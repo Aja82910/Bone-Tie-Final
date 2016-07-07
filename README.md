@@ -2,7 +2,7 @@
 The final version of Bone Tie
   TODO:
     Cloud kit
-      []Chat between users
+      [x]Chat between users
       []Alerts User if other owner is with dog and left home zone
       []Alerts other users if there is a lost dog in that area
       []Upload pictures, videos, comments, etc.
