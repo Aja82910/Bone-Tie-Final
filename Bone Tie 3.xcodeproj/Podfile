@@ -1,0 +1,7 @@
+xcodeproj '/Users/alexarovas/Downloads/Bone-Tie-2-master-2/Bone Tie 3.xcodeproj'
+platform :ios, '9.0'
+use_frameworks!
+target 'Bone Tie 3' do
+    pod 'HanekeSwift'
+    pod 'Charts'
+end
