@@ -3,6 +3,7 @@ The final version of Bone Tie
   TODO:
     Cloud kit
       [x]Chat between users
+      
       []Alerts User if other owner is with dog and left home zone
       []Alerts other users if there is a lost dog in that area
       []Upload pictures, videos, comments, etc.
@@ -23,7 +24,7 @@ The final version of Bone Tie
         []Dog Catcher (escape the pound)
         []Dog version of dumb ways to die
       []add alerts for food time and medicine time and other things
-      []share dog location photo and other necessary information to find immediately when lost to friends and family (need to add []functionality for this without lost mode first)
+      []share dog location photo and other necessary information to find immediately when lost to friends and family (need to add functionality for this without lost mode first)
       []Design
       []Tutorial through app
       []make annotations better
