@@ -1,0 +1,975 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		133CBDC5DB54B3387A0ED09F /* Pods_Bone_Tie_3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6D6B67F319153BF3107C80 /* Pods_Bone_Tie_3UITests.framework */; };
+		49969450E8214419B26419BE /* Pods_Bone_Tie_3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE62559C6C528A70B84274A /* Pods_Bone_Tie_3.framework */; };
+		8023BFEB6148F8DE8165BA3A /* Pods_Bone_Tie_3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E83DB5BBEEACDA53DE564956 /* Pods_Bone_Tie_3Tests.framework */; };
+		B10ABCEF1C60230600D66185 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10ABCEE1C60230600D66185 /* CloudKit.framework */; };
+		B10ABCF11C60263900D66185 /* AlarmKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10ABCF01C60263900D66185 /* AlarmKit.swift */; };
+		B10ABCF31C60264400D66185 /* LocalNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10ABCF21C60264400D66185 /* LocalNotificationHelper.swift */; };
+		B10D0D1C1CE8EF200059DC0B /* LostDogsMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10D0D1B1CE8EF200059DC0B /* LostDogsMap.swift */; };
+		B10EFB721CD3E4F300D6AFAD /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10EFB711CD3E4F300D6AFAD /* Spotlight.swift */; };
+		B10EFB741CD3E4FA00D6AFAD /* SpotlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10EFB731CD3E4FA00D6AFAD /* SpotlightView.swift */; };
+		B10EFB761CD3E50100D6AFAD /* SpotlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10EFB751CD3E50100D6AFAD /* SpotlightViewController.swift */; };
+		B10EFB781CD3E50B00D6AFAD /* SpotlightTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10EFB771CD3E50B00D6AFAD /* SpotlightTransitionController.swift */; };
+		B10EFB7A1CD3E62D00D6AFAD /* AnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10EFB791CD3E62D00D6AFAD /* AnnotationViewController.swift */; };
+		B10EFB7C1CD4777800D6AFAD /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10EFB7B1CD4777800D6AFAD /* SettingsTableViewCell.swift */; };
+		B11029C41CC6D3DE00745166 /* LostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11029C31CC6D3DE00745166 /* LostViewController.swift */; };
+		B11184021D04EA580034936A /* DirectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11184011D04EA580034936A /* DirectionsViewController.swift */; };
+		B11184041D04F5540034936A /* NearbyBuildingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11184031D04F5540034936A /* NearbyBuildingsViewController.swift */; };
+		B11184061D0502DB0034936A /* DogLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11184051D0502DB0034936A /* DogLocationViewController.swift */; };
+		B11374A41CDC1A45003BE4DE /* AddDogImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11374A31CDC1A45003BE4DE /* AddDogImage.swift */; };
+		B11374A61CDC1A5B003BE4DE /* AddDogName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11374A51CDC1A5B003BE4DE /* AddDogName.swift */; };
+		B11374A81CDC1A76003BE4DE /* AddDogCity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11374A71CDC1A76003BE4DE /* AddDogCity.swift */; };
+		B11374AA1CDC2DAF003BE4DE /* AddDogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11374A91CDC2DAF003BE4DE /* AddDogTableViewCell.swift */; };
+		B11374AC1CDC3D61003BE4DE /* AddDogBreed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11374AB1CDC3D61003BE4DE /* AddDogBreed.swift */; };
+		B11374AE1CDC3D9D003BE4DE /* AddDogBreedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11374AD1CDC3D9D003BE4DE /* AddDogBreedTableViewCell.swift */; };
+		B11551AC1CD5B07000AAA8BF /* AddReminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11551AB1CD5B07000AAA8BF /* AddReminders.swift */; };
+		B11551B01CD696D600AAA8BF /* TurorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11551AF1CD696D600AAA8BF /* TurorialViewController.swift */; };
+		B11551B21CD6C2A600AAA8BF /* dogsTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11551B11CD6C2A600AAA8BF /* dogsTutorialViewController.swift */; };
+		B11B81571D08FF7000FC89A3 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11B81561D08FF7000FC89A3 /* RecordViewController.swift */; };
+		B11B81591D0A4B8A00FC89A3 /* SampleSoundsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11B81581D0A4B8A00FC89A3 /* SampleSoundsViewController.swift */; };
+		B122A0671C4DC374008FBF64 /* EditDogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122A0661C4DC374008FBF64 /* EditDogViewController.swift */; };
+		B1278F7A1CA4CB7300D27304 /* Setings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1278F791CA4CB7300D27304 /* Setings.swift */; };
+		B129DBA71CEA5CC2009627D0 /* lostDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B129DBA61CEA5CC2009627D0 /* lostDog.swift */; };
+		B129DBA91CEA7FC6009627D0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B129DBA81CEA7FC6009627D0 /* AVFoundation.framework */; };
+		B129DBAB1CEA9317009627D0 /* FetchLost.swift in Sources */ = {isa = PBXBuildFile; fileRef = B129DBAA1CEA9317009627D0 /* FetchLost.swift */; };
+		B151F95C1CA0B1AF00D5A349 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B151F95B1CA0B1AF00D5A349 /* SWRevealViewController.m */; };
+		B16D4F571C28B9C300780335 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16D4F551C28B9C300780335 /* ImageViewer.swift */; };
+		B16D4F581C28B9C300780335 /* UIImageView+ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16D4F561C28B9C300780335 /* UIImageView+ImageViewer.swift */; };
+		B17D6AA01C6517FF0080A09B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17D6A9E1C6517FF0080A09B /* Main.storyboard */; };
+		B18211741D178D27001D337A /* StickyCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18211731D178D27001D337A /* StickyCollectionViewFlowLayout.swift */; };
+		B18211761D178D6F001D337A /* ZHDropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18211751D178D6F001D337A /* ZHDropDownMenu.swift */; };
+		B18211781D178D99001D337A /* SlideOutMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18211771D178D99001D337A /* SlideOutMenuTableViewController.swift */; };
+		B182117A1D178DB4001D337A /* Dog Bark.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B18211791D178DB4001D337A /* Dog Bark.mp3 */; };
+		B182117C1D178FAC001D337A /* Lost.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182117B1D178FAC001D337A /* Lost.swift */; };
+		B182117E1D1790AD001D337A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B182117D1D1790AD001D337A /* Default-568h@2x.png */; };
+		B18211801D1790CD001D337A /* Bone Tie 3.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B182117F1D1790CD001D337A /* Bone Tie 3.entitlements */; };
+		B1AB57BE1CCFB147003D2625 /* DogsLocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB57BD1CCFB147003D2625 /* DogsLocationInfo.swift */; };
+		B1B52E081D049053009FA754 /* AddDogMixedBreed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B52E071D049053009FA754 /* AddDogMixedBreed.swift */; };
+		B1CEA92E1D10E9A9007AB93A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1CEA92D1D10E9A9007AB93A /* AudioToolbox.framework */; };
+		B1D6E0FA1CE3DEFF00F23A50 /* LookingForDogsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D6E0F91CE3DEFF00F23A50 /* LookingForDogsTableViewController.swift */; };
+		B1D6E0FC1CE41DBB00F23A50 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D6E0FB1CE41DBB00F23A50 /* MapKit.framework */; };
+		B1D8430A1BF68A420019A468 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D843091BF68A420019A468 /* AppDelegate.swift */; };
+		B1D8430E1BF68A420019A468 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8430D1BF68A420019A468 /* Map.swift */; };
+		B1D843131BF68A420019A468 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1D843121BF68A420019A468 /* Assets.xcassets */; };
+		B1D843161BF68A420019A468 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1D843141BF68A420019A468 /* LaunchScreen.storyboard */; };
+		B1D843211BF68A420019A468 /* Bone_Tie2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D843201BF68A420019A468 /* Bone_Tie2Tests.swift */; };
+		B1D8432C1BF68A420019A468 /* Bone_Tie2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8432B1BF68A420019A468 /* Bone_Tie2UITests.swift */; };
+		B1D8433C1BF68E720019A468 /* Dogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8433B1BF68E720019A468 /* Dogs.swift */; };
+		B1DF315A1D2D65B400FF4E25 /* reminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF31591D2D65B400FF4E25 /* reminders.swift */; };
+		B1DF315C1D2D6C3F00FF4E25 /* EveryReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF315B1D2D6C3F00FF4E25 /* EveryReminder.swift */; };
+		B1DF31621D2DAE1800FF4E25 /* RemindersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF31611D2DAE1800FF4E25 /* RemindersTableViewController.swift */; };
+		B1E458F61CF3B36D0078571E /* LostInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E458F51CF3B36D0078571E /* LostInfoViewController.swift */; };
+		B1E458F81CF3B72D0078571E /* LostDogInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E458F71CF3B72D0078571E /* LostDogInformationViewController.swift */; };
+		B1F0E2271D179C9900B4010D /* BTNavigationDropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F0E2261D179C9900B4010D /* BTNavigationDropdownMenu.swift */; };
+		B1F0E22A1D179FD300B4010D /* BTNavigationDropdownMenu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B1F0E2291D179FD300B4010D /* BTNavigationDropdownMenu.bundle */; };
+		B1F4C6731C14A779007E09C0 /* DogNamesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F4C6711C14A779007E09C0 /* DogNamesTableViewCell.swift */; };
+		B1F4C6761C14DB0F007E09C0 /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F4C6751C14DB0F007E09C0 /* Dog.swift */; };
+		B1F4C6781C14EA30007E09C0 /* AddDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F4C6771C14EA30007E09C0 /* AddDog.swift */; };
+		B1F4C67C1C164FD5007E09C0 /* LostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F4C67B1C164FD5007E09C0 /* LostCollectionViewCell.swift */; };
+		B1FAF5EE1CBC6A1400E1FB7D /* Adafruit.io Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FAF5ED1CBC6A1400E1FB7D /* Adafruit.io Api.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B1D8431D1BF68A420019A468 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1D842FE1BF68A420019A468 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B1D843051BF68A420019A468;
+			remoteInfo = "Bone Tie2";
+		};
+		B1D843281BF68A420019A468 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1D842FE1BF68A420019A468 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B1D843051BF68A420019A468;
+			remoteInfo = "Bone Tie2";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2FB2B8A4A57A7EC378FAA132 /* Pods-Bone Tie 3Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3Tests/Pods-Bone Tie 3Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		38C39931139797CD8ED56FF2 /* Pods-Bone Tie 3UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3UITests/Pods-Bone Tie 3UITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5B6D6B67F319153BF3107C80 /* Pods_Bone_Tie_3UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bone_Tie_3UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BCCE2EE4C1D488C96E03632 /* Pods-Bone Tie 3UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3UITests/Pods-Bone Tie 3UITests.release.xcconfig"; sourceTree = "<group>"; };
+		9B5290FEC7303E1EBC86A527 /* Pods-Bone Tie 3Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3Tests/Pods-Bone Tie 3Tests.release.xcconfig"; sourceTree = "<group>"; };
+		B10ABCEE1C60230600D66185 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		B10ABCF01C60263900D66185 /* AlarmKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmKit.swift; sourceTree = "<group>"; };
+		B10ABCF21C60264400D66185 /* LocalNotificationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationHelper.swift; sourceTree = "<group>"; };
+		B10D0D1B1CE8EF200059DC0B /* LostDogsMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostDogsMap.swift; sourceTree = "<group>"; };
+		B10EFB711CD3E4F300D6AFAD /* Spotlight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
+		B10EFB731CD3E4FA00D6AFAD /* SpotlightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightView.swift; sourceTree = "<group>"; };
+		B10EFB751CD3E50100D6AFAD /* SpotlightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightViewController.swift; sourceTree = "<group>"; };
+		B10EFB771CD3E50B00D6AFAD /* SpotlightTransitionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightTransitionController.swift; sourceTree = "<group>"; };
+		B10EFB791CD3E62D00D6AFAD /* AnnotationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationViewController.swift; sourceTree = "<group>"; };
+		B10EFB7B1CD4777800D6AFAD /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		B11029C31CC6D3DE00745166 /* LostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostViewController.swift; sourceTree = "<group>"; };
+		B11184011D04EA580034936A /* DirectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionsViewController.swift; sourceTree = "<group>"; };
+		B11184031D04F5540034936A /* NearbyBuildingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyBuildingsViewController.swift; sourceTree = "<group>"; };
+		B11184051D0502DB0034936A /* DogLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogLocationViewController.swift; sourceTree = "<group>"; };
+		B11374A31CDC1A45003BE4DE /* AddDogImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDogImage.swift; sourceTree = "<group>"; };
+		B11374A51CDC1A5B003BE4DE /* AddDogName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDogName.swift; sourceTree = "<group>"; };
+		B11374A71CDC1A76003BE4DE /* AddDogCity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDogCity.swift; sourceTree = "<group>"; };
+		B11374A91CDC2DAF003BE4DE /* AddDogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDogTableViewCell.swift; sourceTree = "<group>"; };
+		B11374AB1CDC3D61003BE4DE /* AddDogBreed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDogBreed.swift; sourceTree = "<group>"; };
+		B11374AD1CDC3D9D003BE4DE /* AddDogBreedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDogBreedTableViewCell.swift; sourceTree = "<group>"; };
+		B11551AB1CD5B07000AAA8BF /* AddReminders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReminders.swift; sourceTree = "<group>"; };
+		B11551AF1CD696D600AAA8BF /* TurorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurorialViewController.swift; sourceTree = "<group>"; };
+		B11551B11CD6C2A600AAA8BF /* dogsTutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dogsTutorialViewController.swift; sourceTree = "<group>"; };
+		B11B81561D08FF7000FC89A3 /* RecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
+		B11B81581D0A4B8A00FC89A3 /* SampleSoundsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleSoundsViewController.swift; sourceTree = "<group>"; };
+		B122A0661C4DC374008FBF64 /* EditDogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDogViewController.swift; sourceTree = "<group>"; };
+		B1278F791CA4CB7300D27304 /* Setings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setings.swift; sourceTree = "<group>"; };
+		B129DBA61CEA5CC2009627D0 /* lostDog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = lostDog.swift; sourceTree = "<group>"; };
+		B129DBA81CEA7FC6009627D0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B129DBAA1CEA9317009627D0 /* FetchLost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchLost.swift; sourceTree = "<group>"; };
+		B151F9591CA0B1A400D5A349 /* Bone Tie 3-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bone Tie 3-Bridging-Header.h"; path = "Bone Tie2/Bone Tie 3-Bridging-Header.h"; sourceTree = "<group>"; };
+		B151F95A1CA0B1AF00D5A349 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = "Bone Tie2/SWRevealViewController.h"; sourceTree = "<group>"; };
+		B151F95B1CA0B1AF00D5A349 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = "Bone Tie2/SWRevealViewController.m"; sourceTree = "<group>"; };
+		B16D4F551C28B9C300780335 /* ImageViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
+		B16D4F561C28B9C300780335 /* UIImageView+ImageViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageViewer.swift"; sourceTree = "<group>"; };
+		B17D6A9F1C6517FF0080A09B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B18211731D178D27001D337A /* StickyCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		B18211751D178D6F001D337A /* ZHDropDownMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHDropDownMenu.swift; sourceTree = "<group>"; };
+		B18211771D178D99001D337A /* SlideOutMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideOutMenuTableViewController.swift; sourceTree = "<group>"; };
+		B18211791D178DB4001D337A /* Dog Bark.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Dog Bark.mp3"; path = "Assets.xcassets/Dog Bark.dataset/Dog Bark.mp3"; sourceTree = "<group>"; };
+		B182117B1D178FAC001D337A /* Lost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lost.swift; sourceTree = "<group>"; };
+		B182117D1D1790AD001D337A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B182117F1D1790CD001D337A /* Bone Tie 3.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Bone Tie 3.entitlements"; sourceTree = "<group>"; };
+		B1AB57BD1CCFB147003D2625 /* DogsLocationInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogsLocationInfo.swift; sourceTree = "<group>"; };
+		B1B52E071D049053009FA754 /* AddDogMixedBreed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDogMixedBreed.swift; sourceTree = "<group>"; };
+		B1CEA92D1D10E9A9007AB93A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B1D6E0F91CE3DEFF00F23A50 /* LookingForDogsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookingForDogsTableViewController.swift; sourceTree = "<group>"; };
+		B1D6E0FB1CE41DBB00F23A50 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		B1D843061BF68A420019A468 /* Bone Tie 3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bone Tie 3.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1D843091BF68A420019A468 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 1; };
+		B1D8430D1BF68A420019A468 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		B1D843121BF68A420019A468 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B1D843151BF68A420019A468 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B1D843171BF68A420019A468 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1D8431C1BF68A420019A468 /* Bone Tie 3.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bone Tie 3.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1D843201BF68A420019A468 /* Bone_Tie2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bone_Tie2Tests.swift; sourceTree = "<group>"; };
+		B1D843221BF68A420019A468 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1D843271BF68A420019A468 /* Bone Tie 3.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bone Tie 3.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1D8432B1BF68A420019A468 /* Bone_Tie2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bone_Tie2UITests.swift; sourceTree = "<group>"; };
+		B1D8432D1BF68A420019A468 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1D8433B1BF68E720019A468 /* Dogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dogs.swift; sourceTree = "<group>"; };
+		B1DF31591D2D65B400FF4E25 /* reminders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = reminders.swift; sourceTree = "<group>"; };
+		B1DF315B1D2D6C3F00FF4E25 /* EveryReminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryReminder.swift; sourceTree = "<group>"; };
+		B1DF31611D2DAE1800FF4E25 /* RemindersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersTableViewController.swift; sourceTree = "<group>"; };
+		B1E458F51CF3B36D0078571E /* LostInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostInfoViewController.swift; sourceTree = "<group>"; };
+		B1E458F71CF3B72D0078571E /* LostDogInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostDogInformationViewController.swift; sourceTree = "<group>"; };
+		B1F0E2261D179C9900B4010D /* BTNavigationDropdownMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTNavigationDropdownMenu.swift; sourceTree = "<group>"; };
+		B1F0E2291D179FD300B4010D /* BTNavigationDropdownMenu.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BTNavigationDropdownMenu.bundle; sourceTree = "<group>"; };
+		B1F4C6711C14A779007E09C0 /* DogNamesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogNamesTableViewCell.swift; sourceTree = "<group>"; };
+		B1F4C6751C14DB0F007E09C0 /* Dog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
+		B1F4C6771C14EA30007E09C0 /* AddDog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDog.swift; sourceTree = "<group>"; };
+		B1F4C67B1C164FD5007E09C0 /* LostCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostCollectionViewCell.swift; sourceTree = "<group>"; };
+		B1FAF5ED1CBC6A1400E1FB7D /* Adafruit.io Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Adafruit.io Api.swift"; sourceTree = "<group>"; };
+		C859127044BC1D4D0402DDB9 /* Pods-Bone Tie 3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3/Pods-Bone Tie 3.debug.xcconfig"; sourceTree = "<group>"; };
+		C9845603E479E2F5B591A47E /* Pods-Bone Tie 3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3/Pods-Bone Tie 3.release.xcconfig"; sourceTree = "<group>"; };
+		E83DB5BBEEACDA53DE564956 /* Pods_Bone_Tie_3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bone_Tie_3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAE62559C6C528A70B84274A /* Pods_Bone_Tie_3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bone_Tie_3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B1D843031BF68A420019A468 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1CEA92E1D10E9A9007AB93A /* AudioToolbox.framework in Frameworks */,
+				B129DBA91CEA7FC6009627D0 /* AVFoundation.framework in Frameworks */,
+				B1D6E0FC1CE41DBB00F23A50 /* MapKit.framework in Frameworks */,
+				B10ABCEF1C60230600D66185 /* CloudKit.framework in Frameworks */,
+				49969450E8214419B26419BE /* Pods_Bone_Tie_3.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1D843191BF68A420019A468 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8023BFEB6148F8DE8165BA3A /* Pods_Bone_Tie_3Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1D843241BF68A420019A468 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				133CBDC5DB54B3387A0ED09F /* Pods_Bone_Tie_3UITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		22A33738320C9351EE511D09 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B1CEA92D1D10E9A9007AB93A /* AudioToolbox.framework */,
+				B129DBA81CEA7FC6009627D0 /* AVFoundation.framework */,
+				B1D6E0FB1CE41DBB00F23A50 /* MapKit.framework */,
+				B10ABCEE1C60230600D66185 /* CloudKit.framework */,
+				FAE62559C6C528A70B84274A /* Pods_Bone_Tie_3.framework */,
+				E83DB5BBEEACDA53DE564956 /* Pods_Bone_Tie_3Tests.framework */,
+				5B6D6B67F319153BF3107C80 /* Pods_Bone_Tie_3UITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		82ACDEE0C0B896709B94F102 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C859127044BC1D4D0402DDB9 /* Pods-Bone Tie 3.debug.xcconfig */,
+				C9845603E479E2F5B591A47E /* Pods-Bone Tie 3.release.xcconfig */,
+				2FB2B8A4A57A7EC378FAA132 /* Pods-Bone Tie 3Tests.debug.xcconfig */,
+				9B5290FEC7303E1EBC86A527 /* Pods-Bone Tie 3Tests.release.xcconfig */,
+				38C39931139797CD8ED56FF2 /* Pods-Bone Tie 3UITests.debug.xcconfig */,
+				8BCCE2EE4C1D488C96E03632 /* Pods-Bone Tie 3UITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B151F9541CA0A8FB00D5A349 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B151F9591CA0B1A400D5A349 /* Bone Tie 3-Bridging-Header.h */,
+				B151F95A1CA0B1AF00D5A349 /* SWRevealViewController.h */,
+				B151F95B1CA0B1AF00D5A349 /* SWRevealViewController.m */,
+			);
+			name = "Supporting Files";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		B1D842FD1BF68A420019A468 = {
+			isa = PBXGroup;
+			children = (
+				B182117F1D1790CD001D337A /* Bone Tie 3.entitlements */,
+				B182117D1D1790AD001D337A /* Default-568h@2x.png */,
+				B1D843081BF68A420019A468 /* Bone Tie2 */,
+				B1D8431F1BF68A420019A468 /* Bone Tie2Tests */,
+				B1D8432A1BF68A420019A468 /* Bone Tie2UITests */,
+				B1D843071BF68A420019A468 /* Products */,
+				22A33738320C9351EE511D09 /* Frameworks */,
+				82ACDEE0C0B896709B94F102 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		B1D843071BF68A420019A468 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B1D843061BF68A420019A468 /* Bone Tie 3.app */,
+				B1D8431C1BF68A420019A468 /* Bone Tie 3.xctest */,
+				B1D843271BF68A420019A468 /* Bone Tie 3.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B1D843081BF68A420019A468 /* Bone Tie2 */ = {
+			isa = PBXGroup;
+			children = (
+				B1F0E2281D179D8600B4010D /* Source */,
+				B18211751D178D6F001D337A /* ZHDropDownMenu.swift */,
+				B10EFB711CD3E4F300D6AFAD /* Spotlight.swift */,
+				B10EFB731CD3E4FA00D6AFAD /* SpotlightView.swift */,
+				B10EFB751CD3E50100D6AFAD /* SpotlightViewController.swift */,
+				B10EFB771CD3E50B00D6AFAD /* SpotlightTransitionController.swift */,
+				B18211771D178D99001D337A /* SlideOutMenuTableViewController.swift */,
+				B10ABCF01C60263900D66185 /* AlarmKit.swift */,
+				B10ABCF21C60264400D66185 /* LocalNotificationHelper.swift */,
+				B16D4F551C28B9C300780335 /* ImageViewer.swift */,
+				B16D4F561C28B9C300780335 /* UIImageView+ImageViewer.swift */,
+				B1D843091BF68A420019A468 /* AppDelegate.swift */,
+				B1F4C6751C14DB0F007E09C0 /* Dog.swift */,
+				B129DBA61CEA5CC2009627D0 /* lostDog.swift */,
+				B1DF31611D2DAE1800FF4E25 /* RemindersTableViewController.swift */,
+				B1DF31591D2D65B400FF4E25 /* reminders.swift */,
+				B1DF315B1D2D6C3F00FF4E25 /* EveryReminder.swift */,
+				B1D8433B1BF68E720019A468 /* Dogs.swift */,
+				B11551B11CD6C2A600AAA8BF /* dogsTutorialViewController.swift */,
+				B11551AF1CD696D600AAA8BF /* TurorialViewController.swift */,
+				B1F4C6771C14EA30007E09C0 /* AddDog.swift */,
+				B11374A31CDC1A45003BE4DE /* AddDogImage.swift */,
+				B11374A51CDC1A5B003BE4DE /* AddDogName.swift */,
+				B11374A71CDC1A76003BE4DE /* AddDogCity.swift */,
+				B11374AB1CDC3D61003BE4DE /* AddDogBreed.swift */,
+				B1B52E071D049053009FA754 /* AddDogMixedBreed.swift */,
+				B11374AD1CDC3D9D003BE4DE /* AddDogBreedTableViewCell.swift */,
+				B11374A91CDC2DAF003BE4DE /* AddDogTableViewCell.swift */,
+				B11B81561D08FF7000FC89A3 /* RecordViewController.swift */,
+				B11B81581D0A4B8A00FC89A3 /* SampleSoundsViewController.swift */,
+				B11029C31CC6D3DE00745166 /* LostViewController.swift */,
+				B1D8430D1BF68A420019A468 /* Map.swift */,
+				B1FAF5ED1CBC6A1400E1FB7D /* Adafruit.io Api.swift */,
+				B1F4C67B1C164FD5007E09C0 /* LostCollectionViewCell.swift */,
+				B1F4C6711C14A779007E09C0 /* DogNamesTableViewCell.swift */,
+				B182117B1D178FAC001D337A /* Lost.swift */,
+				B122A0661C4DC374008FBF64 /* EditDogViewController.swift */,
+				B1278F791CA4CB7300D27304 /* Setings.swift */,
+				B1D6E0F91CE3DEFF00F23A50 /* LookingForDogsTableViewController.swift */,
+				B10EFB7B1CD4777800D6AFAD /* SettingsTableViewCell.swift */,
+				B1AB57BD1CCFB147003D2625 /* DogsLocationInfo.swift */,
+				B11184011D04EA580034936A /* DirectionsViewController.swift */,
+				B11184031D04F5540034936A /* NearbyBuildingsViewController.swift */,
+				B11184051D0502DB0034936A /* DogLocationViewController.swift */,
+				B1E458F51CF3B36D0078571E /* LostInfoViewController.swift */,
+				B1E458F71CF3B72D0078571E /* LostDogInformationViewController.swift */,
+				B11551AB1CD5B07000AAA8BF /* AddReminders.swift */,
+				B10D0D1B1CE8EF200059DC0B /* LostDogsMap.swift */,
+				B129DBAA1CEA9317009627D0 /* FetchLost.swift */,
+				B10EFB791CD3E62D00D6AFAD /* AnnotationViewController.swift */,
+				B18211731D178D27001D337A /* StickyCollectionViewFlowLayout.swift */,
+				B17D6A9E1C6517FF0080A09B /* Main.storyboard */,
+				B1D843121BF68A420019A468 /* Assets.xcassets */,
+				B18211791D178DB4001D337A /* Dog Bark.mp3 */,
+				B1D843141BF68A420019A468 /* LaunchScreen.storyboard */,
+				B1D843171BF68A420019A468 /* Info.plist */,
+				B151F9541CA0A8FB00D5A349 /* Supporting Files */,
+			);
+			path = "Bone Tie2";
+			sourceTree = "<group>";
+		};
+		B1D8431F1BF68A420019A468 /* Bone Tie2Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B1D843201BF68A420019A468 /* Bone_Tie2Tests.swift */,
+				B1D843221BF68A420019A468 /* Info.plist */,
+			);
+			path = "Bone Tie2Tests";
+			sourceTree = "<group>";
+		};
+		B1D8432A1BF68A420019A468 /* Bone Tie2UITests */ = {
+			isa = PBXGroup;
+			children = (
+				B1D8432B1BF68A420019A468 /* Bone_Tie2UITests.swift */,
+				B1D8432D1BF68A420019A468 /* Info.plist */,
+			);
+			path = "Bone Tie2UITests";
+			sourceTree = "<group>";
+		};
+		B1F0E2281D179D8600B4010D /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				B1F0E2261D179C9900B4010D /* BTNavigationDropdownMenu.swift */,
+				B1F0E2291D179FD300B4010D /* BTNavigationDropdownMenu.bundle */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B1D843051BF68A420019A468 /* Bone Tie 3 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B1D843301BF68A420019A468 /* Build configuration list for PBXNativeTarget "Bone Tie 3" */;
+			buildPhases = (
+				96BCFDE56CAADE1C3AA46740 /* [CP] Check Pods Manifest.lock */,
+				B1D843021BF68A420019A468 /* Sources */,
+				B1D843031BF68A420019A468 /* Frameworks */,
+				B1D843041BF68A420019A468 /* Resources */,
+				D7DC3D7566CD042C83C416E4 /* [CP] Embed Pods Frameworks */,
+				631B46F064BCAD0D7483CCE2 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Bone Tie 3";
+			productName = "Bone Tie2";
+			productReference = B1D843061BF68A420019A468 /* Bone Tie 3.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B1D8431B1BF68A420019A468 /* Bone Tie 3Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B1D843331BF68A420019A468 /* Build configuration list for PBXNativeTarget "Bone Tie 3Tests" */;
+			buildPhases = (
+				43475AFA63A9A0A45141F783 /* [CP] Check Pods Manifest.lock */,
+				B1D843181BF68A420019A468 /* Sources */,
+				B1D843191BF68A420019A468 /* Frameworks */,
+				B1D8431A1BF68A420019A468 /* Resources */,
+				F67BD16524D544A7528127B7 /* [CP] Embed Pods Frameworks */,
+				2A1AC8DCA45EFC2A1D4697DE /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B1D8431E1BF68A420019A468 /* PBXTargetDependency */,
+			);
+			name = "Bone Tie 3Tests";
+			productName = "Bone Tie2Tests";
+			productReference = B1D8431C1BF68A420019A468 /* Bone Tie 3.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B1D843261BF68A420019A468 /* Bone Tie 3UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B1D843361BF68A420019A468 /* Build configuration list for PBXNativeTarget "Bone Tie 3UITests" */;
+			buildPhases = (
+				829FEAE37E9812B90F0512B9 /* [CP] Check Pods Manifest.lock */,
+				B1D843231BF68A420019A468 /* Sources */,
+				B1D843241BF68A420019A468 /* Frameworks */,
+				B1D843251BF68A420019A468 /* Resources */,
+				D3BEADB25A6C14A78D10BBC0 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B1D843291BF68A420019A468 /* PBXTargetDependency */,
+			);
+			name = "Bone Tie 3UITests";
+			productName = "Bone Tie2UITests";
+			productReference = B1D843271BF68A420019A468 /* Bone Tie 3.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B1D842FE1BF68A420019A468 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "Alex Arovas";
+				TargetAttributes = {
+					B1D843051BF68A420019A468 = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 6Z26H684AG;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+					B1D8431B1BF68A420019A468 = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = B1D843051BF68A420019A468;
+					};
+					B1D843261BF68A420019A468 = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = B1D843051BF68A420019A468;
+					};
+				};
+			};
+			buildConfigurationList = B1D843011BF68A420019A468 /* Build configuration list for PBXProject "Bone Tie 3" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B1D842FD1BF68A420019A468;
+			productRefGroup = B1D843071BF68A420019A468 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B1D843051BF68A420019A468 /* Bone Tie 3 */,
+				B1D8431B1BF68A420019A468 /* Bone Tie 3Tests */,
+				B1D843261BF68A420019A468 /* Bone Tie 3UITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B1D843041BF68A420019A468 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B17D6AA01C6517FF0080A09B /* Main.storyboard in Resources */,
+				B1D843161BF68A420019A468 /* LaunchScreen.storyboard in Resources */,
+				B182117A1D178DB4001D337A /* Dog Bark.mp3 in Resources */,
+				B1F0E22A1D179FD300B4010D /* BTNavigationDropdownMenu.bundle in Resources */,
+				B182117E1D1790AD001D337A /* Default-568h@2x.png in Resources */,
+				B18211801D1790CD001D337A /* Bone Tie 3.entitlements in Resources */,
+				B1D843131BF68A420019A468 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1D8431A1BF68A420019A468 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1D843251BF68A420019A468 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2A1AC8DCA45EFC2A1D4697DE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bone Tie 3Tests/Pods-Bone Tie 3Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		43475AFA63A9A0A45141F783 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		631B46F064BCAD0D7483CCE2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bone Tie 3/Pods-Bone Tie 3-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		829FEAE37E9812B90F0512B9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		96BCFDE56CAADE1C3AA46740 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D3BEADB25A6C14A78D10BBC0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bone Tie 3UITests/Pods-Bone Tie 3UITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7DC3D7566CD042C83C416E4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bone Tie 3/Pods-Bone Tie 3-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F67BD16524D544A7528127B7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bone Tie 3Tests/Pods-Bone Tie 3Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B1D843021BF68A420019A468 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1E458F81CF3B72D0078571E /* LostDogInformationViewController.swift in Sources */,
+				B1D8430E1BF68A420019A468 /* Map.swift in Sources */,
+				B11184061D0502DB0034936A /* DogLocationViewController.swift in Sources */,
+				B11B81571D08FF7000FC89A3 /* RecordViewController.swift in Sources */,
+				B1FAF5EE1CBC6A1400E1FB7D /* Adafruit.io Api.swift in Sources */,
+				B1B52E081D049053009FA754 /* AddDogMixedBreed.swift in Sources */,
+				B122A0671C4DC374008FBF64 /* EditDogViewController.swift in Sources */,
+				B1278F7A1CA4CB7300D27304 /* Setings.swift in Sources */,
+				B11B81591D0A4B8A00FC89A3 /* SampleSoundsViewController.swift in Sources */,
+				B11374A41CDC1A45003BE4DE /* AddDogImage.swift in Sources */,
+				B1D8433C1BF68E720019A468 /* Dogs.swift in Sources */,
+				B11374AA1CDC2DAF003BE4DE /* AddDogTableViewCell.swift in Sources */,
+				B1F4C6761C14DB0F007E09C0 /* Dog.swift in Sources */,
+				B1DF31621D2DAE1800FF4E25 /* RemindersTableViewController.swift in Sources */,
+				B11374A81CDC1A76003BE4DE /* AddDogCity.swift in Sources */,
+				B18211741D178D27001D337A /* StickyCollectionViewFlowLayout.swift in Sources */,
+				B16D4F571C28B9C300780335 /* ImageViewer.swift in Sources */,
+				B10D0D1C1CE8EF200059DC0B /* LostDogsMap.swift in Sources */,
+				B11551AC1CD5B07000AAA8BF /* AddReminders.swift in Sources */,
+				B129DBA71CEA5CC2009627D0 /* lostDog.swift in Sources */,
+				B11551B01CD696D600AAA8BF /* TurorialViewController.swift in Sources */,
+				B1D8430A1BF68A420019A468 /* AppDelegate.swift in Sources */,
+				B151F95C1CA0B1AF00D5A349 /* SWRevealViewController.m in Sources */,
+				B10EFB781CD3E50B00D6AFAD /* SpotlightTransitionController.swift in Sources */,
+				B1F4C6731C14A779007E09C0 /* DogNamesTableViewCell.swift in Sources */,
+				B10ABCF11C60263900D66185 /* AlarmKit.swift in Sources */,
+				B11374A61CDC1A5B003BE4DE /* AddDogName.swift in Sources */,
+				B10EFB7A1CD3E62D00D6AFAD /* AnnotationViewController.swift in Sources */,
+				B1D6E0FA1CE3DEFF00F23A50 /* LookingForDogsTableViewController.swift in Sources */,
+				B10EFB761CD3E50100D6AFAD /* SpotlightViewController.swift in Sources */,
+				B1F4C6781C14EA30007E09C0 /* AddDog.swift in Sources */,
+				B18211781D178D99001D337A /* SlideOutMenuTableViewController.swift in Sources */,
+				B10ABCF31C60264400D66185 /* LocalNotificationHelper.swift in Sources */,
+				B1F4C67C1C164FD5007E09C0 /* LostCollectionViewCell.swift in Sources */,
+				B10EFB7C1CD4777800D6AFAD /* SettingsTableViewCell.swift in Sources */,
+				B182117C1D178FAC001D337A /* Lost.swift in Sources */,
+				B18211761D178D6F001D337A /* ZHDropDownMenu.swift in Sources */,
+				B1E458F61CF3B36D0078571E /* LostInfoViewController.swift in Sources */,
+				B129DBAB1CEA9317009627D0 /* FetchLost.swift in Sources */,
+				B1AB57BE1CCFB147003D2625 /* DogsLocationInfo.swift in Sources */,
+				B1DF315C1D2D6C3F00FF4E25 /* EveryReminder.swift in Sources */,
+				B11184041D04F5540034936A /* NearbyBuildingsViewController.swift in Sources */,
+				B11374AC1CDC3D61003BE4DE /* AddDogBreed.swift in Sources */,
+				B16D4F581C28B9C300780335 /* UIImageView+ImageViewer.swift in Sources */,
+				B11184021D04EA580034936A /* DirectionsViewController.swift in Sources */,
+				B1DF315A1D2D65B400FF4E25 /* reminders.swift in Sources */,
+				B11374AE1CDC3D9D003BE4DE /* AddDogBreedTableViewCell.swift in Sources */,
+				B1F0E2271D179C9900B4010D /* BTNavigationDropdownMenu.swift in Sources */,
+				B10EFB721CD3E4F300D6AFAD /* Spotlight.swift in Sources */,
+				B11551B21CD6C2A600AAA8BF /* dogsTutorialViewController.swift in Sources */,
+				B10EFB741CD3E4FA00D6AFAD /* SpotlightView.swift in Sources */,
+				B11029C41CC6D3DE00745166 /* LostViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1D843181BF68A420019A468 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1D843211BF68A420019A468 /* Bone_Tie2Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1D843231BF68A420019A468 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1D8432C1BF68A420019A468 /* Bone_Tie2UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B1D8431E1BF68A420019A468 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B1D843051BF68A420019A468 /* Bone Tie 3 */;
+			targetProxy = B1D8431D1BF68A420019A468 /* PBXContainerItemProxy */;
+		};
+		B1D843291BF68A420019A468 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B1D843051BF68A420019A468 /* Bone Tie 3 */;
+			targetProxy = B1D843281BF68A420019A468 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B17D6A9E1C6517FF0080A09B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B17D6A9F1C6517FF0080A09B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B1D843141BF68A420019A468 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B1D843151BF68A420019A468 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B1D8432E1BF68A420019A468 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B1D8432F1BF68A420019A468 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B1D843311BF68A420019A468 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C859127044BC1D4D0402DDB9 /* Pods-Bone Tie 3.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Bone Tie 3.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "Bone Tie2/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dog.Bone-Tie2";
+				PRODUCT_NAME = "Bone Tie 3";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bone Tie2/Bone Tie 3-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B1D843321BF68A420019A468 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9845603E479E2F5B591A47E /* Pods-Bone Tie 3.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Bone Tie 3.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "Bone Tie2/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dog.Bone-Tie2";
+				PRODUCT_NAME = "Bone Tie 3";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bone Tie2/Bone Tie 3-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		B1D843341BF68A420019A468 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2FB2B8A4A57A7EC378FAA132 /* Pods-Bone Tie 3Tests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Bone Tie2Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dog.Bone-Tie2Tests";
+				PRODUCT_NAME = "Bone Tie 3";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bone Tie 3.app/Bone Tie 3";
+			};
+			name = Debug;
+		};
+		B1D843351BF68A420019A468 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B5290FEC7303E1EBC86A527 /* Pods-Bone Tie 3Tests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Bone Tie2Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dog.Bone-Tie2Tests";
+				PRODUCT_NAME = "Bone Tie 3";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bone Tie 3.app/Bone Tie 3";
+			};
+			name = Release;
+		};
+		B1D843371BF68A420019A468 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38C39931139797CD8ED56FF2 /* Pods-Bone Tie 3UITests.debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = "Bone Tie2UITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dog.Bone-Tie2UITests";
+				PRODUCT_NAME = "Bone Tie 3";
+				TEST_TARGET_NAME = "Bone Tie2";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		B1D843381BF68A420019A468 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8BCCE2EE4C1D488C96E03632 /* Pods-Bone Tie 3UITests.release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = "Bone Tie2UITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dog.Bone-Tie2UITests";
+				PRODUCT_NAME = "Bone Tie 3";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TEST_TARGET_NAME = "Bone Tie2";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B1D843011BF68A420019A468 /* Build configuration list for PBXProject "Bone Tie 3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1D8432E1BF68A420019A468 /* Debug */,
+				B1D8432F1BF68A420019A468 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B1D843301BF68A420019A468 /* Build configuration list for PBXNativeTarget "Bone Tie 3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1D843311BF68A420019A468 /* Debug */,
+				B1D843321BF68A420019A468 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B1D843331BF68A420019A468 /* Build configuration list for PBXNativeTarget "Bone Tie 3Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1D843341BF68A420019A468 /* Debug */,
+				B1D843351BF68A420019A468 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B1D843361BF68A420019A468 /* Build configuration list for PBXNativeTarget "Bone Tie 3UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1D843371BF68A420019A468 /* Debug */,
+				B1D843381BF68A420019A468 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B1D842FE1BF68A420019A468 /* Project object */;
+}

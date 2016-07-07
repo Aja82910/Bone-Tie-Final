@@ -1,0 +1,23 @@
+PODS:
+  - Charts (2.2.5):
+    - Charts/Core (= 2.2.5)
+  - Charts/Core (2.2.5)
+  - EPCalendarPicker (1.0.8)
+  - HanekeSwift (0.10.1)
+  - Interpolate (0.1.4)
+
+DEPENDENCIES:
+  - Charts
+  - EPCalendarPicker
+  - HanekeSwift
+  - Interpolate
+
+SPEC CHECKSUMS:
+  Charts: b48fcc8d7190de910ff9e9748f5360c8ea7856e5
+  EPCalendarPicker: 0348fe754a7650582665ecc5ac98f4c0a0db0e91
+  HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
+  Interpolate: b59d8bf719809fa8aa119bc4cc4542cbed3fe46d
+
+PODFILE CHECKSUM: b5c3d6aa6b294e8507f8d0b5b3520ac38075b426
+
+COCOAPODS: 1.0.1
