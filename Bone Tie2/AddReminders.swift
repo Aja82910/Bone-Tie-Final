@@ -499,10 +499,11 @@ class AddReminders: UIViewController, UIPickerViewDataSource, UIPickerViewDelega
             let userInfo = ["url": "www.mobiwise.co"]
             if ReminderType.selectedRowInComponent(0) == 0 {
                 let message = "Don't forget to feed \(dogs?.name)"
-                let center = repeatMap.centerCoordinate
-                let distance: CLLocationDistance = CLLocationDistance(Double(repeatSlider.value))
-                let region = CLCircularRegion(center: center, radius: distance, identifier: "Notification Region")
+                //let center = repeatMap.centerCoordinate
+                //let distance: CLLocationDistance = CLLocationDistance(Double(repeatSlider.value))
+                let region: CLCircularRegion? = nil//CLCircularRegion(center: center, radius: distance, identifier: "Notification Region")
                 theReminders.append(reminders(reminderDog: dogs, name: nil, photo: dogs?.photo, repeatType: nil, repeatTime: nil, created: NSDate(), firstLaunchTime: datePicker.date, location: nil, range: nil, type: "Food", stillRepeating: false, notification: LocalNotificationHelper.sharedInstance().scheduleNotificationWithKey("mobiwise", title: "Food", message: message, seconds: secondsFromNow, userInfo: userInfo, theDog: dogs, theRegion: region, soundName: nil, theCalenderInterval: nil, theDates: nil, regionTriggersOnce: false), id: getID())!)
+                print(UIApplication.sharedApplication().scheduledLocalNotifications)
                 saveReminders()
                 let url = NSURL(fileURLWithPath: path!)
                 do {
