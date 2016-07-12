@@ -11,13 +11,34 @@ import UIKit
 class RemindersTableViewController: UITableViewController {
     var theDog = dog?()
     var theReminders = [reminders]()
+    var allTheReminders = [EveryReminder]()
+    
+    var sundayReminders = [reminders]()
+    var mondayReminders = [reminders]()
+    var tuesdayReminders = [reminders]()
+    var wednesdayReminders = [reminders]()
+    var thursdayReminders = [reminders]()
+    var fridayReminders = [reminders]()
+    var saturdayReminders = [reminders]()
+    
+    var sundayAllReminders = [EveryReminder]()
+    var mondayAllReminders = [EveryReminder]()
+    var tuesdayAllReminders = [EveryReminder]()
+    var wednesdayAllReminders = [EveryReminder]()
+    var thursdayAllReminders = [EveryReminder]()
+    var fridayAllReminders = [EveryReminder]()
+    var saturdayAllReminders = [EveryReminder]()
+    
     var dismissedViewcontroller: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*if let savedReminders = loadReminders() {
+        if let savedReminders = loadReminders() {
             theReminders += savedReminders
-        }*/
+        }
+        if let savedReminders = loadEveryReminder() {
+            allTheReminders += savedReminders
+        }
         NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(tableView.reloadData), userInfo: !dismissedViewcontroller, repeats: true)
         tableView.backgroundView = UIImageView(image: theDog?.photo)
         // Uncomment the following line to preserve selection between presentations
@@ -26,6 +47,223 @@ class RemindersTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    func remindersIntoDayReminders() {
+        for reminder in theReminders {
+            let weekday = NSCalendar.currentCalendar().component(.Weekday, fromDate: reminder.created)
+            switch weekday {
+            case 1:
+                sundayReminders.append(reminder)
+            case 2:
+                mondayReminders.append(reminder)
+            case 3:
+                tuesdayReminders.append(reminder)
+            case 4:
+                wednesdayReminders.append(reminder)
+            case 5:
+                thursdayReminders.append(reminder)
+            case 6:
+                fridayReminders.append(reminder)
+            default:
+                saturdayReminders.append(reminder)
+            }
+        }
+    }
+    func everyReminderIntoDayReminders() {
+        for reminder in allTheReminders {
+            let weekday = NSCalendar.currentCalendar().component(.Weekday, fromDate: reminder.launchDate!)
+            switch weekday {
+            case 1:
+                sundayAllReminders.append(reminder)
+            case 2:
+                mondayAllReminders.append(reminder)
+            case 3:
+                tuesdayAllReminders.append(reminder)
+            case 4:
+                wednesdayAllReminders.append(reminder)
+            case 5:
+                thursdayAllReminders.append(reminder)
+            case 6:
+                fridayAllReminders.append(reminder)
+            default:
+                saturdayAllReminders.append(reminder)
+            }
+        }
+    }
+    func sortReminders(weekday: Int, descending: Bool, all: Bool) {
+        var allDays = weekday
+        var weekdays = weekday
+        if all {
+            weekdays = 1
+            allDays = 7
+        }
+        for weekday in weekdays...allDays {
+            switch weekday {
+                case 1:
+                    if descending {
+                        sundayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        sundayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedAscending
+                        }
+                    }
+                case 2:
+                    if descending {
+                        mondayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        mondayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedAscending
+                        }
+                }
+
+                case 3:
+                    if descending {
+                        tuesdayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        tuesdayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedAscending
+                        }
+                }
+
+                case 4:
+                    if descending {
+                        wednesdayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        wednesdayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedAscending
+                        }
+                }
+
+                case 5:
+                    if descending {
+                        thursdayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        thursdayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedAscending
+                        }
+                    }
+
+                case 6:
+                    if descending {
+                        fridayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        fridayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedAscending
+                        }
+                    }
+
+                default:
+                    if descending {
+                        saturdayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        saturdayReminders.sortInPlace {
+                            return $0.created.compare($1.created) == NSComparisonResult.OrderedAscending
+                    }
+                }
+            }
+        }
+    }
+    func sortAllReminders(weekday: Int, descending: Bool, all: Bool) {
+        var allDays = weekday
+        var weekdays = weekday
+        if all {
+            weekdays = 1
+            allDays = 7
+        }
+        for weekday in weekdays...allDays {
+            switch weekday {
+                case 1:
+                    if descending {
+                        sundayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        sundayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedAscending
+                        }
+                    }
+                case 2:
+                    if descending {
+                        mondayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        mondayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedAscending
+                        }
+                    }
+                
+                case 3:
+                    if descending {
+                        tuesdayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        tuesdayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedAscending
+                        }
+                    }
+                
+                case 4:
+                    if descending {
+                        wednesdayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        wednesdayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedAscending
+                        }
+                    }
+                
+                case 5:
+                    if descending {
+                        thursdayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        thursdayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedAscending
+                        }
+                    }
+                
+                case 6:
+                    if descending {
+                        fridayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        fridayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedAscending
+                        }
+                    }
+                
+                default:
+                    if descending {
+                        saturdayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedDescending
+                        }
+                    } else {
+                        saturdayAllReminders.sortInPlace {
+                            return $0.launchDate!.compare($1.launchDate!) == NSComparisonResult.OrderedAscending
+                    }
+                }
+            }
+        }
+    }
+
     override func viewDidDisappear(animated: Bool) {
         dismissedViewcontroller = true
     }
@@ -53,9 +291,21 @@ class RemindersTableViewController: UITableViewController {
         maskLayer.path = maskPath.CGPath;
         object.layer.mask = maskLayer;
     }
+    func findDogWithID(id: Int) -> dog? {
+        var dogs = [dog]()
+        if let savedDogs = loadDogs() {
+            dogs += savedDogs
+        }
+        for dog in dogs {
+            if dog.id == id {
+                return dog
+            }
+        }
+        return nil
+    }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         let infoView = UIView(frame: CGRect(x: 10, y: 55, width: self.view.frame.width - 20, height: cell.frame.height - 50))
         roundCorner(UIRectCorner.BottomLeft, radius: 10.0, object: infoView)
         roundCorner(UIRectCorner.BottomRight, radius: 10.0, object: infoView)
@@ -65,9 +315,9 @@ class RemindersTableViewController: UITableViewController {
         roundCorner(UIRectCorner.TopRight, radius: 10, object: titleView)
         titleView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.8)
         let title = UILabel(frame: CGRect(x: 50, y: 20, width: self.view.frame.width - 125, height: 30))
-        title.text = String(theReminders[indexPath.row].reminderDog!.name)
+        title.text = String(findDogWithID(theReminders[indexPath.row].reminderDogId!)!.name)
         title.textColor = PixelColor(theDog!.photo!, x: (title.center.x)/(self.view.frame.width/theDog!.photo!.size.width), y: (title.center.y + cell.frame.minY)/(self.view.frame.width/theDog!.photo!.size.width))
-        let photo = UIImageView(image: theReminders[indexPath.row].reminderDog!.photo)
+        let photo = UIImageView(image: findDogWithID(theReminders[indexPath.row].reminderDogId!)!.photo)
         photo.frame = CGRect(x: 15, y: 10, width: 30, height: 30)
         photo.layer.cornerRadius = 4
         photo.layer.masksToBounds = true
@@ -262,8 +512,19 @@ class RemindersTableViewController: UITableViewController {
         if !isSuccessfulSave {
         }
     }
+    func saveEveryReminder() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(allTheReminders, toFile: EveryReminder.archiveURL!.path!)
+        if !isSuccessfulSave {
+        }
+    }
     func loadReminders() -> [reminders]? {
         return NSKeyedUnarchiver.unarchiveObjectWithFile(reminders.archiveURL!.path!) as? [reminders]
+    }
+    func loadEveryReminder() -> [EveryReminder]? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(EveryReminder.archiveURL!.path!) as? [EveryReminder]
+    }
+    func loadDogs() -> [dog]? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
     }
     /*
     // Override to support conditional editing of the table view.

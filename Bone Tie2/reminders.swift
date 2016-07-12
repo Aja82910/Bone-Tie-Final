@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 class reminders: NSObject, NSCoding {
-    var reminderDog: dog?
+    var reminderDogId: Int?
     var name: String?
     var photo: UIImage?
     var repeatType: String?
@@ -27,7 +27,7 @@ class reminders: NSObject, NSCoding {
     static let archiveURL = doccumentDirectory?.URLByAppendingPathComponent("Reminders")
     
     struct propertyKey {
-        static let reminderDogKey = "DogName"
+        static let reminderDogIdKey = "DogName"
         static let nameKey = "Name"
         static let photoKey = "Photo"
         static let repeatTypeKey = "repeatType"
@@ -42,9 +42,9 @@ class reminders: NSObject, NSCoding {
         static let idKey = "id"
      }
      
-    init?(reminderDog: dog?, name: String?, photo: UIImage?, repeatType: String?, repeatTime: Int?, created: NSDate, firstLaunchTime: NSDate, location: CLLocation?, range: CLLocationDistance?, type: String, stillRepeating: Bool, notification: UILocalNotification, id: Int) {
+    init?(reminderDogId: Int?, name: String?, photo: UIImage?, repeatType: String?, repeatTime: Int?, created: NSDate, firstLaunchTime: NSDate, location: CLLocation?, range: CLLocationDistance?, type: String, stillRepeating: Bool, notification: UILocalNotification, id: Int) {
         // Initialize stored properties.
-        self.reminderDog = reminderDog
+        self.reminderDogId = reminderDogId
         self.name = name
         self.photo = photo
         self.repeatType = repeatType
@@ -61,7 +61,7 @@ class reminders: NSObject, NSCoding {
      // Initialization should fail if there is no name or if the rating is negative.
      // return nil
      func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(reminderDog, forKey: propertyKey.reminderDogKey)
+        aCoder.encodeObject(reminderDogId, forKey: propertyKey.reminderDogIdKey)
         aCoder.encodeObject(name, forKey: propertyKey.nameKey)
         aCoder.encodeObject(photo, forKey: propertyKey.photoKey)
         aCoder.encodeObject(repeatType, forKey: propertyKey.repeatTypeKey)
@@ -76,7 +76,7 @@ class reminders: NSObject, NSCoding {
         aCoder.encodeObject(id, forKey: propertyKey.idKey)
      }
      required convenience init?(coder aDecoder: NSCoder) {
-        let reminderDog = aDecoder.decodeObjectForKey(propertyKey.reminderDogKey) as! dog
+        let reminderDogId = aDecoder.decodeObjectForKey(propertyKey.reminderDogIdKey) as! Int
         let name = aDecoder.decodeObjectForKey(propertyKey.nameKey) as! String?
         let photo = aDecoder.decodeObjectForKey(propertyKey.photoKey) as? UIImage?
         let repeatType = aDecoder.decodeObjectForKey(propertyKey.repeatTypeKey) as! String?
@@ -89,6 +89,6 @@ class reminders: NSObject, NSCoding {
         let stillRepeating = aDecoder.decodeObjectForKey(propertyKey.stillRepeatingKey) as! Bool
         let notification = aDecoder.decodeObjectForKey(propertyKey.notificationKey) as! UILocalNotification
         let id = aDecoder.decodeObjectForKey(propertyKey.idKey) as! Int
-        self.init(reminderDog: reminderDog, name: name, photo: photo!, repeatType: repeatType, repeatTime: repeatTime, created: created, firstLaunchTime: firstLaunchTime, location: location, range: range, type: type, stillRepeating: stillRepeating, notification: notification, id: id)
+        self.init(reminderDogId: reminderDogId, name: name, photo: photo!, repeatType: repeatType, repeatTime: repeatTime, created: created, firstLaunchTime: firstLaunchTime, location: location, range: range, type: type, stillRepeating: stillRepeating, notification: notification, id: id)
      }
 }

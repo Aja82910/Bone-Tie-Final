@@ -496,13 +496,14 @@ class AddReminders: UIViewController, UIPickerViewDataSource, UIPickerViewDelega
             options:  [])
         let secondsFromNow: NSTimeInterval = (Double(alarmTimeDifference.second)+Double(alarmTimeDifference.minute*60)+Double(alarmTimeDifference.hour*3600)+Double(alarmTimeDifference.day*86400))
         if self.alarm.isOn  {
-            let userInfo = ["url": "www.mobiwise.co"]
+            let id = getID()
+            let userInfo = ["dogID": String(dogs!.id), "ID": id]
             if ReminderType.selectedRowInComponent(0) == 0 {
                 let message = "Don't forget to feed \(dogs?.name)"
                 //let center = repeatMap.centerCoordinate
                 //let distance: CLLocationDistance = CLLocationDistance(Double(repeatSlider.value))
                 let region: CLCircularRegion? = nil//CLCircularRegion(center: center, radius: distance, identifier: "Notification Region")
-                theReminders.append(reminders(reminderDog: dogs, name: nil, photo: dogs?.photo, repeatType: nil, repeatTime: nil, created: NSDate(), firstLaunchTime: datePicker.date, location: nil, range: nil, type: "Food", stillRepeating: false, notification: LocalNotificationHelper.sharedInstance().scheduleNotificationWithKey("mobiwise", title: "Food", message: message, seconds: secondsFromNow, userInfo: userInfo, theDog: dogs, theRegion: region, soundName: nil, theCalenderInterval: nil, theDates: nil, regionTriggersOnce: false), id: getID())!)
+                theReminders.append(reminders(reminderDogId: dogs?.id, name: nil, photo: dogs?.photo, repeatType: nil, repeatTime: nil, created: NSDate(), firstLaunchTime: datePicker.date, location: nil, range: nil, type: "Food", stillRepeating: false, notification: LocalNotificationHelper.sharedInstance().scheduleNotification("Food", message: message, seconds: secondsFromNow, userInfo: userInfo as [NSObject : AnyObject], theDog: dogs, theRegion: region, soundName: nil, theCalenderInterval: nil, theDates: nil, regionTriggersOnce: false), id: id)!)
                 print(UIApplication.sharedApplication().scheduledLocalNotifications)
                 saveReminders()
                 let url = NSURL(fileURLWithPath: path!)
@@ -542,7 +543,7 @@ class AddReminders: UIViewController, UIPickerViewDataSource, UIPickerViewDelega
                 let center = repeatMap.centerCoordinate
                 let distance: CLLocationDistance = CLLocationDistance(Double(repeatSlider.value))
                 let region = CLCircularRegion(center: center, radius: distance, identifier: "Notification Region")
-                LocalNotificationHelper.sharedInstance().scheduleNotificationWithKey("mobiwise", title: "Medicine", message: message, seconds: secondsFromNow, userInfo: userInfo, theDog: dogs, theRegion: region, soundName: nil, theCalenderInterval: nil, theDates: nil, regionTriggersOnce: false)
+                LocalNotificationHelper.sharedInstance().scheduleNotification("Medicine", message: message, seconds: secondsFromNow, userInfo: userInfo as [NSObject : AnyObject], theDog: dogs, theRegion: region, soundName: nil, theCalenderInterval: nil, theDates: nil, regionTriggersOnce: false)
                 let url = NSURL(fileURLWithPath: path!)
                 do {
                     let sound = try AVAudioPlayer(contentsOfURL: url)

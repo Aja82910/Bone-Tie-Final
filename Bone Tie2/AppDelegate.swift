@@ -12,6 +12,8 @@ import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+	
+	var allTheReminders = [EveryReminder]()
 
     var window: UIWindow?
 	let ACTION_ONE_IDENTIFIER : String = "ACTION_ONE_IDENTIFIER"
@@ -56,16 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 	func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-		notification.soundName  = "Dog Bark.mp3"
-		let path = NSBundle.mainBundle().pathForResource("Dog Bark.mp3", ofType: nil)
-		let url = NSURL(fileURLWithPath: path!)
-		do {
-			let sound = try AVAudioPlayer(contentsOfURL: url)
-			sound.play()
-		} catch {
-			//no file found
-		}
-		
+		findDogWithID(notification.userInfo!["dogID"] as! NSNumber as Int)
 		//Mixpanel.sharedInstance().track("User Tapped Notification", properties:["":""])
 		print("notification - tapped")
 		
@@ -107,23 +100,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		completionHandler()
 	}
 	var alarm: Alarm!
-	func addReminder() {
+	func addReminder(theDog: dog) {
 		self.alarm.turnOn()
 		let secondsFromNow: NSTimeInterval = (Double(600))
 		if self.alarm.isOn  {
 			let userInfo = ["url": "www.mobiwise.co"]
-			var dogs = [dog]()
-			if let savedDogs = loadDogs() {
-				dogs += savedDogs
-			}
 			if type == "Food" {
-				LocalNotificationHelper.sharedInstance().scheduleNotificationWithKey("mobiwise", title: "Food", message: "Don't forget to feed \(dogs[0].name)", seconds: secondsFromNow, userInfo: userInfo)
+				LocalNotificationHelper.sharedInstance().scheduleNotification( "Food", message: "Don't forget to feed \(theDog.name)", seconds: secondsFromNow, userInfo: userInfo)
 			} else {
-				LocalNotificationHelper.sharedInstance().scheduleNotificationWithKey("mobiwise", title: "Medicine", message: "Don't forget to give \(Medicine) to \(dogs[0].name)", seconds: secondsFromNow, userInfo: userInfo)
+				LocalNotificationHelper.sharedInstance().scheduleNotification("Medicine", message: "Don't forget to give \(Medicine) to \(theDog.name)", seconds: secondsFromNow, userInfo: userInfo)
 			}
 		}
 	}
+	func findDogWithID(id: Int) -> dog? {
+		var dogs = [dog]()
+		if let savedDogs = loadDogs() {
+			dogs += savedDogs
+		}
+		for dog in dogs {
+			if dog.id == id {
+				return dog
+			}
+		}
+		return nil
+	}
+	func saveEveryReminder() {
+		let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(allTheReminders, toFile: EveryReminder.archiveURL!.path!)
+		if !isSuccessfulSave {
+		}
+	}
 	func loadDogs() -> [dog]? {
+		return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
+	}
+	func loadEveryReminder() -> [dog]? {
 		return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
 	}
 

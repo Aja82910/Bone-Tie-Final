@@ -30,9 +30,9 @@ class LocalNotificationHelper: NSObject {
     
     // MARK: - Schedule Notification
 
-    func scheduleNotificationWithKey(key: String, title: String, message: String, seconds: Double, userInfo: [NSObject: AnyObject]?, theDog: dog?, theRegion: CLCircularRegion?, soundName: String?, theCalenderInterval: NSCalendarUnit?, theDates: [NSDate]?, regionTriggersOnce: Bool) -> UILocalNotification {
+    func scheduleNotification(title: String, message: String, seconds: Double, userInfo: [NSObject: AnyObject]?, theDog: dog?, theRegion: CLCircularRegion?, soundName: String?, theCalenderInterval: NSCalendarUnit?, theDates: [NSDate]?, regionTriggersOnce: Bool) -> UILocalNotification {
         let date = NSDate(timeIntervalSinceNow: NSTimeInterval(seconds))
-        let notification = notificationWithTitle(key, title: title, message: message, date: date, userInfo: userInfo, soundName: nil, hasAction: true)
+        let notification = notificationWithTitle(title, message: message, date: date, userInfo: userInfo, soundName: nil, hasAction: true)
         notification.category = LOCAL_NOTIFICATION_CATEGORY
         if let Dog = theDog {
             if Dog.sound != "Default" {
@@ -55,7 +55,13 @@ class LocalNotificationHelper: NSObject {
         if let dates = theDates {
             for date in dates {
                 let NotficationDate = date
-                let NewNotification = notificationWithTitle(key, title: title, message: message, date: NotficationDate, userInfo: userInfo, soundName: nil, hasAction: true)
+                let NewNotification = notificationWithTitle(title, message: message, date: NotficationDate, userInfo: userInfo, soundName: nil, hasAction: true)
+                if date == dates[dates.count - 1] {
+                    if let region = theRegion {
+                        NewNotification.region = region
+                        NewNotification.regionTriggersOnce = regionTriggersOnce
+                    }
+                }
                 NewNotification.category = LOCAL_NOTIFICATION_CATEGORY
                 if let Dog = theDog {
                     if Dog.sound != "Default" {
@@ -69,36 +75,39 @@ class LocalNotificationHelper: NSObject {
                     NewNotification.soundName = UILocalNotificationDefaultSoundName
                 }
                 UIApplication.sharedApplication().scheduleLocalNotification(NewNotification)
+                if date == dates[dates.count - 1] {
+                        return NewNotification
+                }
             }
         }
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
         return notification
     }
     
-    func scheduleNotificationWithKey(key: String, title: String, message: String, date: NSDate, soundName: String, userInfo: [NSObject: AnyObject]?){
-        let notification = notificationWithTitle(key, title: title, message: message, date: date, userInfo: ["key": key], soundName: soundName, hasAction: true)
+    func scheduleNotification(title: String, message: String, date: NSDate, soundName: String, userInfo: [NSObject: AnyObject]?){
+        let notification = notificationWithTitle(title, message: message, date: date, userInfo: userInfo, soundName: soundName, hasAction: true)
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
-    func scheduleNotificationWithKey(key: String, title: String, message: String, seconds: Double, userInfo: [NSObject: AnyObject]?) {
+    func scheduleNotification(title: String, message: String, seconds: Double, userInfo: [NSObject: AnyObject]?) {
         let date = NSDate(timeIntervalSinceNow: NSTimeInterval(seconds))
-        let notification = notificationWithTitle(key, title: title, message: message, date: date, userInfo: userInfo, soundName: nil, hasAction: true)
+        let notification = notificationWithTitle(title, message: message, date: date, userInfo: userInfo, soundName: nil, hasAction: true)
         notification.category = LOCAL_NOTIFICATION_CATEGORY
         notification.soundName = UILocalNotificationDefaultSoundName
          UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     // MARK: - Present Notification
     
-    func presentNotificationWithKey(key: String, title: String, message: String, soundName: String, userInfo: [NSObject: AnyObject]?) {
-        let notification = notificationWithTitle(key, title: title, message: message, date: nil, userInfo: ["key": key], soundName: nil, hasAction: true)
+    func presentNotification(title: String, message: String, soundName: String, userInfo: [NSObject: AnyObject]?) {
+        let notification = notificationWithTitle(title, message: message, date: nil, userInfo: userInfo, soundName: nil, hasAction: true)
         UIApplication.sharedApplication().presentLocalNotificationNow(notification)
     }
     
     // MARK: - Create Notification
     
-    func notificationWithTitle(key : String, title: String, message: String, date: NSDate?, userInfo: [NSObject: AnyObject]?, soundName: String?, hasAction: Bool) -> UILocalNotification {
+    func notificationWithTitle(title: String, message: String, date: NSDate?, userInfo: [NSObject: AnyObject]?, soundName: String?, hasAction: Bool) -> UILocalNotification {
         
-        var dct : Dictionary<String,AnyObject> = userInfo as! Dictionary<String,AnyObject>
-        dct["key"] = NSString(string: key) as String
+        let dct : Dictionary<String,AnyObject> = userInfo as! Dictionary<String,AnyObject>
+       // dct["key"] = NSString(string: key) as String
         
         let notification = UILocalNotification()
         notification.alertAction = title
@@ -110,7 +119,7 @@ class LocalNotificationHelper: NSObject {
         return notification
     }
     
-    func getNotificationWithKey(key : String) -> UILocalNotification {
+    /*func getNotificationwithKey(key : String) -> UILocalNotification {
         
         var notif : UILocalNotification?
         
@@ -122,13 +131,13 @@ class LocalNotificationHelper: NSObject {
         return notif!
     }
     
-    func cancelNotification(key : String){
+    func cancelNotificationWithKey(key : String){
         
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! where notification.userInfo!["key"] as! String == key{
             UIApplication.sharedApplication().cancelLocalNotification(notification)
             break
         }
-    }
+    }*/
     
     func getAllNotifications() -> [UILocalNotification]? {
         return UIApplication.sharedApplication().scheduledLocalNotifications
