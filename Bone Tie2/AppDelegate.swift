@@ -58,7 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 	func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-		findDogWithID(notification.userInfo!["dogID"] as! NSNumber as Int)
+		print(notification.userInfo!["dogID"] as! Int)
+		//allTheReminders.append(EveryReminder(reminderDogID: notification.userInfo!["dogID"] as! Int, name: notification.userInfo!["type"] as! String, photo: nil, launchDate: NSDate(), location: nil, range: nil, reminderID: notification.userInfo!["ID"] as! Int, snoozed: false)!)
 		//Mixpanel.sharedInstance().track("User Tapped Notification", properties:["":""])
 		print("notification - tapped")
 		
@@ -93,14 +94,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			self.alarm = Alarm(hour: 23, minute: 39, {
 				debugPrint("Alarm Triggered!")
 			})
-			addReminder()
+			let dog = findDogWithID(notification.userInfo!["dogID"] as! NSNumber as Int)
+			addReminder(dog!, type: (notification.userInfo!["type"]) as! String)
 			NSNotificationCenter.defaultCenter().postNotificationName(ACTION_TWO_IDENTIFIER, object: nil)
 		}
 		
 		completionHandler()
 	}
 	var alarm: Alarm!
-	func addReminder(theDog: dog) {
+	func addReminder(theDog: dog, type: String) {
 		self.alarm.turnOn()
 		let secondsFromNow: NSTimeInterval = (Double(600))
 		if self.alarm.isOn  {

@@ -10,13 +10,15 @@ import UIKit
 import MapKit
 
 class EveryReminder: NSObject {
-    var reminderDogID: Int?
+    var reminderDogID: Int
     var name: String?
     var photo: UIImage?
     var launchDate: NSDate?
     var location: CLLocation?
     var range: CLLocationDistance?
-    var reminderID: Int?
+    var reminderID: Int
+    var snoozed: Bool
+    var notification: UILocalNotification
     
     static let doccumentDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
     static let archiveURL = doccumentDirectory?.URLByAppendingPathComponent("EveryReminder")
@@ -30,9 +32,11 @@ class EveryReminder: NSObject {
         static let locationKey = "location"
         static let rangeKey = "range"
         static let reminderIDKey = "reminderID"
+        static let snoozedKey = "snoozed"
+        static let notificationKey = "notification"
      }
      
-    init?(reminderDogID: Int?, name: String, photo: UIImage?, launchDate: NSDate, location: CLLocation, range: CLLocationDistance, reminderID: Int?) {
+    init?(reminderDogID: Int, name: String, photo: UIImage?, launchDate: NSDate, location: CLLocation?, range: CLLocationDistance?, reminderID: Int, snoozed: Bool, notification: UILocalNotification) {
         // Initialize stored properties.
         self.reminderDogID = reminderDogID
         self.name = name
@@ -41,6 +45,8 @@ class EveryReminder: NSObject {
         self.location = location
         self.range = range
         self.reminderID = reminderID
+        self.snoozed = snoozed
+        self.notification = notification
      }
      // Initialization should fail if there is no name or if the rating is negative.
      // return nil
@@ -52,6 +58,8 @@ class EveryReminder: NSObject {
         aCoder.encodeObject(location, forKey: propertyKey.locationKey)
         aCoder.encodeObject(range, forKey: propertyKey.rangeKey)
         aCoder.encodeObject(reminderID, forKey: propertyKey.reminderIDKey)
+        aCoder.encodeObject(snoozed, forKey: propertyKey.snoozedKey)
+        aCoder.encodeObject(notification, forKey: propertyKey.notificationKey)
      }
      required convenience init?(coder aDecoder: NSCoder) {
         let reminderDogID = aDecoder.decodeObjectForKey(propertyKey.reminderDogIDKey) as! Int
@@ -61,7 +69,9 @@ class EveryReminder: NSObject {
         let location = aDecoder.decodeObjectForKey(propertyKey.locationKey) as! CLLocation
         let range = aDecoder.decodeObjectForKey(propertyKey.rangeKey) as! CLLocationDistance
         let reminderID = aDecoder.decodeObjectForKey(propertyKey.reminderIDKey) as! Int
-        self.init(reminderDogID: reminderDogID, name: name, photo: photo, launchDate: launchDate, location: location, range: range, reminderID: reminderID)
+        let snoozed = aDecoder.decodeObjectForKey(propertyKey.snoozedKey) as! Bool
+        let notification = aDecoder.decodeObjectForKey(propertyKey.notificationKey) as! UILocalNotification
+        self.init(reminderDogID: reminderDogID, name: name, photo: photo, launchDate: launchDate, location: location, range: range, reminderID: reminderID, snoozed: snoozed, notification: notification)
      }
 
 }

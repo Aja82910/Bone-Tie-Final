@@ -74,6 +74,7 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
     var font = UIFont(name: "Chalkduster", size: 20.5)
     var downArrowImage = UIImageView()
     var arrowImage = UIButton()
+    var tapGesture = UITapGestureRecognizer()
     override func viewDidLoad() {
         super.viewDidLoad()
         BTConfiguration().defaultValue()
@@ -290,6 +291,8 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
             }
             self.ShowDropMenu(self)
         }
+        tapGesture.addTarget(self, action: #selector(self.tap(_:)))
+        menuView.addGestureRecognizer(tapGesture)
         backgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({
                 //NSTimer.scheduledTimerWithTimeInterval(5, target: Api(), selector: #selector(Api.lostReload), userInfo: nil, repeats: true)
                 UIApplication.sharedApplication().endBackgroundTask(self.backgroundTaskIdentifier!)
@@ -299,6 +302,13 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         // Do any additional setup after loading the view.
         self.scrollView.bringSubviewToFront(down)
         self.down.bringSubviewToFront(downArrowImage)
+    }
+    func open() {
+        menuView.hide()
+        SWRevealViewController().revealToggle(self)
+    }
+    func tap(sender: UITapGestureRecognizer) {
+        print(sender.view)
     }
     func combineAnnotationPhotos(Dog: dog) -> UIImage {
         var bottomImage: UIImage
@@ -555,7 +565,7 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         let longed = longitude
         let lated = latitude
         Open.target = self.revealViewController()
-        Open.action = #selector(SWRevealViewController.revealToggle(_:))
+        Open.action = #selector(self.open)
         self.view.addGestureRecognizer(self.revealViewController()!.panGestureRecognizer()!)
         //let uilpgr = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(_:)))
        //uilpgr.minimumPressDuration = 1.0

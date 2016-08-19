@@ -29,10 +29,18 @@ class RemindersTableViewController: UITableViewController {
     var fridayAllReminders = [EveryReminder]()
     var saturdayAllReminders = [EveryReminder]()
     
+    @IBOutlet weak var Open: UIBarButtonItem!
+    
     var dismissedViewcontroller: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Open.image = UIImage(named: "Open")
+        Open.title = ""
+        Open.target = self.revealViewController()
+        Open.action = #selector(SWRevealViewController.revealToggle(_:))
+        print(self.revealViewController().panGestureRecognizer())
+        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         if let savedReminders = loadReminders() {
             theReminders += savedReminders
         }
@@ -455,6 +463,11 @@ class RemindersTableViewController: UITableViewController {
             let newString =  Weekday(weekday) + (stringHour as String)
             timeOff.text = newString
         }
+        cell.addSubview(infoView)
+        cell.addSubview(titleView)
+        cell.addSubview(title)
+        cell.addSubview(photo)
+        cell.addSubview(timeOff)
         return cell
     }
     func Weekday(weekDayInt: Int) -> String{

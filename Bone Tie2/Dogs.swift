@@ -79,16 +79,16 @@ class Dogs: UITableViewController {
     func tableView(tableView: UITableView, numberOfSections: Int) -> Int{
         return 0 }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return self.dogs.count + 5
+        return self.dogs.count + 6
         
     }
     override func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
             
-            if indexPath.row >= 5 {
+            if indexPath.row >= 6 {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! DogNamesTableViewCell
                 if dogs.count != 0 {
-                    let doggies = dogs[indexPath.row - 5]
+                    let doggies = dogs[indexPath.row - 6]
                     cell.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
                     cell.DogName.textColor = UIColor.whiteColor()
                     cell.DogName.text = doggies.name
@@ -127,8 +127,14 @@ class Dogs: UITableViewController {
                 print(cell.frame.width)
                 x += 1
                 return cell
-            } else {
+            } else if indexPath.row == 4 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("Lost Dogs", forIndexPath: indexPath) as UITableViewCell
+                cell.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
+                cell.frame = CGRect(x: cell.frame.minX, y: cell.frame.minY, width: 152 / 192 * cell.frame.width, height: cell.frame.height)
+                x += 1
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier("Reminders", forIndexPath: indexPath) as UITableViewCell
                 cell.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
                 cell.frame = CGRect(x: cell.frame.minX, y: cell.frame.minY, width: 152 / 192 * cell.frame.width, height: cell.frame.height)
                 x += 1
@@ -190,7 +196,7 @@ class Dogs: UITableViewController {
         //let source  = sender.sourceViewController as? AddDogImage
         if let sourceViewController = sender.sourceViewController as? AddDogImage, pupies = sourceViewController.myNewDog {
             // Add a new meal.
-            let newIndexPath = NSIndexPath(forRow: dogs.count + 5, inSection: 0)
+            let newIndexPath = NSIndexPath(forRow: dogs.count + 6, inSection: 0)
             dogs.append(pupies)
             tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
         }
@@ -222,7 +228,7 @@ class Dogs: UITableViewController {
             let DestViewController = segue.destinationViewController as! UINavigationController
             let targetController = DestViewController.topViewController as! LostViewController
             let indexPath = self.tableView.indexPathForSelectedRow
-            let videos = self.dogs[indexPath!.row - 5]
+            let videos = self.dogs[indexPath!.row - 6]
             targetController.doggie = videos
         }
 

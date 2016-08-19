@@ -189,7 +189,9 @@ public class BTNavigationDropdownMenu: UIView {
             self.configuration.maskBackgroundOpacity = value
         }
     }
-    
+    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print(touches.first?.view)
+    }
     public var didSelectItemAtIndexHandler: ((indexPath: Int) -> ())?
     public var isShown: Bool!
 
@@ -379,7 +381,7 @@ public class BTNavigationDropdownMenu: UIView {
         // Change background alpha
         self.backgroundView.alpha = self.configuration.maskBackgroundOpacity
         
-        UIView.animateWithDuration(
+       UIView.animateWithDuration(
             self.configuration.animationDuration * 1.5,
             delay: 0,
             usingSpringWithDamping: 0.7,
@@ -478,7 +480,7 @@ class BTConfiguration {
 
 // MARK: Table View
 class BTTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
-    
+
     // Public properties
     var configuration: BTConfiguration!
     var selectRowAtIndexPathHandler: ((indexPath: Int) -> ())?
@@ -506,6 +508,7 @@ class BTTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         //        self.separatorEffect = UIBlurEffect(style: .Light)
         self.autoresizingMask = UIViewAutoresizing.FlexibleWidth
         self.tableFooterView = UIView(frame: CGRectZero)
+        
     }
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         if let hitView = super.hitTest(point, withEvent: event) where hitView.isKindOfClass(BTTableCellContentView.self) {
@@ -525,10 +528,6 @@ class BTTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         return self.items.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return self.configuration.cellHeight
-    }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
          let cell = BTTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell", configuration: self.configuration)
         if (indexPath as NSIndexPath).row == 0 {
@@ -542,8 +541,7 @@ class BTTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
              label.text = "Map Type"*/    //might add label for this
             self.configuration.mapsType?.center = CGPoint(x: cell.center.x + 25, y: cell.center.y)
             cell.addSubview(image)
-            cell.addSubview(self.configuration.mapsType!)
-            cell.bringSubviewToFront(self.configuration.mapsType!)
+            cell.contentView.addSubview(self.configuration.mapsType!)
             
             self.configuration.mapsType?.addTarget(LostViewController(), action: #selector(LostViewController.MapType(_:)), forControlEvents: .ValueChanged)
             self.configuration.mapsType?.addTarget(self, action: #selector(self.changeMap(_:)), forControlEvents: .ValueChanged)
@@ -593,6 +591,7 @@ class BTTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: Table view cell
+var topSeparator = true
 class BTTableViewCell: UITableViewCell {
     let checkmarkIconWidth: CGFloat = 50
     let horizontalMargin: CGFloat = 20
@@ -621,7 +620,6 @@ class BTTableViewCell: UITableViewCell {
             self.textLabel!.frame = CGRect(x: -horizontalMargin, y: 0, width: cellContentFrame.width, height: cellContentFrame.height)
         }
         self.bringSubviewToFront(self.configuration.mapsType!)
-        
         // Checkmark icon
         if self.textLabel!.textAlignment == .Center {
             self.checkmarkIcon = UIImageView(frame: CGRect(x: cellContentFrame.width - checkmarkIconWidth, y: (cellContentFrame.height - 30)/2, width: 30, height: 30))
@@ -634,13 +632,17 @@ class BTTableViewCell: UITableViewCell {
         self.checkmarkIcon.image = self.configuration.checkMarkImage
         self.checkmarkIcon.contentMode = UIViewContentMode.ScaleAspectFill
         self.contentView.addSubview(self.checkmarkIcon)
-        
         // Separator for cell
-        let separator = BTTableCellContentView(frame: cellContentFrame)
-        if let cellSeparatorColor = self.configuration.cellSeparatorColor {
-            separator.separatorColor = cellSeparatorColor
+        if !topSeparator {
+            let separator = BTTableCellContentView(frame: cellContentFrame)
+            if let cellSeparatorColor = self.configuration.cellSeparatorColor {
+                separator.separatorColor = cellSeparatorColor
+            }
+            self.contentView.addSubview(separator)
+        } else {
+            topSeparator = false
         }
-        self.contentView.addSubview(separator)
+        self.contentView.bringSubviewToFront(configuration.mapsType!)
     }
     
     required init?(coder aDecoder: NSCoder) {

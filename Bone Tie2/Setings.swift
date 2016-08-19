@@ -52,8 +52,6 @@ class Setings: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     @IBAction func DeletingDog(sender: AnyObject) {
-        print(deletedDog?.name)
-        print(deletedDog)
         confirmDelete(deletedDog!.name)
     }
     func confirmDelete(Dog: String) {
@@ -92,13 +90,11 @@ class Setings: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             returnRecord, error in
                                 if let err = error {
                                     dispatch_async(dispatch_get_main_queue()) {
-                                        print(err.localizedDescription)
                                         self.notifyUser("Error Deleting From Public Database", message: "Trying Again")
                                     }
                                 } else {
                                     dispatch_async(dispatch_get_main_queue()) {
                                         self.notifyUser("Success!", message: "Record Deleted successfully.")
-                                        print("Record Deleted")
                                     }
                                     self.currentRecord = newRecord
                                     
@@ -109,7 +105,6 @@ class Setings: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         } while Error != nil
                     }
                     else {
-                        print("Fail")
                         print(Error)
                         return
                     }
@@ -149,13 +144,11 @@ class Setings: UIViewController, UITableViewDelegate, UITableViewDataSource {
         publicDatabase?.deleteRecordWithID(CKRecordID(recordName: theDog!.name + theDog!.breed + theDog!.city), completionHandler: ({returnRecord, error in
             if let err = error {
                 dispatch_async(dispatch_get_main_queue()) {
-                    //self.notifyUser("Save Error", message: err.localizedDescription)
-                    print(err.localizedDescription)
+                    self.notifyUser("Save Error", message: err.localizedDescription)
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
-                    //self.notifyUser("Success!", message: "Record saved successfully.")
-                    print("Record Saved")
+                    self.notifyUser("Success!", message: "Record saved successfully.")
                 }
             }
         }))
@@ -285,12 +278,10 @@ func saveImageToFile(image: UIImage) -> NSURL
             if let err = error {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.notifyUser("Save Error", message: err.localizedDescription)
-                    print(err.localizedDescription)
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.notifyUser("Success!", message: "Record saved successfully.")
-                    print("Record Saved")
                 }
                 print("suceess")
                 self.currentRecord = newRecord
