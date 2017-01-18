@@ -11,7 +11,7 @@ import QuartzCore
 
 class TurorialViewController: UIViewController {
     var SetupImage = UIImageView(image: UIImage(named: "Nimble"))
-    let blur = UIBlurEffect(style: .Light)
+    let blur = UIBlurEffect(style: .light)
     var blurView = UIVisualEffectView()
     var Yes = UIButton()
     var No = UIButton()
@@ -24,41 +24,41 @@ class TurorialViewController: UIViewController {
         SetupImage.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(SetupImage)
         colorView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-        colorView.backgroundColor = UIColor.orangeColor()
+        colorView.backgroundColor = UIColor.orange
         colorView.alpha = 0.2
         self.view.addSubview(colorView)
         blurView.effect = blur
         blurView.alpha = 0.8
         blurView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(blurView)
-        Yes.backgroundColor = UIColor.clearColor()
+        Yes.backgroundColor = UIColor.clear
         Yes.frame = CGRect(x: (self.view.frame.width - 300) / 3, y: 1.5 * (self.view.center.y) - 20, width: 150, height: 40)
         Yes.layer.borderWidth = 1.0
-        Yes.layer.borderColor = self.view.tintColor.CGColor
-        Yes.setTitle("Yes", forState: .Normal)
-        Yes.setTitle("Yes", forState: .Selected)
-        Yes.setTitleColor(self.view.tintColor, forState: .Normal)
-        Yes.setTitleColor(self.view.tintColor, forState: .Selected)
-        Yes.addTarget(self, action: #selector(self.Tutorial), forControlEvents: .TouchUpInside)
-        No.backgroundColor = UIColor.clearColor()
+        Yes.layer.borderColor = self.view.tintColor.cgColor
+        Yes.setTitle("Yes", for: UIControlState())
+        Yes.setTitle("Yes", for: .selected)
+        Yes.setTitleColor(self.view.tintColor, for: UIControlState())
+        Yes.setTitleColor(self.view.tintColor, for: .selected)
+        Yes.addTarget(self, action: #selector(self.Tutorial), for: .touchUpInside)
+        No.backgroundColor = UIColor.clear
         No.frame = CGRect(x: (((self.view.frame.width - 300) / 3) * 2) + 150, y: 1.5 * (self.view.center.y) - 20, width: 150, height: 40)
         No.layer.borderWidth = 1.0
-        No.layer.borderColor = self.view.tintColor.CGColor
-        No.setTitle("No", forState: .Normal)
-        No.setTitle("No", forState: .Selected)
-        No.setTitleColor(self.view.tintColor, forState: .Normal)
-        No.setTitleColor(self.view.tintColor, forState: .Selected)
-        No.addTarget(self, action: #selector(self.NoTutorial), forControlEvents: .TouchUpInside)
-        Next.backgroundColor = UIColor.clearColor()
+        No.layer.borderColor = self.view.tintColor.cgColor
+        No.setTitle("No", for: UIControlState())
+        No.setTitle("No", for: .selected)
+        No.setTitleColor(self.view.tintColor, for: UIControlState())
+        No.setTitleColor(self.view.tintColor, for: .selected)
+        No.addTarget(self, action: #selector(self.NoTutorial), for: .touchUpInside)
+        Next.backgroundColor = UIColor.clear
         Next.frame = CGRect(x: self.view.frame.width, y: self.view.center.y + 100, width: 150, height: 40)
         Next.center = CGPoint(x: self.view.center.x, y: Next.center.y)
         Next.layer.borderWidth = 1.0
-        Next.layer.borderColor = self.view.tintColor.CGColor
-        Next.setTitle("Next", forState: .Normal)
-        Next.setTitle("Next", forState: .Selected)
-        Next.setTitleColor(self.view.tintColor, forState: .Normal)
-        Next.setTitleColor(self.view.tintColor, forState: .Selected)
-        Next.addTarget(self, action: #selector(self.startTutorial), forControlEvents: .TouchUpInside)
+        Next.layer.borderColor = self.view.tintColor.cgColor
+        Next.setTitle("Next", for: UIControlState())
+        Next.setTitle("Next", for: .selected)
+        Next.setTitleColor(self.view.tintColor, for: UIControlState())
+        Next.setTitleColor(self.view.tintColor, for: .selected)
+        Next.addTarget(self, action: #selector(self.startTutorial), for: .touchUpInside)
         Next.alpha = 0.0
         Inviting.textColor = self.view.tintColor
         Inviting.text = "Would you like a short description on this app?"
@@ -66,13 +66,13 @@ class TurorialViewController: UIViewController {
         Inviting.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 400)
         Inviting.numberOfLines = 0
         Inviting.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 100)
-        Inviting.textAlignment = NSTextAlignment.Center
+        Inviting.textAlignment = NSTextAlignment.center
         Start.text = "This App is called Bone Tie. With this app you can control your Bone Tie device. Map, Lost Mode, Add a Dog, and your dog are the 4 main pages. Each one does exactly as it says. Map shows all your dogs on a map. Lost mode allows you to put your dogs in lost mode. Add a dog allows you to add a dog. Finnally, Your Dog provides information on your dog. Touch next to get satrted with Bone Tie."
         Start.numberOfLines = 0
         Start.textColor = self.view.tintColor
         Start.font = UIFont(name: "Noteworthy-Light", size: 24)
         Start.center = CGPoint(x: self.view.center.x, y: self.view.frame.height)
-        Start.textAlignment = NSTextAlignment.Center
+        Start.textAlignment = NSTextAlignment.center
         Start.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 400)
         Start.alpha = 0.0
         self.view.addSubview(SetupImage)
@@ -83,7 +83,7 @@ class TurorialViewController: UIViewController {
         self.view.addSubview(Inviting)
         self.view.addSubview(Start)
         self.view.addSubview(Next)
-        self.view.bringSubviewToFront(Inviting)
+        self.view.bringSubview(toFront: Inviting)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -95,17 +95,17 @@ class TurorialViewController: UIViewController {
     }
 
     func NoTutorial() {
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "CompletedTutorial")
-        dismissViewControllerAnimated(true, completion: nil)
+        UserDefaults.standard.set(true, forKey: "CompletedTutorial")
+        dismiss(animated: true, completion: nil)
     }
     func Tutorial() {
         let duration = 1.0
         let delay = 0.0
-        let options = UIViewKeyframeAnimationOptions.CalculationModeLinear
-        UIView.animateKeyframesWithDuration(duration, delay: delay, options: options,  animations: { () -> Void in
+        let options = UIViewKeyframeAnimationOptions()
+        UIView.animateKeyframes(withDuration: duration, delay: delay, options: options,  animations: { () -> Void in
             // each keyframe needs to be added here
             // within each keyframe the relativeStartTime and relativeDuration need to be values between 0.0 and 1.0
-            UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 1, animations: { () -> Void in
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: { () -> Void in
                 self.Next.alpha = 1
                 self.Start.alpha = 1
                 self.Yes.alpha = 0
@@ -118,8 +118,8 @@ class TurorialViewController: UIViewController {
 
     }
     func startTutorial() {
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "CompletedTutorial")
-        performSegueWithIdentifier("Started", sender: self)
+        UserDefaults.standard.set(true, forKey: "CompletedTutorial")
+        performSegue(withIdentifier: "Started", sender: self)
     }
     /*
     // MARK: - Navigation

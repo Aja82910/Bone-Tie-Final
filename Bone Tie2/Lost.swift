@@ -20,13 +20,13 @@ class Lost: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var LostButton: UIButton!
     @IBOutlet weak var FoundButton: UIButton!
     var Found = CGRect()
-    let container = CKContainer.defaultContainer()
+    let container = CKContainer.default()
     var publicDatabase: CKDatabase?
     var currentRecord: CKRecord?
     override func viewDidLoad() {
         super.viewDidLoad()
-        LostButton.hidden = true
-        FoundButton.hidden = true
+        LostButton.isHidden = true
+        FoundButton.isHidden = true
         publicDatabase = container.publicCloudDatabase
         lost = isLost
         Found = FoundButton.frame
@@ -45,31 +45,31 @@ class Lost: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }*/
     }
     var dogs = [dog]()
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if let savedDogs = loadDogs() {
         dogs = savedDogs
         }
     }
     var isSelected = false
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+    func numberOfSections(in tableView: UITableView) -> Int{
         return 1 }
-    func tableView(tableView: UITableView, numberOfSections: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfSections: Int) -> Int{
         return 0 }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return self.dogs.count
     }
-    func tableView(tableView: UITableView,
-                   cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCellWithIdentifier("cells", forIndexPath: indexPath) as! LostTableViewCell
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cells", for: indexPath) as! LostTableViewCell
         let doggies = dogs[indexPath.row]
         cell.DogNames.text = doggies.name
         cell.DogImages.image = doggies.photo
         return cell }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell: UITableViewCell = tableView.cellForRow(at: indexPath)!
         if MyLostDogs != [] {
-            LostButton.hidden = true
-            FoundButton.hidden = false
+            LostButton.isHidden = true
+            FoundButton.isHidden = false
             if isSelected{
                 isSelected = false
                 var numberLost = 0
@@ -79,21 +79,21 @@ class Lost: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     }
                     numberLost += 1
                 }
-                lostDogs.removeAtIndex(numberLost)
+                lostDogs.remove(at: numberLost)
                 if lostDogs == [] {
-                    LostButton.hidden = true
-                    FoundButton.hidden = true
+                    LostButton.isHidden = true
+                    FoundButton.isHidden = true
                 }
-                cell.accessoryType = UITableViewCellAccessoryType.None
+                cell.accessoryType = UITableViewCellAccessoryType.none
             }
             else{
                 lostDogs.append(dogs[indexPath.row])
                 isSelected = true
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark
             }
         } else {
-            LostButton.hidden = false
-            FoundButton.hidden = true
+            LostButton.isHidden = false
+            FoundButton.isHidden = true
             if isSelected{
                 isSelected = false
                 var numberLost = 0
@@ -103,39 +103,39 @@ class Lost: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     }
                     numberLost += 1
                 }
-                lostDogs.removeAtIndex(numberLost)
+                lostDogs.remove(at: numberLost)
                 if lostDogs == [] {
-                    LostButton.hidden = true
-                    FoundButton.hidden = true
+                    LostButton.isHidden = true
+                    FoundButton.isHidden = true
                 }
-                cell.accessoryType = UITableViewCellAccessoryType.None
+                cell.accessoryType = UITableViewCellAccessoryType.none
             }
             else{
                 lostDogs.append(dogs[indexPath.row])
                 isSelected = true
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark
             }
 
         }
     }
-    @IBAction func Found(sender: AnyObject) {
-        LostButton.hidden = true
-        FoundButton.hidden = true
+    @IBAction func Found(_ sender: AnyObject) {
+        LostButton.isHidden = true
+        FoundButton.isHidden = true
         lost = "No"
         let LostFound = Api().Found()
-        NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.Found), userInfo: nil, repeats: !LostFound)
+        Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.Found), userInfo: nil, repeats: !LostFound)
         for dog in lostDogs {
-            if let index = MyLostDogs.indexOf(dog) {
-                MyLostDogs.removeAtIndex(index)
+            if let index = MyLostDogs.index(of: dog) {
+                MyLostDogs.remove(at: index)
             }
-            publicDatabase?.deleteRecordWithID(CKRecordID(recordName: dog.name + dog.breed + dog.city), completionHandler: ({returnRecord, error in
+            publicDatabase?.delete(withRecordID: CKRecordID(recordName: dog.name + dog.breed + dog.city), completionHandler: ({returnRecord, error in
                 if let err = error {
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         //self.notifyUser("Save Error", message: err.localizedDescription)
                         print(err.localizedDescription)
                     }
                 } else {
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         //self.notifyUser("Success!", message: "Record saved successfully.")
                         print("Record Saved")
                     }
@@ -144,29 +144,28 @@ class Lost: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         lostDogs = []
         let cells = TableView.indexPathsForVisibleRows
-        let cell = TableView.cellForRowAtIndexPath(cells![0])
-        cell?.accessoryType = UITableViewCellAccessoryType.None
+        let cell = TableView.cellForRow(at: cells![0])
+        cell?.accessoryType = UITableViewCellAccessoryType.none
         isSelected = false
     }
-    func saveImageToFile(image: UIImage) -> NSURL {
+    func saveImageToFile(_ image: UIImage) -> URL {
         let dirPaths = NSSearchPathForDirectoriesInDomains(
-            .DocumentDirectory, .UserDomainMask, true)
+            .documentDirectory, .userDomainMask, true)
         
-        let docsDir: AnyObject = dirPaths[0]
+        let docsDir: NSString = dirPaths[0] as NSString
         
-        let filePath =
-            docsDir.stringByAppendingPathComponent("img")
+        let filePath = docsDir.appendingPathComponent("img")
         
-        UIImageJPEGRepresentation(image, 0.5)!.writeToFile(filePath,
-                                                           atomically: true)
+        try? UIImageJPEGRepresentation(image, 0.5)!.write(to: URL(fileURLWithPath: filePath),
+                                                           options: [.atomic])
         
-        return NSURL.fileURLWithPath(filePath)
+        return URL(fileURLWithPath: filePath)
     }
-    @IBAction func LostMode(sender: AnyObject) {
+    @IBAction func LostMode(_ sender: AnyObject) {
         lost = "Yes"
         let LostModes = Api().LostMode()
-        NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.LostMode), userInfo: !LostModes, repeats: true)
-        NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.updateLocationLost), userInfo: lost == "Yes", repeats: true)
+        Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.LostMode), userInfo: !LostModes, repeats: true)
+        Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.updateLocationLost), userInfo: lost == "Yes", repeats: true)
         MyLostDogs += lostDogs
         lostDogs = []
         for dog in MyLostDogs {
@@ -174,21 +173,21 @@ class Lost: UIViewController, UITableViewDataSource, UITableViewDelegate {
             let newRecord = CKRecord(recordType: "Lost", recordID: dogID)
             let photo = saveImageToFile(dog.photo!)
             newRecord.setObject(CKAsset(fileURL: photo), forKey: "Photo")
-            let lostDate = NSDateFormatter()
-            lostDate.timeZone = NSTimeZone.systemTimeZone()
-            newRecord.setObject(lostDate.dateFromString(lostDate.stringFromDate(NSDate())), forKey: "LostDate")
+            let lostDate = DateFormatter()
+            lostDate.timeZone = TimeZone.current
+            newRecord.setObject(lostDate.date(from: lostDate.string(from: Date())) as CKRecordValue?, forKey: "LostDate")
             let Latitude: CLLocationDegrees = latitude
             let Longitude: CLLocationDegrees = longitude
             newRecord.setObject(CLLocation(latitude: Latitude, longitude: Longitude), forKey: "Location")
-            newRecord.setObject(dog.name, forKey: "Name")
-            publicDatabase!.saveRecord(newRecord, completionHandler: ({returnRecord, error in
+            newRecord.setObject(dog.name as CKRecordValue?, forKey: "Name")
+            publicDatabase!.save(newRecord, completionHandler: ({returnRecord, error in
                 if let err = error {
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         //self.notifyUser("Save Error", message: err.localizedDescription)
                         print(err.localizedDescription)
                     }
                 } else {
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         //self.notifyUser("Success!", message: "Record saved successfully.")
                         print("Record Saved")
                     }
@@ -197,15 +196,15 @@ class Lost: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 }
             }))
         }
-        LostButton.hidden = true
-        FoundButton.hidden = true
+        LostButton.isHidden = true
+        FoundButton.isHidden = true
         let cells = TableView.indexPathsForVisibleRows
-        let cell = TableView.cellForRowAtIndexPath(cells![0])
-        cell?.accessoryType = UITableViewCellAccessoryType.None
+        let cell = TableView.cellForRow(at: cells![0])
+        cell?.accessoryType = UITableViewCellAccessoryType.none
         isSelected = false
     }
     func loadDogs() -> [dog]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
+        return NSKeyedUnarchiver.unarchiveObject(withFile: dog.archiveURL!.path) as? [dog]
     }
 }
 /*class Lost: UIViewController, UICollectionViewDelegate {

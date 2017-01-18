@@ -23,17 +23,17 @@ class DirectionsViewController: UIViewController {
         theDirectionsType.font = UIFont(name: "Chalkduster", size: 16)
         theDirectionsType.text = "Directions Type: " + directionsType!
         theDirectionsType.numberOfLines = 2
-        theDirectionsType.textAlignment = .Center
+        theDirectionsType.textAlignment = .center
         if directionsType != String?("None") {
             theDirectionsType.text = "Directions Type: " + directionsType! + " \n" + "Directions Time: " + directionsTime!
             print(directionsTime)
-            theDirections.textAlignment = .Center
+            theDirections.textAlignment = .center
             theDirections.frame = CGRect(origin: CGPoint(x: 5, y: 110), size: CGSize(width: self.view.frame.width - 10, height: self.view.frame.height - 160))
             theDirections.center = CGPoint(x: self.view.center.x, y: self.theDirections.center.y)
             theDirections.font = UIFont(name: "Chalkduster", size: 11)
             theDirections.text = "Directions \n" + directions!
-            theDirections.userInteractionEnabled = true
-            theDirections.editable = false
+            theDirections.isUserInteractionEnabled = true
+            theDirections.isEditable = false
             print(theDirections)
             print(theDirectionsType)
             self.view.addSubview(theDirections)

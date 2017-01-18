@@ -12,10 +12,10 @@ import MapKit
 import CloudKit
 class Dogs: UITableViewController {
     
-    let container = CKContainer.defaultContainer()
+    let container = CKContainer.default()
     var publicDatabase: CKDatabase?
     var currentRecord: CKRecord?
-    var photoURL: NSURL?
+    var photoURL: URL?
 
     var dogs = [dog]()
     //var headerView = UIView()
@@ -66,7 +66,7 @@ class Dogs: UITableViewController {
 
         //self.navigationItem.leftBarButtonItem = self.editButtonItem()
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         dogs = []
         if let savedDogs = loadDogs() {
             dogs += savedDogs
@@ -74,23 +74,23 @@ class Dogs: UITableViewController {
         tableView.reloadData()
         }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+    override func numberOfSections(in tableView: UITableView) -> Int{
         return 1 }
-    func tableView(tableView: UITableView, numberOfSections: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfSections: Int) -> Int{
         return 0 }
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return self.dogs.count + 6
         
     }
-    override func tableView(tableView: UITableView,
-        cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+    override func tableView(_ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath) -> UITableViewCell{
             
             if indexPath.row >= 6 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! DogNamesTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DogNamesTableViewCell
                 if dogs.count != 0 {
                     let doggies = dogs[indexPath.row - 6]
                     cell.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
-                    cell.DogName.textColor = UIColor.whiteColor()
+                    cell.DogName.textColor = UIColor.white
                     cell.DogName.text = doggies.name
                     cell.DogImage.image = doggies.photo
                     cell.frame = CGRect(x: cell.frame.minX, y: cell.frame.minY, width: 152 / 192 * cell.frame.width, height: cell.frame.height)
@@ -99,28 +99,28 @@ class Dogs: UITableViewController {
                 
             }
             else if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("Map", forIndexPath: indexPath) as UITableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Map", for: indexPath) as UITableViewCell
                 cell.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
                 cell.frame = CGRect(x: cell.frame.minX, y: cell.frame.minY, width: 152 / 192 * cell.frame.width, height: cell.frame.height)
                 x += 1
                 return cell
             }
             else if indexPath.row == 1 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("Lost", forIndexPath: indexPath) as UITableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Lost", for: indexPath) as UITableViewCell
                 cell.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
                 cell.frame = CGRect(x: cell.frame.minX, y: cell.frame.minY, width: 152 / 192 * cell.frame.width, height: cell.frame.height)
                 x += 1
                 return cell
             }
             else if indexPath.row == 2 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("Add", forIndexPath: indexPath) as UITableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Add", for: indexPath) as UITableViewCell
                 cell.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
                 cell.frame = CGRect(x: cell.frame.minX, y: cell.frame.minY, width: 152 / 192 * cell.frame.width, height: cell.frame.height)
                 print(cell.frame.width)
                 x += 1
                 return cell
             } else if indexPath.row == 3 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("Subscribe", forIndexPath: indexPath) as UITableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Subscribe", for: indexPath) as UITableViewCell
                 cell.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
                 cell.frame = CGRect(x: cell.frame.minX, y: cell.frame.minY, width: 15 / 192 * cell.frame.width, height: cell.frame.height)
                 print(tableView.frame.width)
@@ -128,13 +128,13 @@ class Dogs: UITableViewController {
                 x += 1
                 return cell
             } else if indexPath.row == 4 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("Lost Dogs", forIndexPath: indexPath) as UITableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Lost Dogs", for: indexPath) as UITableViewCell
                 cell.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
                 cell.frame = CGRect(x: cell.frame.minX, y: cell.frame.minY, width: 152 / 192 * cell.frame.width, height: cell.frame.height)
                 x += 1
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("Reminders", forIndexPath: indexPath) as UITableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Reminders", for: indexPath) as UITableViewCell
                 cell.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
                 cell.frame = CGRect(x: cell.frame.minX, y: cell.frame.minY, width: 152 / 192 * cell.frame.width, height: cell.frame.height)
                 x += 1
@@ -143,20 +143,20 @@ class Dogs: UITableViewController {
     }
 
     let EdittingDogs = EditDogViewController()
-    var deleteDogIndexPath: NSIndexPath? = nil
-    var indexpathed: NSIndexPath?
+    var deleteDogIndexPath: IndexPath? = nil
+    var indexpathed: IndexPath?
         // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let movedObject = self.dogs[sourceIndexPath.row]
-        dogs.removeAtIndex(sourceIndexPath.row)
-        dogs.insert(movedObject, atIndex: destinationIndexPath.row)
+        dogs.remove(at: sourceIndexPath.row)
+        dogs.insert(movedObject, at: destinationIndexPath.row)
         //NSLog("%@", "\(sourceIndexPath.row) => \(destinationIndexPath.row) \(dogs)")
         saveDogs()
     }
     
     
     // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
     }
@@ -170,62 +170,61 @@ class Dogs: UITableViewController {
         // Pass the selected object to the new view controller.
    // }
     func saveDogs() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(dogs, toFile: dog.archiveURL!.path!)
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(dogs, toFile: dog.archiveURL!.path)
         if !isSuccessfulSave {
         }
     }
-    func saveImageToFile(image: UIImage) -> NSURL
+    func saveImageToFile(_ image: UIImage) -> URL
     {
         let dirPaths = NSSearchPathForDirectoriesInDomains(
-            .DocumentDirectory, .UserDomainMask, true)
+            .documentDirectory, .userDomainMask, true)
         
-        let docsDir: AnyObject = dirPaths[0]
+        let docsDir: NSString = dirPaths[0] as NSString
         
-        let filePath =
-        docsDir.stringByAppendingPathComponent("img")
+        let filePath = docsDir.appendingPathComponent("img")
         
-        UIImageJPEGRepresentation(image, 0.5)!.writeToFile(filePath,
-            atomically: true)
+        try? UIImageJPEGRepresentation(image, 0.5)!.write(to: URL(fileURLWithPath: filePath),
+            options: [.atomic])
         
-        return NSURL.fileURLWithPath(filePath)
+        return URL(fileURLWithPath: filePath)
     }
 
         
    
-    @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
+    @IBAction func unwindToMealList(_ sender: UIStoryboardSegue) {
         //let source  = sender.sourceViewController as? AddDogImage
-        if let sourceViewController = sender.sourceViewController as? AddDogImage, pupies = sourceViewController.myNewDog {
+        if let sourceViewController = sender.source as? AddDogImage, let pupies = sourceViewController.myNewDog {
             // Add a new meal.
-            let newIndexPath = NSIndexPath(forRow: dogs.count + 6, inSection: 0)
+            let newIndexPath = IndexPath(row: dogs.count + 6, section: 0)
             dogs.append(pupies)
-            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+            tableView.insertRows(at: [newIndexPath], with: .bottom)
         }
         saveDogs()
     }
-        func notifyUser(title: String, message: String) -> Void
+        func notifyUser(_ title: String, message: String) -> Void
     {
         let alert = UIAlertController(title: title,
             message: message,
-            preferredStyle: UIAlertControllerStyle.Alert)
+            preferredStyle: UIAlertControllerStyle.alert)
         
         let cancelAction = UIAlertAction(title: "OK",
-            style: .Cancel, handler: nil)
+            style: .cancel, handler: nil)
         
         alert.addAction(cancelAction)
-        self.presentViewController(alert, animated: true,
+        self.present(alert, animated: true,
             completion: nil)
     }
-    override func viewDidDisappear(animated: Bool) {
-        UIView.animateWithDuration(0.2) {
+    override func viewDidDisappear(_ animated: Bool) {
+        UIView.animate(withDuration: 0.2, animations: {
             self.view.frame = CGRect(origin: self.view.frame.origin, size: CGSize(width: 15 / 192 * (self.view.frame.width), height: self.view.frame.height))
-        }
+        }) 
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        UIView.animateWithDuration(0.2) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        UIView.animate(withDuration: 0.2, animations: {
             self.view.frame = CGRect(origin: self.view.frame.origin, size: CGSize(width: (self.view.frame.width), height: self.view.frame.height))
-        }
+        }) 
         if segue.identifier == "ShowDogs" {
-            let DestViewController = segue.destinationViewController as! UINavigationController
+            let DestViewController = segue.destination as! UINavigationController
             let targetController = DestViewController.topViewController as! LostViewController
             let indexPath = self.tableView.indexPathForSelectedRow
             let videos = self.dogs[indexPath!.row - 6]
@@ -234,13 +233,13 @@ class Dogs: UITableViewController {
 
     }
     func loadDogs() -> [dog]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
+        return NSKeyedUnarchiver.unarchiveObject(withFile: dog.archiveURL!.path) as? [dog]
     }
     
     func loadSampleDogs () {
         let Dog1 = UIImage(named: "Nimble")!
         let sound = "Dog Bark.mp3"
-        let Dog = dog(name: "Nimble", photo: Dog1, date: NSDate(), breed: "Labrador Retriever", trackerNumber: "Sw8w5u2", city: "city", color:  "Red", sound: sound, id: 1000)!
+        let Dog = dog(name: "Nimble", photo: Dog1, date: Date(), breed: "Labrador Retriever", trackerNumber: "Sw8w5u2", city: "city", color:  "Red", sound: sound, id: 1000)!
         dogs += [Dog]
     }
 }

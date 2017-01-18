@@ -20,11 +20,11 @@ class AddDogImage: UIViewController, UIImagePickerControllerDelegate, UINavigati
     var AddDogImage: UIImage?
     var AddDogSound = String()
     var myNewDog: dog?
-    let container = CKContainer.defaultContainer()
+    let container = CKContainer.default()
     var publicDatabase: CKDatabase?
     var privateDatabase: CKDatabase?
     var currentRecord: CKRecord?
-    var photoURL: NSURL?
+    var photoURL: URL?
     var id = Int()
     
     override func viewDidLoad() {
@@ -40,49 +40,49 @@ class AddDogImage: UIViewController, UIImagePickerControllerDelegate, UINavigati
         checkValidDogName()
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         checkValidDogName()
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         // Disable the Save button while editing.
-        Connect.enabled = false
+        Connect.isEnabled = false
     }
     
     func checkValidDogName() {
         // Disable the Save button if the text field is empty.
         let text = DogImage.image == UIImage(named: "Image")
-        Connect.enabled = (!text)
+        Connect.isEnabled = (!text)
     }
     
     // MARK: UIImagePickerControllerDelegate
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Dismiss the picker if the user canceled.
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // The info dictionary contains multiple representations of the image, and this uses the original.
         let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         
         // Set photoImageView to display the selected image.
         DogImage.image = selectedImage
         // Dismiss the picker.
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
         checkValidDogName()
     }
-    @IBAction func Cancel(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func Cancel(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
         
     }
-    @IBAction func TryToConnect(sender: AnyObject) {
+    @IBAction func TryToConnect(_ sender: AnyObject) {
         let photo = DogImage.image
-        let date = NSDate()
+        let date = Date()
         pictures.append(photo!)
         text.append(AddDogName)
         if let doggies = dog(name: AddDogName, photo: photo, date: date, breed: AddDogBreed, trackerNumber: AddDogCode, city: AddDogCity, color:  AddDogColor, sound:  AddDogSound, id: id) {
-                self.performSegueWithIdentifier("Connected", sender: self)
+                self.performSegue(withIdentifier: "Connected", sender: self)
                 myNewDog = doggies
             }
         else {
@@ -101,14 +101,14 @@ class AddDogImage: UIViewController, UIImagePickerControllerDelegate, UINavigati
         return id
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Connected" {
-            Connect.tintColor = UIColor.clearColor()
-            Connect.enabled = false
+            Connect.tintColor = UIColor.clear
+            Connect.isEnabled = false
             self
             let photo = DogImage.image
             AddDogImage = photo
-            let date = NSDate()
+            let date = Date()
             pictures.append(photo!)
             text.append(AddDogName)
             myNewDog = dog(name: AddDogName, photo: photo, date: date, breed: AddDogBreed, trackerNumber: AddDogCode, city: AddDogCity, color: AddDogColor, sound: AddDogSound, id: id)
@@ -125,32 +125,32 @@ class AddDogImage: UIViewController, UIImagePickerControllerDelegate, UINavigati
                     newRecord.setObject(imageAsset, forKey: "Photo")
                 }
             }
-            newRecord.setObject(AddDogCity, forKey: "City")
-            newRecord.setObject(AddDogBreed, forKey: "Breed")
-            newRecord.setObject(AddDogName, forKey: "Name")
-            publicDatabase!.saveRecord(newRecord, completionHandler:
+            newRecord.setObject(AddDogCity as CKRecordValue?, forKey: "City")
+            newRecord.setObject(AddDogBreed as CKRecordValue?, forKey: "Breed")
+            newRecord.setObject(AddDogName as CKRecordValue?, forKey: "Name")
+            publicDatabase!.save(newRecord, completionHandler:
                 ({returnRecord, error in
                     if let err = error {
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             self.notifyUser("Save Error", message: err.localizedDescription)
                             print(err.localizedDescription)
                         }
                     } else {
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             self.notifyUser("Success!", message: "Record saved successfully.")
                             print("Record Saved")
                         }
                         self.currentRecord = newRecord
                     }
                 }))
-            privateDatabase?.saveRecord(newRecord, completionHandler: { (returnRecord, error) in
+            privateDatabase?.save(newRecord, completionHandler: { (returnRecord, error) in
                 if let err = error {
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         self.notifyUser("Save Error", message: err.localizedDescription)
                         print(err.localizedDescription)
                     }
                 } else {
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         self.notifyUser("Success!", message: "Record saved successfully.")
                         print("Record Saved")
                     }
@@ -159,56 +159,56 @@ class AddDogImage: UIViewController, UIImagePickerControllerDelegate, UINavigati
             })
         }
     }
-    func notifyUser(title: String, message: String) -> Void
+    func notifyUser(_ title: String, message: String) -> Void
     {
         let alert = UIAlertController(title: title,
                                       message: message,
-                                      preferredStyle: UIAlertControllerStyle.Alert)
+                                      preferredStyle: UIAlertControllerStyle.alert)
         
         let cancelAction = UIAlertAction(title: "OK",
-                                         style: .Cancel, handler: nil)
+                                         style: .cancel, handler: nil)
         
         alert.addAction(cancelAction)
-        self.presentViewController(alert, animated: true,
+        self.present(alert, animated: true,
                                    completion: nil)
     }
     
-    func photoLibrary (alertAction: UIAlertAction!) {
+    func photoLibrary (_ alertAction: UIAlertAction!) {
         // UIImagePickerController is a view controller that lets a user pick media from their photo library.
         let imagePickerController = UIImagePickerController()
         
         // Only allow photos to be picked, not taken.
-        imagePickerController.sourceType = .PhotoLibrary
+        imagePickerController.sourceType = .photoLibrary
         
         // Make sure ViewController is notified when the user picks an image.
         imagePickerController.delegate = self
         
-        presentViewController(imagePickerController, animated: true, completion: nil)
+        present(imagePickerController, animated: true, completion: nil)
     }
-    func takePhoto (alertAction: UIAlertAction!) {
+    func takePhoto (_ alertAction: UIAlertAction!) {
         // UIImagePickerController is a view controller that lets a user pick media from their photo library.
         let imagePickerController = UIImagePickerController()
         imagePickerController.allowsEditing = true
         // Only allow photos to be picked, not taken.
-        imagePickerController.sourceType = .Camera
-        imagePickerController.cameraCaptureMode = .Photo
-        imagePickerController.modalPresentationStyle = .FullScreen
+        imagePickerController.sourceType = .camera
+        imagePickerController.cameraCaptureMode = .photo
+        imagePickerController.modalPresentationStyle = .fullScreen
         
         // Make sure ViewController is notified when the user picks an image.
         imagePickerController.delegate = self
         
-        presentViewController(imagePickerController, animated: true, completion: nil)
+        present(imagePickerController, animated: true, completion: nil)
     }
     func loadDogs() -> [dog]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
+        return NSKeyedUnarchiver.unarchiveObject(withFile: dog.archiveURL!.path) as? [dog]
     }
     
-    @IBAction func selectImageFromPhotoLibrary(sender: UITapGestureRecognizer) {
-        let alert = UIAlertController(title: "Add an Image For Your Dog", message: nil, preferredStyle: .ActionSheet)
+    @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+        let alert = UIAlertController(title: "Add an Image For Your Dog", message: nil, preferredStyle: .actionSheet)
         
-        let PhotoLibrary = UIAlertAction(title: "Photo Library", style: .Default, handler: photoLibrary)
-        let TakePhoto = UIAlertAction(title: "Take Photo", style: .Default, handler: takePhoto)
-        let CancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let PhotoLibrary = UIAlertAction(title: "Photo Library", style: .default, handler: photoLibrary)
+        let TakePhoto = UIAlertAction(title: "Take Photo", style: .default, handler: takePhoto)
+        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(PhotoLibrary)
         alert.addAction(TakePhoto)
@@ -216,27 +216,26 @@ class AddDogImage: UIViewController, UIImagePickerControllerDelegate, UINavigati
         
         // Support display in iPad
         alert.popoverPresentationController?.sourceView = self.view
-        alert.popoverPresentationController?.sourceRect = CGRectMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height / 2.0, 1.0, 1.0)
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
         // Hide the keyboard.
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 
-    func saveImageToFile(image: UIImage) -> NSURL {
+    func saveImageToFile(_ image: UIImage) -> URL {
         let dirPaths = NSSearchPathForDirectoriesInDomains(
-        .DocumentDirectory, .UserDomainMask, true)
+        .documentDirectory, .userDomainMask, true)
     
-        let docsDir: AnyObject = dirPaths[0]
+        let docsDir: NSString = dirPaths[0] as NSString
     
-        let filePath =
-        docsDir.stringByAppendingPathComponent("img")
+        let filePath = docsDir.appendingPathComponent("img")
     
-        UIImageJPEGRepresentation(image, 0.5)!.writeToFile(filePath,
-                                                       atomically: true)
+        try? UIImageJPEGRepresentation(image, 0.5)!.write(to: URL(fileURLWithPath: filePath),
+                                                       options: [.atomic])
     
-        return NSURL.fileURLWithPath(filePath)
+        return URL(fileURLWithPath: filePath)
     }
     func saveDogs() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(myNewDog!, toFile: dog.archiveURL!.path!)
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(myNewDog!, toFile: dog.archiveURL!.path)
         if !isSuccessfulSave {
         }
     }

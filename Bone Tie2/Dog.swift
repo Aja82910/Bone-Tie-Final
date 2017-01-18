@@ -10,15 +10,15 @@ import UIKit
 class dog: NSObject, NSCoding {
     var name: String
     var photo: UIImage?
-    var date: NSDate
+    var date: Date
     var trackerNumber: String
     var breed: String
     var city: String
     var color: String
     var sound: String
     var id: Int
-    static let doccumentDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
-    static let archiveURL = doccumentDirectory?.URLByAppendingPathComponent("Dogs")
+    static let doccumentDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first
+    static let archiveURL = doccumentDirectory?.appendingPathComponent("Dogs")
     
     // MARK: Initialization
     struct propertyKey {
@@ -33,7 +33,7 @@ class dog: NSObject, NSCoding {
         static let idKey = "id"
     }
     
-    init?(name: String, photo: UIImage?, date: NSDate, breed: String, trackerNumber: String, city: String, color: String, sound: String, id: Int) {
+    init?(name: String, photo: UIImage?, date: Date, breed: String, trackerNumber: String, city: String, color: String, sound: String, id: Int) {
         // Initialize stored properties.
         self.name = name
         self.photo = photo
@@ -47,28 +47,28 @@ class dog: NSObject, NSCoding {
     }
     // Initialization should fail if there is no name or if the rating is negative.
     // return nil
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(name, forKey: propertyKey.nameKey)
-        aCoder.encodeObject(photo, forKey: propertyKey.photoKey)
-        aCoder.encodeObject(breed, forKey: propertyKey.breedKey)
-        aCoder.encodeObject(date, forKey: propertyKey.dateKey)
-        aCoder.encodeObject(trackerNumber, forKey: propertyKey.trackerNumberKey)
-        aCoder.encodeObject(city, forKey: propertyKey.cityKey)
-        aCoder.encodeObject(date, forKey: propertyKey.dateKey)
-        aCoder.encodeObject(color, forKey:  propertyKey.colorKey)
-        aCoder.encodeObject(sound, forKey:  propertyKey.soundKey)
-        aCoder.encodeObject(id, forKey:  propertyKey.idKey) // RAM to Hardrive
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: propertyKey.nameKey)
+        aCoder.encode(photo, forKey: propertyKey.photoKey)
+        aCoder.encode(breed, forKey: propertyKey.breedKey)
+        aCoder.encode(date, forKey: propertyKey.dateKey)
+        aCoder.encode(trackerNumber, forKey: propertyKey.trackerNumberKey)
+        aCoder.encode(city, forKey: propertyKey.cityKey)
+        aCoder.encode(date, forKey: propertyKey.dateKey)
+        aCoder.encode(color, forKey:  propertyKey.colorKey)
+        aCoder.encode(sound, forKey:  propertyKey.soundKey)
+        aCoder.encode(id, forKey:  propertyKey.idKey) // RAM to Hardrive
     }
     required convenience init?(coder aDecoder: NSCoder) {
-        let name = aDecoder.decodeObjectForKey(propertyKey.nameKey) as! String // Hardrive to RAM
-        let photo = aDecoder.decodeObjectForKey(propertyKey.photoKey) as? UIImage
-        let date = aDecoder.decodeObjectForKey(propertyKey.dateKey) as! NSDate
-        let breed = aDecoder.decodeObjectForKey(propertyKey.breedKey) as! String
-        let trackerNumber = aDecoder.decodeObjectForKey(propertyKey.trackerNumberKey) as! String
-        let city = aDecoder.decodeObjectForKey(propertyKey.cityKey) as! String
-        let color = aDecoder.decodeObjectForKey(propertyKey.colorKey) as! String
-        let sound = aDecoder.decodeObjectForKey(propertyKey.soundKey) as! String //If nil it is the default sound
-        let id = aDecoder.decodeObjectForKey(propertyKey.idKey) as! Int
+        let name = aDecoder.decodeObject(forKey: propertyKey.nameKey) as! String // Hardrive to RAM
+        let photo = aDecoder.decodeObject(forKey: propertyKey.photoKey) as? UIImage
+        let date = aDecoder.decodeObject(forKey: propertyKey.dateKey) as! Date
+        let breed = aDecoder.decodeObject(forKey: propertyKey.breedKey) as! String
+        let trackerNumber = aDecoder.decodeObject(forKey: propertyKey.trackerNumberKey) as! String
+        let city = aDecoder.decodeObject(forKey: propertyKey.cityKey) as! String
+        let color = aDecoder.decodeObject(forKey: propertyKey.colorKey) as! String
+        let sound = aDecoder.decodeObject(forKey: propertyKey.soundKey) as! String //If nil it is the default sound
+        let id = aDecoder.decodeObject(forKey: propertyKey.idKey) as! Int
         self.init(name: name, photo: photo, date: date, breed: breed, trackerNumber: trackerNumber, city: city, color: color, sound: sound, id: id)
     }
 }

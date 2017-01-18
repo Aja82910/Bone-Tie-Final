@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import CoreGraphics
 import CoreLocation
+import BTNavigationDropdownMenu
 
 public let uiBusy = UIActivityIndicatorView()
 let config: AnyClass = BTConfiguration.self
@@ -26,7 +27,7 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
     @IBOutlet weak var Refresh: UIBarButtonItem!
     @IBOutlet weak var More: UIBarButtonItem!
 
-    let ber = UIBarButtonSystemItem.Add
+    let ber = UIBarButtonSystemItem.add
     var manager: CLLocationManager!
     var mapsType = UISegmentedControl()
     var directionsType = UISegmentedControl()
@@ -63,13 +64,13 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
     var DisplayMinutes = UILabel()
     var tint = UIColor()
     var DirectionLabel = UILabel()
-    var blurBackGround  = UIBlurEffect(style: .Light)
+    var blurBackGround  = UIBlurEffect(style: .light)
     var downBlur = UIVisualEffectView()
     var blurView = UIVisualEffectView()
     var backgroundImage = UIImageView()
     var circleButton = UIImageView()
     var callButton = UILabel()
-    var dropdownItems = []
+    var dropdownItems: [String]!
     var menuView: BTNavigationDropdownMenu!
     var font = UIFont(name: "Chalkduster", size: 20.5)
     var downArrowImage = UIImageView()
@@ -77,34 +78,39 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
     var tapGesture = UITapGestureRecognizer()
     override func viewDidLoad() {
         super.viewDidLoad()
-        BTConfiguration().defaultValue()
-        let arrow = arrowImagePaths
-        print(arrow)
+        let bundle = Bundle(for: BTConfiguration.self)
+        print(bundle)
+        let url = bundle.url(forResource: "BTNavigationDropdownMenu", withExtension: "bundle")
+        print(url!)
+        let imageBundle = Bundle(url: url!)
+        config.defaultValue
+        let arrow = imageBundle?.path(forResource: "arrow_down_icon", ofType: "png")
+        print(arrow!)
         downArrowImage.image = UIImage(contentsOfFile: arrow!)!
-        downArrowImage.image = downArrowImage.image!.imageWithRenderingMode(.AlwaysTemplate)
+        downArrowImage.image = downArrowImage.image!.withRenderingMode(.alwaysTemplate)
         down.frame = CGRect(x: 0, y: self.view.frame.height - 113, width: self.view.frame.width, height: 50)
-        down.backgroundColor = UIColor.orangeColor()
+        down.backgroundColor = UIColor.orange
         down.alpha = 1.0
-        down.addTarget(self, action: #selector(self.goDown), forControlEvents: .TouchUpInside)
+        down.addTarget(self, action: #selector(self.goDown), for: .touchUpInside)
         downBlur.effect = blurBackGround
         downBlur.frame = down.frame
         downArrowImage.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         downArrowImage.center = CGPoint(x: self.down.frame.width / 2, y: self.down.frame.height / 2)
         var downArrow = UIImage(named: "Down")
-        downArrow = downArrow!.imageWithRenderingMode(.AlwaysTemplate)
-        arrowImage.setImage(downArrow, forState: .Selected)
-        arrowImage.setImage(downArrow, forState: .Normal)
+        downArrow = downArrow!.withRenderingMode(.alwaysTemplate)
+        arrowImage.setImage(downArrow, for: .selected)
+        arrowImage.setImage(downArrow, for: UIControlState())
         arrowImage.frame = CGRect(x: self.navigationController!.navigationBar.frame.width - 40, y: 0, width: 30, height: 30)
         arrowImage.center = CGPoint(x: self.arrowImage.center.x, y: self.navigationController!.navigationBar.frame.minY)
         arrowImage.tintColor = self.view.tintColor
         self.navigationItem.backBarButtonItem?.target = self
         self.navigationItem.backBarButtonItem?.action = #selector(self.backToLostViewController)
-        self.arrowImage.transform = CGAffineTransformRotate(self.arrowImage.transform, CGFloat(M_PI))
+        self.arrowImage.transform = self.arrowImage.transform.rotated(by: CGFloat(M_PI))
         //arrowImage.sizeToFit()
         print(More.accessibilityFrame)
         //self.navigationItem.
         //arrowImage.backgroundColor = UIColor.redColor()
-        arrowImage.addTarget(self, action: #selector(self.ShowDropMenu(_:)), forControlEvents: .TouchUpInside)
+        arrowImage.addTarget(self, action: #selector(self.ShowDropMenu(_:)), for: .touchUpInside)
         self.navigationController?.navigationBar.addSubview(arrowImage)
         //dropdown.backgroundColor = UIColor.blueColor()
         //self.dropdown.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -122,10 +128,10 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         Display.text = LedDatas
         //DisplayMilesWalkedLabel.text = "Display Miles Walked"
         Open.tintColor = tint
-        coolColor.frame = CGRectMake(0, 0, self.view.frame.width, 50)
-        coolColor.backgroundColor = UIColor.blueColor()
+        coolColor.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50)
+        coolColor.backgroundColor = UIColor.blue
         self.view.addSubview(coolColor)
-        self.view.sendSubviewToBack(coolColor)
+        self.view.sendSubview(toBack: coolColor)
         DogImageLost = UIImageView(frame: CGRect(x: 0, y: 450, width: self.view.bounds.width, height: self.view.bounds.width))
         self.view.translatesAutoresizingMaskIntoConstraints = true
         Information = UIView(frame: CGRect(x: 0, y: 450 + self.view.bounds.width, width: self.view.bounds.width, height: 150))
@@ -149,24 +155,24 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         mapsType.center = CGPoint(x: self.view.center.x - 50, y: 10.5)
         mapsType.layer.cornerRadius = 5.0  // Don't let background bleed
         mapsType.tintColor = tint
-        mapsType.backgroundColor = UIColor.clearColor()
-        mapsType.addTarget(self, action: #selector(LostViewController.MapType(_:)), forControlEvents: .ValueChanged)
+        mapsType.backgroundColor = UIColor.clear
+        mapsType.addTarget(self, action: #selector(LostViewController.MapType(_:)), for: .valueChanged)
         DirectionLabel = UILabel(frame: CGRect(x: 10, y: 10, width: 0, height: 0))
         DirectionLabel.text = "Directions"
-        DirectionLabel.textColor = UIColor.orangeColor()
+        DirectionLabel.textColor = UIColor.orange
         DirectionLabel.sizeToFit()
         directionsType = UISegmentedControl(items: ["Drive", "Walk", "Transit", "None"])
         directionsType.selectedSegmentIndex = 3
-        print("Done" + String(DirectionLabel.frame.height))
+        print("Done" + String(describing: DirectionLabel.frame.height))
         directionsType.frame = CGRect(x: self.mapView.frame.width/2 - self.directionsType.frame.width/2, y: self.DirectionLabel.frame.maxY + 10, width: 325.3, height: 29.0)
         directionsType.center = CGPoint(x: self.view.center.x /*- (1/2 * DisplayMinutes.frame.width)*/, y: self.directionsType.center.y)
         DisplayMinutes = UILabel(frame: CGRect(x: 20, y: self.directionsType.frame.maxY + 10, width: 0, height: 0))
         DisplayMinutes.center = CGPoint(x: self.view.center.x, y: self.DisplayMinutes.center.y)
-        DisplayMinutes.textColor = UIColor.orangeColor()
+        DisplayMinutes.textColor = UIColor.orange
         directionsType.layer.cornerRadius = 5.0  // Don't let background bleed
         directionsType.tintColor = tint
-        directionsType.backgroundColor = UIColor.clearColor()
-        directionsType.addTarget(self, action: #selector(LostViewController.DirectionType(_:)), forControlEvents: .ValueChanged)
+        directionsType.backgroundColor = UIColor.clear
+        directionsType.addTarget(self, action: #selector(LostViewController.DirectionType(_:)), for: .valueChanged)
         //DogNameLost.frame = CGRectMake(200, 200, 200, 200)
         DogImageLost.setupForImageViewer()
         /*shareButton.frame = CGRectMake(13, 75, self.view.frame.width - 26 , 50)
@@ -190,7 +196,7 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         //circleButton.setImage(image, forState: .Selected)
         circleButton.image = UIImage(named: "Expand")
         //circleButton.setImage(UIImage(named: "Expand"), forState: .Selected)
-        circleButton.backgroundColor = UIColor.clearColor()
+        circleButton.backgroundColor = UIColor.clear
         //circleButton.addTarget(self, action: #selector(self.addReminder(_:)), forControlEvents: .TouchUpInside)
         callButton.frame = CGRect(x: self.view.center.x - (1/2 * circleButton.frame.width), y: self.view.frame.height - (3/2 * circleButton.frame.height), width: 40, height: 40)
         callButton.center = CGPoint(x: 10, y: 5)
@@ -205,11 +211,11 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         //callButton.transform = CGAffineTransformMakeRotation(-1/4 * fullRotation)
         //old buttons needed the rotation
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 64, width: self.view.frame.width, height: self.view.frame.height))
-        scrollView.backgroundColor = UIColor.whiteColor()
-        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height * 2 - 176)
-        scrollView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        scrollView.backgroundColor = UIColor.white
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height * 2 - 176)
+        scrollView.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         scrollView.delegate = self
-        scrollView.scrollEnabled = true
+        scrollView.isScrollEnabled = true
         backgroundImage.image = doggie?.photo
         backgroundImage.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         blurView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
@@ -245,9 +251,9 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         //Information.addSubview(DisplayMilesWalked)
         //Information.addSubview(DisplayMilesWalkedLabel)
         //Information.addSubview(TrackerNumberImage)
-        let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: #selector(LostViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        center.addObserver(self, selector: #selector(LostViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        let center: NotificationCenter = NotificationCenter.default
+        center.addObserver(self, selector: #selector(LostViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        center.addObserver(self, selector: #selector(LostViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         //scrollView.addSubview(DogNameLost)
         //self.view.addSubview(DogImageLost)
         //TrackerNumberImage.hidden = true
@@ -260,29 +266,29 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         dropdownItems = ["Map Type", "Settings", "Share", "Add A Reminder", "Call", "Directions to \(doggie!.name)"]
         menuView = BTNavigationDropdownMenu(navigationController: self.navigationController, title: doggie!.name, items: dropdownItems as [AnyObject])
         menuView.cellHeight = 50
-        menuView.cellBackgroundColor = UIColor.cyanColor()
-        let colors = CGColorGetComponents(UIColor.cyanColor().CGColor)
-        print(colors[2])
-        menuView.cellSelectionColor = UIColor(red: colors[0] - 0.1, green: colors[1] - 0.1, blue: colors[2] - 0.1, alpha: 1.0)
+        menuView.cellBackgroundColor = UIColor.cyan
+        let colors = UIColor.cyan.cgColor.components
+        print(colors?[2])
+        menuView.cellSelectionColor = UIColor(red: colors![0] - 0.1, green: colors![1] - 0.1, blue: colors![2] - 0.1, alpha: 1.0)
         menuView.checkMarkImage = nil
-        menuView.keepSelectedCellColor = false
-        menuView.cellTextLabelColor = UIColor.orangeColor()
+        menuView.shouldKeepSelectedCellColor = false
+        menuView.cellTextLabelColor = UIColor.orange
         menuView.cellTextLabelFont = font
-        menuView.cellTextLabelAlignment = .Center
+        menuView.cellTextLabelAlignment = .center
         menuView.arrowPadding = 15
         menuView.animationDuration = 0.5
-        menuView.maskBackgroundColor = UIColor.blackColor()
+        menuView.maskBackgroundColor = UIColor.black
         menuView.maskBackgroundOpacity = 0.3
-        menuView.mapsType = mapsType
+        //menuView.mapsType = ["Map", "Satilite", "Hybrid"]
         menuView.didSelectItemAtIndexHandler = {(indexPath: Int) -> () in
             print("Did select item at index: \(indexPath)")
             if indexPath == 1 {
-                self.arrowImage.hidden = true
-                self.performSegueWithIdentifier("Setting", sender: self)
+                self.arrowImage.isHidden = true
+                self.performSegue(withIdentifier: "Setting", sender: self)
             } else if indexPath == 2 {
                 self.shareButtonTapped(self)
             } else if indexPath == 3 {
-                self.arrowImage.hidden = true
+                self.arrowImage.isHidden = true
                 self.addReminder(self)
             } else if indexPath == 4 {
                 self.call(self)
@@ -293,24 +299,24 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         }
         tapGesture.addTarget(self, action: #selector(self.tap(_:)))
         menuView.addGestureRecognizer(tapGesture)
-        backgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({
+        backgroundTaskIdentifier = UIApplication.shared.beginBackgroundTask(expirationHandler: {
                 //NSTimer.scheduledTimerWithTimeInterval(5, target: Api(), selector: #selector(Api.lostReload), userInfo: nil, repeats: true)
-                UIApplication.sharedApplication().endBackgroundTask(self.backgroundTaskIdentifier!)
+                UIApplication.shared.endBackgroundTask(self.backgroundTaskIdentifier!)
             })
-           NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.lostReload), userInfo: nil, repeats: true)
+           Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.lostReload), userInfo: nil, repeats: true)
         
         // Do any additional setup after loading the view.
-        self.scrollView.bringSubviewToFront(down)
-        self.down.bringSubviewToFront(downArrowImage)
+        self.scrollView.bringSubview(toFront: down)
+        self.down.bringSubview(toFront: downArrowImage)
     }
     func open() {
         menuView.hide()
         SWRevealViewController().revealToggle(self)
     }
-    func tap(sender: UITapGestureRecognizer) {
+    func tap(_ sender: UITapGestureRecognizer) {
         print(sender.view)
     }
-    func combineAnnotationPhotos(Dog: dog) -> UIImage {
+    func combineAnnotationPhotos(_ Dog: dog) -> UIImage {
         var bottomImage: UIImage
         var topImage = Dog.photo
         switch Dog.color {
@@ -343,31 +349,31 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
             default:
                 bottomImage = UIImage(named: "Red Annotation")!
         }
-        let size = CGSizeMake(50, 50)
+        let size = CGSize(width: 50, height: 50)
         topImage = circle(topImage!, size: CGSize(width: 50.0, height: 50.0))
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        [bottomImage.drawInRect(CGRectMake(0, 0, size.width, size.height))];
-        [topImage!.drawInRect(CGRectMake(0.11 * (size.width), 0.06 * (size.height), 0.77 * (size.width), 0.77 * (size.height)))];
+        [bottomImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))];
+        [topImage!.draw(in: CGRect(x: 0.11 * (size.width), y: 0.06 * (size.height), width: 0.77 * (size.width), height: 0.77 * (size.height)))];
         
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newImage
     }
-    func circle(image: UIImage, size: CGSize) -> UIImage? {
+    func circle(_ image: UIImage, size: CGSize) -> UIImage? {
         let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         imageView.image = image
         imageView.layer.cornerRadius = size.width/2
         imageView.layer.masksToBounds = true
         UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, 0.0)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        imageView.layer.renderInContext(context)
+        imageView.layer.render(in: context)
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return result
     }
     var doneScrolling = false
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if doneScrolling == true {
             print("Done here")
         }
@@ -377,12 +383,12 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         print(doneScrolling)
         print("done")
     }
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         doneScrolling = true
     }
     func faceDircetion() {
        // UIView.animateWithDuration(0.2) {
-            self.downArrowImage.transform = CGAffineTransformMakeRotation(-1 * (self.scrollView.bounds.minY / (self.view.frame.height - 113)) * CGFloat(M_PI))
+            self.downArrowImage.transform = CGAffineTransform(rotationAngle: -1 * (self.scrollView.bounds.minY / (self.view.frame.height - 113)) * CGFloat(M_PI))
        // }
     }
     func goDown() {
@@ -394,12 +400,12 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
             faceDircetion()
         }
     }
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         /*if let location = locations.first {
             print("Found user's location: \(location)")
         }*/
-        self.scrollView.bringSubviewToFront(down)
-        self.down.bringSubviewToFront(downArrowImage)
+        self.scrollView.bringSubview(toFront: down)
+        self.down.bringSubview(toFront: downArrowImage)
         let userLocation:CLLocation = locations[0]
         Userlong = userLocation.coordinate.longitude
         Userlat = userLocation.coordinate.latitude
@@ -408,16 +414,16 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func addReminder(sender: AnyObject) {
-        self.performSegueWithIdentifier("AddReminder", sender: self)
+    func addReminder(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "AddReminder", sender: self)
     }
     func backToLostViewController() {
-        self.arrowImage.hidden = false
+        self.arrowImage.isHidden = false
     }
-    func call(sender: AnyObject) {
+    func call(_ sender: AnyObject) {
         let busPhone  = "914-359-1066"
-        if let url = NSURL(string: "tel://\(busPhone)") {
-            UIApplication.sharedApplication().openURL(url)
+        if let url = URL(string: "tel://\(busPhone)") {
+            UIApplication.shared.openURL(url)
         }
     }
         /*func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -490,40 +496,40 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
             return cell
         }
     }*/
-    override func viewWillAppear(animated: Bool) {
-        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: #selector(self.backInParent), userInfo: nil, repeats: false)
+    override func viewWillAppear(_ animated: Bool) {
+        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.backInParent), userInfo: nil, repeats: false)
     }
     func backInParent() {
-        self.arrowImage.hidden = false
+        self.arrowImage.isHidden = false
     }
-    func ShowDropMenu(sender: AnyObject) {
+    func ShowDropMenu(_ sender: AnyObject) {
         print(menuView.isShown!)
         if !menuView.isShown! {
-            menuView.showMenu()
-            UIView.animateWithDuration(0.4, animations: {
-                self.arrowImage.transform = CGAffineTransformRotate(self.arrowImage.transform, 3.14159265358979)
+            menuView!.showMenu()
+            UIView.animate(withDuration: 0.4, animations: {
+                self.arrowImage.transform = self.arrowImage.transform.rotated(by: 3.14159265358979)
             })
         } else {
-            menuView.hideMenu()
-            UIView.animateWithDuration(0.4, animations: {
-                self.arrowImage.transform = CGAffineTransformRotate(self.arrowImage.transform , -3.14159265358979)
+            menuView!.hideMenu()
+            UIView.animate(withDuration: 0.4, animations: {
+                self.arrowImage.transform = self.arrowImage.transform.rotated(by: -3.14159265358979)
             })
         }
     }
-    func MapType(sender: UISegmentedControl) {
+    func MapType(_ sender: UISegmentedControl) {
         switch mapsType.selectedSegmentIndex
         {
         case 0:
-            self.mapView.mapType = MKMapType.Standard
+            self.mapView.mapType = MKMapType.standard
         case 1:
-            self.mapView.mapType = MKMapType.SatelliteFlyover
+            self.mapView.mapType = MKMapType.satelliteFlyover
         case 2:
-            self.mapView.mapType = MKMapType.HybridFlyover
+            self.mapView.mapType = MKMapType.hybridFlyover
         default:
             break
         }
     }
-    func DirectionType(sender: UISegmentedControl) {
+    func DirectionType(_ sender: UISegmentedControl) {
         switch directionsType.selectedSegmentIndex
         {
         case 0:
@@ -542,9 +548,9 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
             break
         }
         mapView.removeOverlays(self.mapView.overlays)
-        mapView(mapView, viewForAnnotation: mapView.annotations[mapView.annotations.count - 1])
+        mapView(mapView, viewFor: mapView.annotations[mapView.annotations.count - 1])
     }
-    func loadDirections(sender: AnyObject) {
+    func loadDirections(_ sender: AnyObject) {
         var appleMapsType = ""
         if DirectionType == "Automobile" {
             appleMapsType = "d"
@@ -555,8 +561,8 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         else {
             appleMapsType = "r"
         }
-        let targetURL = NSURL(string: "http://maps.apple.com/?daddr=\(latitude),\(longitude)&dirflg=\(appleMapsType)")!
-        UIApplication.sharedApplication().openURL(targetURL) 
+        let targetURL = URL(string: "http://maps.apple.com/?daddr=\(latitude),\(longitude)&dirflg=\(appleMapsType)")!
+        UIApplication.shared.openURL(targetURL) 
     }
 
     func loadMap() {
@@ -571,7 +577,7 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
        //uilpgr.minimumPressDuration = 1.0
         //mapView.addGestureRecognizer(uilpgr)
         if places.count == 1 {
-            places.removeAtIndex(0)
+            places.remove(at: 0)
         }
         if latitude != 0.0 {
             if places.count == 0 {
@@ -614,9 +620,9 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
             }
     }
     }
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "loadMap"
-        var view = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+        var view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         let AnnotationDog = UIImageView.init(image: self.doggie?.photo)
         if annotation is MKUserLocation {
             return nil
@@ -627,15 +633,15 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
             let pinImage = combineAnnotationPhotos(doggie!)
             let size = CGSize(width: 50, height: 50)
             UIGraphicsBeginImageContext(size)
-            pinImage.drawInRect(CGRectMake(0, 0, size.width, size.height))
+            pinImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
             let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             view?.image = resizedImage
-            view?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            view?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             view?.leftCalloutAccessoryView = AnnotationDog
             //view?.animatesDrop = true
-            AnnotationDog.frame = CGRectMake(0, 0, view!.bounds.height + 28, view!.bounds.height + 10)
-            AnnotationDog.contentMode = .ScaleAspectFill
+            AnnotationDog.frame = CGRect(x: 0, y: 0, width: view!.bounds.height + 28, height: view!.bounds.height + 10)
+            AnnotationDog.contentMode = .scaleAspectFill
             //view?.sizeToFit()
             } else {
             view?.annotation = annotation
@@ -643,32 +649,32 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         let destination = MKPlacemark(coordinate: annotation.coordinate, addressDictionary: nil)
         let request = MKDirectionsRequest()
         //let UserLocation = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: Userlat, longitude: Userlong), addressDictionary: nil)
-        let UserLocation = MKMapItem.mapItemForCurrentLocation()
+        let UserLocation = MKMapItem.forCurrentLocation()
         //request.source = MKMapItem(placemark: UserLocation)
         request.source = UserLocation
         request.destination = MKMapItem(placemark: destination)
         request.requestsAlternateRoutes = false
         switch DirectionType{
         case "Automobile":
-            request.transportType = MKDirectionsTransportType.Automobile
+            request.transportType = MKDirectionsTransportType.automobile
         case "Walking":
-            request.transportType = MKDirectionsTransportType.Walking
+            request.transportType = MKDirectionsTransportType.walking
         case "Transit":
-            request.transportType = MKDirectionsTransportType.Transit
+            request.transportType = MKDirectionsTransportType.transit
         case "None":
             DisplayMinutes.text = ""
             return view
         default:
-            request.transportType = MKDirectionsTransportType.Automobile
+            request.transportType = MKDirectionsTransportType.automobile
         }
         
         let directions = MKDirections(request: request)
-        directions.calculateDirectionsWithCompletionHandler ({ (response, error) in
+        directions.calculate (completionHandler: { (response, error) in
             if error != nil {
                 // Handle error
                 if self.DirectionType != "Automobile" {
                 var realError = ""
-                    switch Int(error!.code) {
+                    /*switch Int(error.code) {
                     case 1:
                         realError = "Unknown Error"
                         self.notifyUser("Directions Error", message: realError + "\n Switching to Automobile directions")
@@ -683,14 +689,14 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
                         realError = "Could not calculate Directions"
                         self.notifyUser("Directions Error", message: realError + "\n Switching to Automobile directions")
                     default:
-                        self.notifyUser("Directions Error", message: String(error) + "\n Switching to Automobile directions")
-                    }
+                        self.notifyUser("Directions Error", message: String(describing: error) + "\n Switching to Automobile directions")
+                    }*/
                 self.DirectionType = "Automobile"
                 self.directionsType.selectedSegmentIndex = 0
                 self.reloadDirections()
                 }
                 else {
-                  self.notifyUser("Directions Error", message: String(error))
+                  self.notifyUser("Directions Error", message: String(describing: error))
                 }
             } else {
                 self.showRoute(response!)
@@ -700,13 +706,13 @@ class LostViewController: UIViewController, UIScrollViewDelegate, MKMapViewDeleg
         })
         return view
     }
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
-            self.arrowImage.hidden = true
-            performSegueWithIdentifier("DogsInfoLocation", sender: self)
+            self.arrowImage.isHidden = true
+            performSegue(withIdentifier: "DogsInfoLocation", sender: self)
         }
     }
-    func mapView(mapView: MKMapView, rendererForOverlay
+    func mapView(_ mapView: MKMapView, rendererFor
 overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         
@@ -715,10 +721,10 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         return renderer
     }
     var directions = String()
-    func showRoute(response: MKDirectionsResponse) {
+    func showRoute(_ response: MKDirectionsResponse) {
         for route in response.routes {
-            mapView.addOverlay(route.polyline,
-            level: MKOverlayLevel.AboveRoads)
+            mapView.add(route.polyline,
+            level: MKOverlayLevel.aboveRoads)
             for step in route.steps {
                 steped += "\n" + step.instructions
                 
@@ -731,16 +737,16 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         directions = steped
         Steps.font = UIFont(name: "Chalkduster", size: 20.5)
         Steps.adjustsFontSizeToFitWidth = true
-        Steps.textAlignment = NSTextAlignment.Center
-        Steps.highlightedTextColor = UIColor.orangeColor()
-        Steps.highlighted = true
+        Steps.textAlignment = NSTextAlignment.center
+        Steps.highlightedTextColor = UIColor.orange
+        Steps.isHighlighted = true
         Steps.textColor = tint
-        Steps.lineBreakMode = .ByWordWrapping
+        Steps.lineBreakMode = .byWordWrapping
         Steps.numberOfLines = 0
         Steps.text = steped
          Steps.sizeToFit()
         scrollView.addSubview(Steps)
-        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.scrollView.contentSize.height + Steps.frame.height)
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.scrollView.contentSize.height + Steps.frame.height)
     }
     /*func DisplayMilesWalked(sender: UISwitch) {
         if DisplayMilesWalked.on {
@@ -754,7 +760,13 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         
     }*/
     func reloadDirections () {
-        mapView(mapView, viewForAnnotation: mapView.annotations[mapView.annotations.count - 2])
+        mapView(mapView, viewFor: mapView.annotations[mapView.annotations.count - 2])
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            print(touch.view)
+            print(touch.window)
+        }
     }
     /*func longPress(gestureRecognizer: UIGestureRecognizer) {
      
@@ -811,17 +823,17 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         doneReloading = false
         let request = api.requestDatafromDog(true)
         let retrieve = api.lostReload()
-        NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector:  #selector(LostViewController.EndedRefresh), userInfo: nil, repeats: !EndedRefresh())
+        Timer.scheduledTimer(timeInterval: 3, target: self, selector:  #selector(LostViewController.EndedRefresh), userInfo: nil, repeats: !EndedRefresh())
         RefreshColor = tint
-        Refresh.tintColor = UIColor.clearColor()
-        Refresh.enabled = false
+        Refresh.tintColor = UIColor.clear
+        Refresh.isEnabled = false
         self.navigationItem.setRightBarButtonItems([More, UIBarButtonItem(customView: uiBusy), Refresh], animated: true)
         if !request || !retrieve {
             if !request {
-            NSTimer.scheduledTimerWithTimeInterval(5, target: Api(), selector: #selector(Api.requestDatafromDog), userInfo: nil, repeats: !request)
+            Timer.scheduledTimer(timeInterval: 5, target: Api(), selector: #selector(Api.requestDatafromDog), userInfo: nil, repeats: !request)
             }
             else if !retrieve {
-                 NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.lostReload), userInfo: nil, repeats: !retrieve)
+                 Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.lostReload), userInfo: nil, repeats: !retrieve)
             }
             else {
                 Refreshing(false)
@@ -835,42 +847,42 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         retrieve
     }
     
-    func Refreshing(on: Bool) {
+    func Refreshing(_ on: Bool) {
         uiBusy.hidesWhenStopped = true
         if on {
             uiBusy.startAnimating()
         }
         else {
             uiBusy.stopAnimating()
-            uiBusy.hidden = true
+            uiBusy.isHidden = true
         }
     }
     func RefreshStop() {
         Refreshing(false)
     }
-    func getTravelTime(annotation: MKAnnotation) {
+    func getTravelTime(_ annotation: MKAnnotation) {
         let destination = MKPlacemark(coordinate: annotation.coordinate, addressDictionary: nil)
         let request = MKDirectionsRequest()
         //let UserLocation = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: Userlat, longitude: Userlong), addressDictionary: nil)
-        let UserLocation = MKMapItem.mapItemForCurrentLocation()
+        let UserLocation = MKMapItem.forCurrentLocation()
         //request.source = MKMapItem(placemark: UserLocation)
         request.source = UserLocation
         request.destination = MKMapItem(placemark: destination)
         request.requestsAlternateRoutes = false
         switch DirectionType{
         case "Automobile":
-            request.transportType = MKDirectionsTransportType.Automobile
+            request.transportType = MKDirectionsTransportType.automobile
         case "Walking":
-            request.transportType = MKDirectionsTransportType.Walking
+            request.transportType = MKDirectionsTransportType.walking
         case "Transit":
-            request.transportType = MKDirectionsTransportType.Transit
+            request.transportType = MKDirectionsTransportType.transit
         default:
-            request.transportType = MKDirectionsTransportType.Automobile
+            request.transportType = MKDirectionsTransportType.automobile
         }
         
         
         let directions = MKDirections(request: request)
-        directions.calculateETAWithCompletionHandler ({ (response: MKETAResponse?, error: NSError?) in
+        directions.calculateETA (completionHandler: { (response: MKETAResponse?, error: NSError?) in
             if error == nil {
                 var TravelTime: UInt = UInt(response!.expectedTravelTime)
                 TravelTime = TravelTime/60
@@ -890,33 +902,33 @@ overlay: MKOverlay) -> MKOverlayRenderer {
                 self.DisplayMinutes.center = CGPoint(x: self.view.center.x, y: self.DisplayMinutes.center.y)
             }
             else {
-                self.notifyUser("Error Estimating Travel Time", message: String(error))
+                self.notifyUser("Error Estimating Travel Time", message: String(describing: error))
                 self.DirectionTime = ""
                 self.DisplayMinutes.text = ""
             }
-        })
+        } as! MKETAHandler)
 
     }
-    func shareButtonTapped(sender: AnyObject) {
+    func shareButtonTapped(_ sender: AnyObject) {
         let shareName: String = doggie!.name
         let shareBreed: String = doggie!.breed
         let shareCity: String = doggie!.city
         let shareLocation: CLLocation = CLLocation(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
         let shareImg: UIImage = self.DogImageLost.image!
-        let shareItems: Array = [shareName, shareImg, shareBreed, shareCity, shareLocation]
+        let shareItems: Array = [shareName, shareImg, shareBreed, shareCity, shareLocation] as [Any]
         let shareSheet = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
-        self.presentViewController(shareSheet, animated: true, completion: nil)
+        self.present(shareSheet, animated: true, completion: nil)
     }
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         //UIView.animateWithDuration(1.0) { () -> Void in
         //self.DogImageLost.center.y = self.view.center.y
         //self.DogNameLost.center.y = self.view.center.y
         //}
-        self.arrowImage.hidden = false
+        self.arrowImage.isHidden = false
         var doggies = [dog]()
         if let savedDogs = loadDogs() {
             doggies += savedDogs
@@ -925,8 +937,8 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         DogImageLost.image = (self.doggie?.photo)
         //DogNameLost.text = (self.doggie?.name)
         backgroundImage.image = doggie?.photo
-        Display.borderStyle = UITextBorderStyle.RoundedRect
-        Display.returnKeyType = UIReturnKeyType.Done
+        Display.borderStyle = UITextBorderStyle.roundedRect
+        Display.returnKeyType = UIReturnKeyType.done
         Display.allowsEditingTextAttributes = true
         DogImageLost.image = (self.doggie?.photo)
         //DogNameLost.text = (self.doggie?.name)
@@ -936,25 +948,25 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         Displaying.text = "Displaying"
         Display.text = LedDatas
         //DisplayMilesWalkedLabel.text = "Display Miles Walked"
-        DogImageLost.frame = CGRectMake(0, self.view.frame.height - 63, self.view.bounds.width, self.view.bounds.width)
-        Information.frame = CGRectMake(0, self.view.frame.height + self.view.bounds.width - 63, self.view.bounds.width, 150)
+        DogImageLost.frame = CGRect(x: 0, y: self.view.frame.height - 63, width: self.view.bounds.width, height: self.view.bounds.width)
+        Information.frame = CGRect(x: 0, y: self.view.frame.height + self.view.bounds.width - 63, width: self.view.bounds.width, height: 150)
         //DogName.frame = CGRectMake(63, 13, 116, 28)
        // TrackerNumberLabel.frame = CGRectMake(8, 42, 171, 28)
-        Displaying.frame = CGRectMake(65, 70, 114, 28)
+        Displaying.frame = CGRect(x: 65, y: 70, width: 114, height: 28)
         //DisplayMilesWalkedLabel.frame = CGRectMake(105, 108, 170, 26)
         //DisplayMilesWalked.frame = CGRectMake(305, 105, 51, 31)
-        Display.frame = CGRectMake(205, 68, 150, 30)
+        Display.frame = CGRect(x: 205, y: 68, width: 150, height: 30)
         //TrackerNumber.frame = CGRectMake(205, 40, 150, 28)
         //TrackerNumber.adjustsFontSizeToFitWidth = true
         //DogNameLost.frame = CGRectMake(205, 13, 101, 28)
-        scrollView = UIScrollView(frame: CGRectMake(0, 64, self.view.bounds.width, self.view.bounds.height - 64))
-        scrollView.backgroundColor = UIColor.whiteColor()
-        scrollView.contentSize = CGSizeMake(self.view.bounds.width, self.view.frame.height * 2 - 176)
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: 64, width: self.view.bounds.width, height: self.view.bounds.height - 64))
+        scrollView.backgroundColor = UIColor.white
+        scrollView.contentSize = CGSize(width: self.view.bounds.width, height: self.view.frame.height * 2 - 176)
         //scrollView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         scrollView.delegate = self
-        scrollView.scrollEnabled = true
+        scrollView.isScrollEnabled = true
         //setZoomScale()
-        let blurEffects = UIBlurEffect(style: .Light)
+        let blurEffects = UIBlurEffect(style: .light)
         let textBoxBlur = UIVisualEffectView(effect: blurEffects)
         textBoxBlur.layer.cornerRadius = 5
         textBoxBlur.layer.masksToBounds = true
@@ -962,7 +974,7 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         self.view.addSubview(backgroundImage)
         self.view.addSubview(blurView)
         view.addSubview(scrollView)
-        scrollView.backgroundColor = UIColor.clearColor()
+        scrollView.backgroundColor = UIColor.clear
         //scrollView.addSubview(image)
         scrollView.addSubview(DogImageLost)
         scrollView.addSubview(mapView)
@@ -979,24 +991,24 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         //Information.addSubview(TrackerNumberLabel)
         Information.addSubview(textBoxBlur)
         Information.addSubview(Display)
-        Display.backgroundColor = UIColor.clearColor()
+        Display.backgroundColor = UIColor.clear
         Information.addSubview(Displaying)
-        self.scrollView.bringSubviewToFront(down)
-        self.down.bringSubviewToFront(downArrowImage)
+        self.scrollView.bringSubview(toFront: down)
+        self.down.bringSubview(toFront: downArrowImage)
         //Information.addSubview(DisplayMilesWalked)
         //Information.addSubview(DisplayMilesWalkedLabel)
         //Information.bringSubviewToFront(self.TrackerNumberImage)
         //self.view.addSubview(DogImageLost)
         //self.view.addSubview(shareButton)
         //self.view.addSubview(circleButton)
-        circleButton.backgroundColor = UIColor.clearColor()
+        circleButton.backgroundColor = UIColor.clear
         let blurry = UIVisualEffectView(effect: blurEffects)
-        blurry.frame = CGRectMake(circleButton.frame.minX + 16.5, circleButton.frame.minY + 16.5, 33, 33)
+        blurry.frame = CGRect(x: circleButton.frame.minX + 16.5, y: circleButton.frame.minY + 16.5, width: 33, height: 33)
         blurry.center = circleButton.center
         blurry.layer.masksToBounds = true
         blurry.layer.cornerRadius = 16.5
         let blurries = UIVisualEffectView(effect: blurEffects)
-        blurries.frame = CGRectMake(circleButton.frame.minX + 16.5, circleButton.frame.minY + 16.5, 33, 33)
+        blurries.frame = CGRect(x: circleButton.frame.minX + 16.5, y: circleButton.frame.minY + 16.5, width: 33, height: 33)
         blurries.center = callButton.center
         blurries.layer.masksToBounds = true
         blurries.layer.cornerRadius = 16.5
@@ -1004,12 +1016,12 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         //self.view.addSubview(blurry)
         //for old blur behind old call and add reminder buttons
         //self.view.addSubview(callButton)
-        self.view.bringSubviewToFront(circleButton)
+        self.view.bringSubview(toFront: circleButton)
         Display.placeholder = "Only 4 symbols"
         DirectionLabel.center = CGPoint(x: self.view.center.x, y: self.DirectionLabel.center.y)
-        scrollView.bringSubviewToFront(directionsType)
+        scrollView.bringSubview(toFront: directionsType)
         if Display.frame.width + Display.frame.minX > self.view.frame.width {
-            Display.frame =  CGRectMake(self.view.frame.width - self.Display.frame.width - 10, self.Display.frame.minY, self.Display.frame.width, self.Display.frame.height)
+            Display.frame =  CGRect(x: self.view.frame.width - self.Display.frame.width - 10, y: self.Display.frame.minY, width: self.Display.frame.width, height: self.Display.frame.height)
             textBoxBlur.frame = Display.frame
             //TrackerNumber.frame =  CGRectMake(self.view.frame.width - self.TrackerNumber.frame.width - 10, self.TrackerNumber.frame.minY, self.TrackerNumber.frame.width, self.TrackerNumber.frame.height)
              //DogNameLost.frame =  CGRectMake(self.Display.frame.minX, self.DogNameLost.frame.minY, self.DogNameLost.frame.width, self.DogNameLost.frame.height)
@@ -1103,10 +1115,10 @@ overlay: MKOverlay) -> MKOverlayRenderer {
     }*/
     //Old function for enlarging the tracker number
     func EndedRefresh() -> Bool {
-        if !uiBusy.isAnimating() && !doneReloading {
+        if !uiBusy.isAnimating && !doneReloading {
             self.navigationItem.setRightBarButtonItems([More, Refresh], animated: true)
             Refresh.tintColor = RefreshColor
-            Refresh.enabled = true
+            Refresh.isEnabled = true
             loadMap()
             doneReloading = true
             return true
@@ -1114,16 +1126,16 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         return false
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         if x == 1 {
-        let info:NSDictionary = notification.userInfo!
-        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let info:NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
         
         let keyboardHeight: CGFloat = keyboardSize.height
         self.scrollView.contentSize = CGSize(width: self.view.bounds.width, height: scrollView.contentSize.height + keyboardHeight + self.Display.frame.height)
-        self.scrollView.bringSubviewToFront(self.Display)
-        self.scrollView.bringSubviewToFront(self.Display)
-        self.scrollView.bringSubviewToFront(self.Display)
+        self.scrollView.bringSubview(toFront: self.Display)
+        self.scrollView.bringSubview(toFront: self.Display)
+        self.scrollView.bringSubview(toFront: self.Display)
         self.scrollView.setContentOffset(CGPoint(x: 0, y: Information.frame.minY - 246), animated: true)
 
             x = 0
@@ -1131,35 +1143,35 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         if x == 0 {
-        let info:NSDictionary = notification.userInfo!
-        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let info:NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
         
         let keyboardHeight: CGFloat = keyboardSize.height
         self.scrollView.contentSize = CGSize(width: self.view.bounds.width, height: scrollView.contentSize.height - (keyboardHeight + self.Display.frame.height))
-            self.scrollView.bringSubviewToFront(self.Display)
-            self.scrollView.scrollEnabled = true
+            self.scrollView.bringSubview(toFront: self.Display)
+            self.scrollView.isScrollEnabled = true
             LedDatas = self.Display.text!
             let request = self.api.requestDatafromDog(false)
             if !request {
-                NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.requestDatafromDog(_:)), userInfo: nil, repeats: !request)
+                Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.requestDatafromDog(_:)), userInfo: nil, repeats: !request)
                     }
             
             x = 1;
         }
     }
-    func notifyUser(title: String, message: String) -> Void
+    func notifyUser(_ title: String, message: String) -> Void
     {
         let alert = UIAlertController(title: title,
                                       message: message,
-                                      preferredStyle: UIAlertControllerStyle.Alert)
+                                      preferredStyle: UIAlertControllerStyle.alert)
         
         let cancelAction = UIAlertAction(title: "OK",
-                                         style: .Cancel, handler: nil)
+                                         style: .cancel, handler: nil)
         
         alert.addAction(cancelAction)
-        self.presentViewController(alert, animated: true,
+        self.present(alert, animated: true,
                                    completion: nil)
     }
 
@@ -1187,29 +1199,29 @@ overlay: MKOverlay) -> MKOverlayRenderer {
         
         scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
     }*/
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print(segue.identifier)
         if segue.identifier == "Setting" {
-            let DestViewController = segue.destinationViewController as! Setings
+            let DestViewController = segue.destination as! Setings
             DestViewController.deletedDog = self.doggie
         }
         if segue.identifier == "DogsInfoLocation" {
-            let DestViewController = segue.destinationViewController as! DogLocationViewController
+            let DestViewController = segue.destination as! DogLocationViewController
             DestViewController.dogs = self.doggie
-            DestViewController.directionsType = self.directionsType.titleForSegmentAtIndex(self.directionsType.selectedSegmentIndex)!
+            DestViewController.directionsType = self.directionsType.titleForSegment(at: self.directionsType.selectedSegmentIndex)!
             DestViewController.directions = self.directions
             if self.DisplayMinutes.text != "" {
-                let traveltimed = self.DisplayMinutes.text?.startIndex.advancedBy(13)
-                DestViewController.directionTime = DisplayMinutes.text!.substringFromIndex(traveltimed!)
+                let traveltimed = self.DisplayMinutes.text?.characters.index((self.DisplayMinutes.text?.startIndex)!, offsetBy: 13)
+                DestViewController.directionTime = DisplayMinutes.text!.substring(from: traveltimed!)
             }
         }
         if segue.identifier == "AddReminder" {
-            let DestViewController = segue.destinationViewController as! AddReminders
+            let DestViewController = segue.destination as! AddReminders
             DestViewController.dogs = self.doggie!
         }
     }
     func loadDogs() -> [dog]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
+        return NSKeyedUnarchiver.unarchiveObject(withFile: dog.archiveURL!.path) as? [dog]
     }
     /*
     // MARK: - Navigation

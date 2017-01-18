@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		133CBDC5DB54B3387A0ED09F /* Pods_Bone_Tie_3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6D6B67F319153BF3107C80 /* Pods_Bone_Tie_3UITests.framework */; };
-		49969450E8214419B26419BE /* Pods_Bone_Tie_3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE62559C6C528A70B84274A /* Pods_Bone_Tie_3.framework */; };
-		8023BFEB6148F8DE8165BA3A /* Pods_Bone_Tie_3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E83DB5BBEEACDA53DE564956 /* Pods_Bone_Tie_3Tests.framework */; };
+		38079DB79C12541A5485062E /* Pods_Bone_Tie_3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9774C043D1ACFF7CAAFEE537 /* Pods_Bone_Tie_3UITests.framework */; };
+		381C09A44F38528496A51965 /* Pods_Bone_Tie_3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DECD1A07B2E7A00BFC90C3F /* Pods_Bone_Tie_3Tests.framework */; };
+		A33ED926250356D24D33AE8A /* Pods_Bone_Tie_3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCF67BD76CC34DC58E77ED9B /* Pods_Bone_Tie_3.framework */; };
 		B10ABCEF1C60230600D66185 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10ABCEE1C60230600D66185 /* CloudKit.framework */; };
 		B10ABCF11C60263900D66185 /* AlarmKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10ABCF01C60263900D66185 /* AlarmKit.swift */; };
 		B10ABCF31C60264400D66185 /* LocalNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10ABCF21C60264400D66185 /* LocalNotificationHelper.swift */; };
@@ -41,7 +41,6 @@
 		B129DBA91CEA7FC6009627D0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B129DBA81CEA7FC6009627D0 /* AVFoundation.framework */; };
 		B129DBAB1CEA9317009627D0 /* FetchLost.swift in Sources */ = {isa = PBXBuildFile; fileRef = B129DBAA1CEA9317009627D0 /* FetchLost.swift */; };
 		B151F95C1CA0B1AF00D5A349 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B151F95B1CA0B1AF00D5A349 /* SWRevealViewController.m */; };
-		B16D4F571C28B9C300780335 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16D4F551C28B9C300780335 /* ImageViewer.swift */; };
 		B16D4F581C28B9C300780335 /* UIImageView+ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16D4F561C28B9C300780335 /* UIImageView+ImageViewer.swift */; };
 		B17D6AA01C6517FF0080A09B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17D6A9E1C6517FF0080A09B /* Main.storyboard */; };
 		B18211741D178D27001D337A /* StickyCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18211731D178D27001D337A /* StickyCollectionViewFlowLayout.swift */; };
@@ -51,6 +50,7 @@
 		B182117C1D178FAC001D337A /* Lost.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182117B1D178FAC001D337A /* Lost.swift */; };
 		B182117E1D1790AD001D337A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B182117D1D1790AD001D337A /* Default-568h@2x.png */; };
 		B18211801D1790CD001D337A /* Bone Tie 3.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B182117F1D1790CD001D337A /* Bone Tie 3.entitlements */; };
+		B18557611E2D302C00CBA9E6 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18557601E2D302C00CBA9E6 /* ImageViewer.swift */; };
 		B1AB57BE1CCFB147003D2625 /* DogsLocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB57BD1CCFB147003D2625 /* DogsLocationInfo.swift */; };
 		B1B52E081D049053009FA754 /* AddDogMixedBreed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B52E071D049053009FA754 /* AddDogMixedBreed.swift */; };
 		B1CEA92E1D10E9A9007AB93A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1CEA92D1D10E9A9007AB93A /* AudioToolbox.framework */; };
@@ -68,7 +68,6 @@
 		B1DF31621D2DAE1800FF4E25 /* RemindersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF31611D2DAE1800FF4E25 /* RemindersTableViewController.swift */; };
 		B1E458F61CF3B36D0078571E /* LostInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E458F51CF3B36D0078571E /* LostInfoViewController.swift */; };
 		B1E458F81CF3B72D0078571E /* LostDogInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E458F71CF3B72D0078571E /* LostDogInformationViewController.swift */; };
-		B1F0E2271D179C9900B4010D /* BTNavigationDropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F0E2261D179C9900B4010D /* BTNavigationDropdownMenu.swift */; };
 		B1F0E22A1D179FD300B4010D /* BTNavigationDropdownMenu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B1F0E2291D179FD300B4010D /* BTNavigationDropdownMenu.bundle */; };
 		B1F4C6731C14A779007E09C0 /* DogNamesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F4C6711C14A779007E09C0 /* DogNamesTableViewCell.swift */; };
 		B1F4C6761C14DB0F007E09C0 /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F4C6751C14DB0F007E09C0 /* Dog.swift */; };
@@ -95,11 +94,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2FB2B8A4A57A7EC378FAA132 /* Pods-Bone Tie 3Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3Tests/Pods-Bone Tie 3Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		38C39931139797CD8ED56FF2 /* Pods-Bone Tie 3UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3UITests/Pods-Bone Tie 3UITests.debug.xcconfig"; sourceTree = "<group>"; };
-		5B6D6B67F319153BF3107C80 /* Pods_Bone_Tie_3UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bone_Tie_3UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BCCE2EE4C1D488C96E03632 /* Pods-Bone Tie 3UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3UITests/Pods-Bone Tie 3UITests.release.xcconfig"; sourceTree = "<group>"; };
-		9B5290FEC7303E1EBC86A527 /* Pods-Bone Tie 3Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3Tests/Pods-Bone Tie 3Tests.release.xcconfig"; sourceTree = "<group>"; };
+		31D5DD456FC2614176E4B632 /* Pods-Bone Tie 3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3/Pods-Bone Tie 3.release.xcconfig"; sourceTree = "<group>"; };
+		342104C50FA99961AEB71D21 /* Pods-Bone Tie 3Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3Tests/Pods-Bone Tie 3Tests.release.xcconfig"; sourceTree = "<group>"; };
+		584E24250863EBFEBBC4AAED /* Pods-Bone Tie 3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3/Pods-Bone Tie 3.debug.xcconfig"; sourceTree = "<group>"; };
+		72523AE46608FF3425949F70 /* Pods-Bone Tie 3Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3Tests/Pods-Bone Tie 3Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		9549AE57E54974F340C39B98 /* Pods-Bone Tie 3UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3UITests/Pods-Bone Tie 3UITests.release.xcconfig"; sourceTree = "<group>"; };
+		9774C043D1ACFF7CAAFEE537 /* Pods_Bone_Tie_3UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bone_Tie_3UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DECD1A07B2E7A00BFC90C3F /* Pods_Bone_Tie_3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bone_Tie_3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10ABCEE1C60230600D66185 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B10ABCF01C60263900D66185 /* AlarmKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmKit.swift; sourceTree = "<group>"; };
 		B10ABCF21C60264400D66185 /* LocalNotificationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationHelper.swift; sourceTree = "<group>"; };
@@ -133,7 +134,6 @@
 		B151F9591CA0B1A400D5A349 /* Bone Tie 3-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bone Tie 3-Bridging-Header.h"; path = "Bone Tie2/Bone Tie 3-Bridging-Header.h"; sourceTree = "<group>"; };
 		B151F95A1CA0B1AF00D5A349 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = "Bone Tie2/SWRevealViewController.h"; sourceTree = "<group>"; };
 		B151F95B1CA0B1AF00D5A349 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = "Bone Tie2/SWRevealViewController.m"; sourceTree = "<group>"; };
-		B16D4F551C28B9C300780335 /* ImageViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		B16D4F561C28B9C300780335 /* UIImageView+ImageViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageViewer.swift"; sourceTree = "<group>"; };
 		B17D6A9F1C6517FF0080A09B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B18211731D178D27001D337A /* StickyCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -143,6 +143,7 @@
 		B182117B1D178FAC001D337A /* Lost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lost.swift; sourceTree = "<group>"; };
 		B182117D1D1790AD001D337A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B182117F1D1790CD001D337A /* Bone Tie 3.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Bone Tie 3.entitlements"; sourceTree = "<group>"; };
+		B18557601E2D302C00CBA9E6 /* ImageViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		B1AB57BD1CCFB147003D2625 /* DogsLocationInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogsLocationInfo.swift; sourceTree = "<group>"; };
 		B1B52E071D049053009FA754 /* AddDogMixedBreed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDogMixedBreed.swift; sourceTree = "<group>"; };
 		B1CEA92D1D10E9A9007AB93A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -166,17 +167,14 @@
 		B1DF31611D2DAE1800FF4E25 /* RemindersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersTableViewController.swift; sourceTree = "<group>"; };
 		B1E458F51CF3B36D0078571E /* LostInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostInfoViewController.swift; sourceTree = "<group>"; };
 		B1E458F71CF3B72D0078571E /* LostDogInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostDogInformationViewController.swift; sourceTree = "<group>"; };
-		B1F0E2261D179C9900B4010D /* BTNavigationDropdownMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTNavigationDropdownMenu.swift; sourceTree = "<group>"; };
 		B1F0E2291D179FD300B4010D /* BTNavigationDropdownMenu.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BTNavigationDropdownMenu.bundle; sourceTree = "<group>"; };
 		B1F4C6711C14A779007E09C0 /* DogNamesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogNamesTableViewCell.swift; sourceTree = "<group>"; };
 		B1F4C6751C14DB0F007E09C0 /* Dog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		B1F4C6771C14EA30007E09C0 /* AddDog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDog.swift; sourceTree = "<group>"; };
 		B1F4C67B1C164FD5007E09C0 /* LostCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostCollectionViewCell.swift; sourceTree = "<group>"; };
 		B1FAF5ED1CBC6A1400E1FB7D /* Adafruit.io Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Adafruit.io Api.swift"; sourceTree = "<group>"; };
-		C859127044BC1D4D0402DDB9 /* Pods-Bone Tie 3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3/Pods-Bone Tie 3.debug.xcconfig"; sourceTree = "<group>"; };
-		C9845603E479E2F5B591A47E /* Pods-Bone Tie 3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3/Pods-Bone Tie 3.release.xcconfig"; sourceTree = "<group>"; };
-		E83DB5BBEEACDA53DE564956 /* Pods_Bone_Tie_3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bone_Tie_3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FAE62559C6C528A70B84274A /* Pods_Bone_Tie_3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bone_Tie_3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCF67BD76CC34DC58E77ED9B /* Pods_Bone_Tie_3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bone_Tie_3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBB664B19A5A06732D92B454 /* Pods-Bone Tie 3UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bone Tie 3UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bone Tie 3UITests/Pods-Bone Tie 3UITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,7 +186,7 @@
 				B129DBA91CEA7FC6009627D0 /* AVFoundation.framework in Frameworks */,
 				B1D6E0FC1CE41DBB00F23A50 /* MapKit.framework in Frameworks */,
 				B10ABCEF1C60230600D66185 /* CloudKit.framework in Frameworks */,
-				49969450E8214419B26419BE /* Pods_Bone_Tie_3.framework in Frameworks */,
+				A33ED926250356D24D33AE8A /* Pods_Bone_Tie_3.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,7 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8023BFEB6148F8DE8165BA3A /* Pods_Bone_Tie_3Tests.framework in Frameworks */,
+				381C09A44F38528496A51965 /* Pods_Bone_Tie_3Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				133CBDC5DB54B3387A0ED09F /* Pods_Bone_Tie_3UITests.framework in Frameworks */,
+				38079DB79C12541A5485062E /* Pods_Bone_Tie_3UITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,24 +216,11 @@
 				B129DBA81CEA7FC6009627D0 /* AVFoundation.framework */,
 				B1D6E0FB1CE41DBB00F23A50 /* MapKit.framework */,
 				B10ABCEE1C60230600D66185 /* CloudKit.framework */,
-				FAE62559C6C528A70B84274A /* Pods_Bone_Tie_3.framework */,
-				E83DB5BBEEACDA53DE564956 /* Pods_Bone_Tie_3Tests.framework */,
-				5B6D6B67F319153BF3107C80 /* Pods_Bone_Tie_3UITests.framework */,
+				BCF67BD76CC34DC58E77ED9B /* Pods_Bone_Tie_3.framework */,
+				9DECD1A07B2E7A00BFC90C3F /* Pods_Bone_Tie_3Tests.framework */,
+				9774C043D1ACFF7CAAFEE537 /* Pods_Bone_Tie_3UITests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		82ACDEE0C0B896709B94F102 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C859127044BC1D4D0402DDB9 /* Pods-Bone Tie 3.debug.xcconfig */,
-				C9845603E479E2F5B591A47E /* Pods-Bone Tie 3.release.xcconfig */,
-				2FB2B8A4A57A7EC378FAA132 /* Pods-Bone Tie 3Tests.debug.xcconfig */,
-				9B5290FEC7303E1EBC86A527 /* Pods-Bone Tie 3Tests.release.xcconfig */,
-				38C39931139797CD8ED56FF2 /* Pods-Bone Tie 3UITests.debug.xcconfig */,
-				8BCCE2EE4C1D488C96E03632 /* Pods-Bone Tie 3UITests.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		B151F9541CA0A8FB00D5A349 /* Supporting Files */ = {
@@ -259,7 +244,7 @@
 				B1D8432A1BF68A420019A468 /* Bone Tie2UITests */,
 				B1D843071BF68A420019A468 /* Products */,
 				22A33738320C9351EE511D09 /* Frameworks */,
-				82ACDEE0C0B896709B94F102 /* Pods */,
+				E1B937C17F55C9E93B9BD1CE /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -285,7 +270,7 @@
 				B18211771D178D99001D337A /* SlideOutMenuTableViewController.swift */,
 				B10ABCF01C60263900D66185 /* AlarmKit.swift */,
 				B10ABCF21C60264400D66185 /* LocalNotificationHelper.swift */,
-				B16D4F551C28B9C300780335 /* ImageViewer.swift */,
+				B18557601E2D302C00CBA9E6 /* ImageViewer.swift */,
 				B16D4F561C28B9C300780335 /* UIImageView+ImageViewer.swift */,
 				B1D843091BF68A420019A468 /* AppDelegate.swift */,
 				B1F4C6751C14DB0F007E09C0 /* Dog.swift */,
@@ -358,10 +343,22 @@
 		B1F0E2281D179D8600B4010D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				B1F0E2261D179C9900B4010D /* BTNavigationDropdownMenu.swift */,
 				B1F0E2291D179FD300B4010D /* BTNavigationDropdownMenu.bundle */,
 			);
 			name = Source;
+			sourceTree = "<group>";
+		};
+		E1B937C17F55C9E93B9BD1CE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				584E24250863EBFEBBC4AAED /* Pods-Bone Tie 3.debug.xcconfig */,
+				31D5DD456FC2614176E4B632 /* Pods-Bone Tie 3.release.xcconfig */,
+				72523AE46608FF3425949F70 /* Pods-Bone Tie 3Tests.debug.xcconfig */,
+				342104C50FA99961AEB71D21 /* Pods-Bone Tie 3Tests.release.xcconfig */,
+				DBB664B19A5A06732D92B454 /* Pods-Bone Tie 3UITests.debug.xcconfig */,
+				9549AE57E54974F340C39B98 /* Pods-Bone Tie 3UITests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,6 +414,7 @@
 				B1D843241BF68A420019A468 /* Frameworks */,
 				B1D843251BF68A420019A468 /* Resources */,
 				D3BEADB25A6C14A78D10BBC0 /* [CP] Copy Pods Resources */,
+				296FCB9E59F9B4CC0B54D747 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -435,12 +433,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Alex Arovas";
 				TargetAttributes = {
 					B1D843051BF68A420019A468 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = 6Z26H684AG;
+						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -518,6 +517,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		296FCB9E59F9B4CC0B54D747 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bone Tie 3UITests/Pods-Bone Tie 3UITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2A1AC8DCA45EFC2A1D4697DE /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -545,7 +559,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		631B46F064BCAD0D7483CCE2 /* [CP] Copy Pods Resources */ = {
@@ -575,7 +589,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		96BCFDE56CAADE1C3AA46740 /* [CP] Check Pods Manifest.lock */ = {
@@ -590,7 +604,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D3BEADB25A6C14A78D10BBC0 /* [CP] Copy Pods Resources */ = {
@@ -645,6 +659,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B18557611E2D302C00CBA9E6 /* ImageViewer.swift in Sources */,
 				B1E458F81CF3B72D0078571E /* LostDogInformationViewController.swift in Sources */,
 				B1D8430E1BF68A420019A468 /* Map.swift in Sources */,
 				B11184061D0502DB0034936A /* DogLocationViewController.swift in Sources */,
@@ -661,7 +676,6 @@
 				B1DF31621D2DAE1800FF4E25 /* RemindersTableViewController.swift in Sources */,
 				B11374A81CDC1A76003BE4DE /* AddDogCity.swift in Sources */,
 				B18211741D178D27001D337A /* StickyCollectionViewFlowLayout.swift in Sources */,
-				B16D4F571C28B9C300780335 /* ImageViewer.swift in Sources */,
 				B10D0D1C1CE8EF200059DC0B /* LostDogsMap.swift in Sources */,
 				B11551AC1CD5B07000AAA8BF /* AddReminders.swift in Sources */,
 				B129DBA71CEA5CC2009627D0 /* lostDog.swift in Sources */,
@@ -692,7 +706,6 @@
 				B11184021D04EA580034936A /* DirectionsViewController.swift in Sources */,
 				B1DF315A1D2D65B400FF4E25 /* reminders.swift in Sources */,
 				B11374AE1CDC3D9D003BE4DE /* AddDogBreedTableViewCell.swift in Sources */,
-				B1F0E2271D179C9900B4010D /* BTNavigationDropdownMenu.swift in Sources */,
 				B10EFB721CD3E4F300D6AFAD /* Spotlight.swift in Sources */,
 				B11551B21CD6C2A600AAA8BF /* dogsTutorialViewController.swift in Sources */,
 				B10EFB741CD3E4FA00D6AFAD /* SpotlightView.swift in Sources */,
@@ -764,8 +777,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -809,8 +824,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -836,7 +853,7 @@
 		};
 		B1D843311BF68A420019A468 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C859127044BC1D4D0402DDB9 /* Pods-Bone Tie 3.debug.xcconfig */;
+			baseConfigurationReference = 584E24250863EBFEBBC4AAED /* Pods-Bone Tie 3.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -852,12 +869,13 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bone Tie2/Bone Tie 3-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		B1D843321BF68A420019A468 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9845603E479E2F5B591A47E /* Pods-Bone Tie 3.release.xcconfig */;
+			baseConfigurationReference = 31D5DD456FC2614176E4B632 /* Pods-Bone Tie 3.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -873,12 +891,13 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bone Tie2/Bone Tie 3-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		B1D843341BF68A420019A468 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2FB2B8A4A57A7EC378FAA132 /* Pods-Bone Tie 3Tests.debug.xcconfig */;
+			baseConfigurationReference = 72523AE46608FF3425949F70 /* Pods-Bone Tie 3Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "Bone Tie2Tests/Info.plist";
@@ -891,7 +910,7 @@
 		};
 		B1D843351BF68A420019A468 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B5290FEC7303E1EBC86A527 /* Pods-Bone Tie 3Tests.release.xcconfig */;
+			baseConfigurationReference = 342104C50FA99961AEB71D21 /* Pods-Bone Tie 3Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "Bone Tie2Tests/Info.plist";
@@ -905,7 +924,7 @@
 		};
 		B1D843371BF68A420019A468 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 38C39931139797CD8ED56FF2 /* Pods-Bone Tie 3UITests.debug.xcconfig */;
+			baseConfigurationReference = DBB664B19A5A06732D92B454 /* Pods-Bone Tie 3UITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "Bone Tie2UITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -918,7 +937,7 @@
 		};
 		B1D843381BF68A420019A468 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8BCCE2EE4C1D488C96E03632 /* Pods-Bone Tie 3UITests.release.xcconfig */;
+			baseConfigurationReference = 9549AE57E54974F340C39B98 /* Pods-Bone Tie 3UITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "Bone Tie2UITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

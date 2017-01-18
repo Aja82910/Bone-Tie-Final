@@ -12,11 +12,11 @@ class StickyCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     var firstItemTransform: CGFloat?
     
-    func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let items = NSArray (array: super.layoutAttributesForElementsInRect(rect)!, copyItems: true)
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let items = NSArray (array: super.layoutAttributesForElements(in: rect)!, copyItems: true)
         var headerAttributes: UICollectionViewLayoutAttributes?
         
-        items.enumerateObjectsUsingBlock { (object, idex, stop) -> Void in
+        items.enumerateObjects({ (object, idex, stop) -> Void in
             let attributes = object as! UICollectionViewLayoutAttributes
             
             if attributes.representedElementKind == UICollectionElementKindSectionHeader {
@@ -25,11 +25,11 @@ class StickyCollectionViewFlowLayout: UICollectionViewFlowLayout {
             else {
                 self.updateCellAttributes(attributes, headerAttributes: headerAttributes)
             }
-        }
+        })
         return items as? [UICollectionViewLayoutAttributes]
     }
     
-    func updateCellAttributes(attributes: UICollectionViewLayoutAttributes, headerAttributes: UICollectionViewLayoutAttributes?) {
+    func updateCellAttributes(_ attributes: UICollectionViewLayoutAttributes, headerAttributes: UICollectionViewLayoutAttributes?) {
         let minY = collectionView!.bounds.minY + collectionView!.contentInset.top
         var maxY = attributes.frame.origin.y
         
@@ -43,7 +43,7 @@ class StickyCollectionViewFlowLayout: UICollectionViewFlowLayout {
         
         if let itemTransform = firstItemTransform {
             let scale = 1 - deltaY * itemTransform
-            attributes.transform = CGAffineTransformMakeScale(scale, scale)
+            attributes.transform = CGAffineTransform(scaleX: scale, y: scale)
         }
         
         origin.y = finalY
@@ -51,7 +51,7 @@ class StickyCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.zIndex = attributes.indexPath.row
     }
     
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
 }

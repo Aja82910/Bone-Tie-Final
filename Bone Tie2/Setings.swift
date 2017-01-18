@@ -11,11 +11,11 @@ import CloudKit
 
 class Setings: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var deletedDog: dog?
-    let container = CKContainer.defaultContainer()
+    let container = CKContainer.default()
     var publicDatabase: CKDatabase?
     var privateDatabase: CKDatabase?
     var currentRecord: CKRecord?
-    var photoURL: NSURL?
+    var photoURL: URL?
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var FoundButton: UIButton!
     @IBOutlet weak var LostButton: UIButton!
@@ -31,48 +31,48 @@ class Setings: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         if lost == "Yes" {
-            FoundButton.hidden = false
-            LostButton.hidden = true
+            FoundButton.isHidden = false
+            LostButton.isHidden = true
         }
         else {
-            FoundButton.hidden = true
-            LostButton.hidden = false
+            FoundButton.isHidden = true
+            LostButton.isHidden = false
         }
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    func tableView(tableView: UITableView, numberOfSections: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfSections: Int) -> Int{
         return 0 }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Device", forIndexPath: indexPath) as! SettingsTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Device", for: indexPath) as! SettingsTableViewCell
         return cell
     }
-    @IBAction func DeletingDog(sender: AnyObject) {
+    @IBAction func DeletingDog(_ sender: AnyObject) {
         confirmDelete(deletedDog!.name)
     }
-    func confirmDelete(Dog: String) {
-        let alert = UIAlertController(title: "Delete Dog", message: "Are you sure you want to permanently delete \(Dog)?", preferredStyle: .ActionSheet)
+    func confirmDelete(_ Dog: String) {
+        let alert = UIAlertController(title: "Delete Dog", message: "Are you sure you want to permanently delete \(Dog)?", preferredStyle: .actionSheet)
         
-        let DeleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: handleDeleteDog)
-        let CancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: cancelDeleteDog)
+        let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteDog)
+        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeleteDog)
         
         alert.addAction(DeleteAction)
         alert.addAction(CancelAction)
         
         // Support display in iPad
         alert.popoverPresentationController?.sourceView = self.view
-        alert.popoverPresentationController?.sourceRect = CGRectMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height / 2.0, 1.0, 1.0)
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     // ...
     
-    func handleDeleteDog(alertAction: UIAlertAction!) -> Void {
-        if MyLostDogs.indexOf(deletedDog!) != nil {
+    func handleDeleteDog(_ alertAction: UIAlertAction!) -> Void {
+        if MyLostDogs.index(of: deletedDog!) != nil {
             foundDog(deletedDog)
         }
             let myDeletedDog = deletedDog
@@ -82,18 +82,18 @@ class Setings: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 let imageAsset = CKAsset(fileURL: url)
                 newRecord.setObject(imageAsset, forKey: "Photo")
             }
-            newRecord.setObject(myDeletedDog!.name, forKey: "Name")
-                privateDatabase?.deleteRecordWithID(CKRecordID(recordName: myDeletedDog!.name + myDeletedDog!.trackerNumber) , completionHandler: { (Record, Error) in
+            newRecord.setObject(myDeletedDog!.name as CKRecordValue?, forKey: "Name")
+                privateDatabase?.delete(withRecordID: CKRecordID(recordName: myDeletedDog!.name + myDeletedDog!.trackerNumber) , completionHandler: { (Record, Error) in
                     if Error == nil {
                         repeat {
-                            self.publicDatabase?.deleteRecordWithID(newRecord.recordID, completionHandler: ({
+                            self.publicDatabase?.delete(withRecordID: newRecord.recordID, completionHandler: ({
                             returnRecord, error in
                                 if let err = error {
-                                    dispatch_async(dispatch_get_main_queue()) {
+                                    DispatchQueue.main.async {
                                         self.notifyUser("Error Deleting From Public Database", message: "Trying Again")
                                     }
                                 } else {
-                                    dispatch_async(dispatch_get_main_queue()) {
+                                    DispatchQueue.main.async {
                                         self.notifyUser("Success!", message: "Record Deleted successfully.")
                                     }
                                     self.currentRecord = newRecord
@@ -105,7 +105,7 @@ class Setings: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         } while Error != nil
                     }
                     else {
-                        print(Error)
+                        print(Error!)
                         return
                     }
                 })
@@ -116,11 +116,11 @@ class Setings: UIViewController, UITableViewDelegate, UITableViewDataSource {
             deleteDogIndexPath = nil
             */
             saveDogs()
-            self.performSegueWithIdentifier("Deleted", sender: self)
+            self.performSegue(withIdentifier: "Deleted", sender: self)
         
         
         }
-    func removeDogsWithID(id: Int) {
+    func removeDogsWithID(_ id: Int) {
         if let savedDogs = self.loadDogs() {
             self.dogs += savedDogs
         }
@@ -130,84 +130,83 @@ class Setings: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 indexes.append(index - 1)
             }
         }
-        indexes = indexes.reverse()
+        indexes = indexes.reversed()
         for deleteIndex in indexes {
-            dogs.removeAtIndex(deleteIndex)
+            dogs.remove(at: deleteIndex)
         }
     }
-     func foundDog(theDog: dog?) {
+     func foundDog(_ theDog: dog?) {
         let LostFound = Api().Found()
-        NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.Found), userInfo: nil, repeats: !LostFound)
-        if let index = MyLostDogs.indexOf(theDog!) {
-            MyLostDogs.removeAtIndex(index)
+        Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.Found), userInfo: nil, repeats: !LostFound)
+        if let index = MyLostDogs.index(of: theDog!) {
+            MyLostDogs.remove(at: index)
         }
-        publicDatabase?.deleteRecordWithID(CKRecordID(recordName: theDog!.name + theDog!.breed + theDog!.city), completionHandler: ({returnRecord, error in
+        publicDatabase?.delete(withRecordID: CKRecordID(recordName: theDog!.name + theDog!.breed + theDog!.city), completionHandler: ({returnRecord, error in
             if let err = error {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.notifyUser("Save Error", message: err.localizedDescription)
                 }
             } else {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.notifyUser("Success!", message: "Record saved successfully.")
                 }
             }
         }))
     }
 
-    func cancelDeleteDog(alertAction: UIAlertAction!) {
+    func cancelDeleteDog(_ alertAction: UIAlertAction!) {
     }
-func notifyUser(title: String, message: String) -> Void
+func notifyUser(_ title: String, message: String) -> Void
 {
     let alert = UIAlertController(title: title,
         message: message,
-        preferredStyle: UIAlertControllerStyle.Alert)
+        preferredStyle: UIAlertControllerStyle.alert)
     
     let cancelAction = UIAlertAction(title: "OK",
-        style: .Cancel, handler: nil)
+        style: .cancel, handler: nil)
     
     alert.addAction(cancelAction)
-    self.presentViewController(alert, animated: true,
+    self.present(alert, animated: true,
         completion: nil)
 }
-func saveImageToFile(image: UIImage) -> NSURL
+func saveImageToFile(_ image: UIImage) -> URL
 {
     let dirPaths = NSSearchPathForDirectoriesInDomains(
-        .DocumentDirectory, .UserDomainMask, true)
+        .documentDirectory, .userDomainMask, true)
     
-    let docsDir: AnyObject = dirPaths[0]
+    let docsDir: NSString = dirPaths[0] as NSString
     
-    let filePath =
-    docsDir.stringByAppendingPathComponent("img")
+    let filePath = docsDir.appendingPathComponent("img")
     
-    UIImageJPEGRepresentation(image, 0.5)!.writeToFile(filePath,
-        atomically: true)
+    try? UIImageJPEGRepresentation(image, 0.5)!.write(to: URL(fileURLWithPath: filePath),
+        options: [.atomic])
     
-    return NSURL.fileURLWithPath(filePath)
+    return URL(fileURLWithPath: filePath)
 }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "deletedDog" {
-            let DestViewController = segue.destinationViewController as! UINavigationController
+            let DestViewController = segue.destination as! UINavigationController
             let targetController = DestViewController.topViewController as! EditDogViewController
             let video = deletedDog
             targetController.dogs = video
         }
 
     }
-@IBAction func unwindToDogList(sender: UIStoryboardSegue) {
-    if let sourceViewControllered = sender.sourceViewController as? EditDogViewController, pupies = sourceViewControllered.dogs {
+@IBAction func unwindToDogList(_ sender: UIStoryboardSegue) {
+    if let sourceViewControllered = sender.source as? EditDogViewController, let pupies = sourceViewControllered.dogs {
             let dogID = CKRecordID(recordName: pupies.name)
             photoURL = saveImageToFile(pupies.photo!)
             dogs[0] = pupies
             deletedDog = pupies
             self.navigationItem.title = deletedDog?.name
-            publicDatabase?.fetchRecordWithID(dogID, completionHandler: { (record, error) in
+            publicDatabase?.fetch(withRecordID: dogID, completionHandler: { (record, error) in
                 if error != nil {
                     print("Error fetching record: \(error!.localizedDescription)")
                 } else {
                     // Now you have grabbed your existing record from iCloud
                     // Apply whatever changes you want
-                    record!.setObject(pupies.name, forKey: "Name")
-                    record!.setObject(pupies.breed, forKey: "category")
+                    record!.setObject(pupies.name as CKRecordValue?, forKey: "Name")
+                    record!.setObject(pupies.breed as CKRecordValue?, forKey: "category")
                     
                     if (pupies.photo == nil) {
                         self.notifyUser("No Photo", message: "Use the Photo option to choose a photo for the dog")
@@ -221,7 +220,7 @@ func saveImageToFile(image: UIImage) -> NSURL
                     }
                     
                     // Save this record again
-                    self.publicDatabase!.saveRecord(record!, completionHandler: { (savedRecord, saveError) in
+                    self.publicDatabase!.save(record!, completionHandler: { (savedRecord, saveError) in
                         if saveError != nil {
                             print("Error saving record: \(saveError!.localizedDescription)")
                         } else {
@@ -236,71 +235,71 @@ func saveImageToFile(image: UIImage) -> NSURL
     }
     saveDogs()
 }
-    @IBAction func Found(sender: AnyObject) {
-        LostButton.hidden = false
-        FoundButton.hidden = true
+    @IBAction func Found(_ sender: AnyObject) {
+        LostButton.isHidden = false
+        FoundButton.isHidden = true
         lost = "No"
         let LostFound = Api().Found()
-        NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.Found), userInfo: nil, repeats: !LostFound)
-        MyLostDogs.removeAtIndex(MyLostDogs.indexOf(deletedDog!)!)
-        publicDatabase?.deleteRecordWithID(CKRecordID(recordName: deletedDog!.name + deletedDog!.breed + deletedDog!.city), completionHandler: ({returnRecord, error in
+        Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.Found), userInfo: nil, repeats: !LostFound)
+        MyLostDogs.remove(at: MyLostDogs.index(of: deletedDog!)!)
+        publicDatabase?.delete(withRecordID: CKRecordID(recordName: deletedDog!.name + deletedDog!.breed + deletedDog!.city), completionHandler: ({returnRecord, error in
             if let err = error {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     //self.notifyUser("Save Error", message: err.localizedDescription)
                     print(err.localizedDescription)
                 }
             } else {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     //self.notifyUser("Success!", message: "Record saved successfully.")
                     print("Record Saved")
                 }
             }
         }))
     }
-    @IBAction func LostMode(sender: AnyObject) {
+    @IBAction func LostMode(_ sender: AnyObject) {
         lost = "Yes"
         let LostModes = Api().LostMode()
-        NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.LostMode), userInfo: nil, repeats: !LostModes)
-        NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.retrieveWeatherForecast), userInfo: nil, repeats: lost == "Yes")
+        Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.LostMode), userInfo: nil, repeats: !LostModes)
+        Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.retrieveWeatherForecast), userInfo: nil, repeats: lost == "Yes")
         MyLostDogs.append(deletedDog!)
         let dogID = CKRecordID(recordName: deletedDog!.name + deletedDog!.breed + deletedDog!.city)
         let newRecord = CKRecord(recordType: "Lost", recordID: dogID)
         let photo = saveImageToFile(deletedDog!.photo!)
         newRecord.setObject(CKAsset(fileURL: photo), forKey: "Photo")
-        let lostDate = NSDateFormatter()
-        lostDate.timeZone = NSTimeZone.systemTimeZone()
-        newRecord.setObject(lostDate.dateFromString(lostDate.stringFromDate(NSDate())), forKey: "LostDate")
+        let lostDate = DateFormatter()
+        lostDate.timeZone = TimeZone.current
+        newRecord.setObject(lostDate.date(from: lostDate.string(from: Date())) as CKRecordValue?, forKey: "LostDate")
         let Latitude: CLLocationDegrees = latitude
         let Longitude: CLLocationDegrees = longitude
         newRecord.setObject(CLLocation(latitude: Latitude, longitude: Longitude), forKey: "Location")
-        newRecord.setObject(deletedDog!.name, forKey: "Name")
-        publicDatabase!.saveRecord(newRecord, completionHandler: ({returnRecord, error in
+        newRecord.setObject(deletedDog!.name as CKRecordValue?, forKey: "Name")
+        publicDatabase!.save(newRecord, completionHandler: ({returnRecord, error in
             if let err = error {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.notifyUser("Save Error", message: err.localizedDescription)
                 }
             } else {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.notifyUser("Success!", message: "Record saved successfully.")
                 }
                 print("suceess")
                 self.currentRecord = newRecord
             }
         }))
-        LostButton.hidden = true
-        FoundButton.hidden = false
+        LostButton.isHidden = true
+        FoundButton.isHidden = false
     }
 
 
     func saveDogs() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(dogs, toFile: dog.archiveURL!.path!)
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(dogs, toFile: dog.archiveURL!.path)
         if !isSuccessfulSave {
             print("Failed to save deletedDog...")
         }
         
     }
     func loadDogs() -> [dog]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
+        return NSKeyedUnarchiver.unarchiveObject(withFile: dog.archiveURL!.path) as? [dog]
     }
 
 }

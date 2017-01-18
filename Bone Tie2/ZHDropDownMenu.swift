@@ -27,47 +27,47 @@
 import UIKit
 
 public protocol ZHDropDownMenuDelegate:class{
-    func dropDownMenu(menu:ZHDropDownMenu!, didInput text:String!)
-    func dropDownMenu(menu:ZHDropDownMenu!, didChoose index:Int)
+    func dropDownMenu(_ menu:ZHDropDownMenu!, didInput text:String!)
+    func dropDownMenu(_ menu:ZHDropDownMenu!, didChoose index:Int)
 }
 
-@IBDesignable public class ZHDropDownMenu: UIView , UITableViewDataSource ,UITableViewDelegate,UITextFieldDelegate{
+@IBDesignable open class ZHDropDownMenu: UIView , UITableViewDataSource ,UITableViewDelegate,UITextFieldDelegate{
     
-    public weak var delegate:ZHDropDownMenuDelegate?
+    open weak var delegate:ZHDropDownMenuDelegate?
     
-    public var inputClosure: ((ZHDropDownMenu , text: String) ->Void )?
+    open var inputClosure: ((ZHDropDownMenu , _ text: String) ->Void )?
     
-    public var chooseClosure: ((ZHDropDownMenu , index: Int) ->Void )?
+    open var chooseClosure: ((ZHDropDownMenu , _ index: Int) ->Void )?
     
-    public var options:Array<String> = [] //菜单项数据
+    open var options:Array<String> = [] //菜单项数据
     
-    @IBInspectable public var defaultValue:String? { //默认值。这不是placeholder!!
+    @IBInspectable open var defaultValue:String? { //默认值。这不是placeholder!!
         didSet {
             contentTextField.text = defaultValue
         }
     }
     
-    @IBInspectable public var textColor:UIColor?{ //输入框和下拉列表项中文本颜色
+    @IBInspectable open var textColor:UIColor?{ //输入框和下拉列表项中文本颜色
         didSet {
             contentTextField.textColor = textColor
         }
     }
     
-    public var font:UIFont?{ //输入框和下拉列表项中字体
+    open var font:UIFont?{ //输入框和下拉列表项中字体
         didSet {
             contentTextField.font = font
         }
     }
     
-    public var showBorder:Bool = true { //是否显示边框，默认显示
+    open var showBorder:Bool = true { //是否显示边框，默认显示
         didSet {
             if showBorder {
-                layer.borderColor = UIColor.lightGrayColor().CGColor
+                layer.borderColor = UIColor.lightGray.cgColor
                 layer.borderWidth = 0.5
                 layer.masksToBounds = true
                 layer.cornerRadius = 2.5
             }else {
-                layer.borderColor = UIColor.clearColor().CGColor
+                layer.borderColor = UIColor.clear.cgColor
                 layer.masksToBounds = false
                 layer.cornerRadius = 0
                 layer.borderWidth = 0
@@ -75,44 +75,44 @@ public protocol ZHDropDownMenuDelegate:class{
         }
     }
     
-    public lazy var rowHeight:CGFloat = { //菜单项的行高，默认和本控件一样高
+    open lazy var rowHeight:CGFloat = { //菜单项的行高，默认和本控件一样高
         return self.frame.size.height
     }()
     
-    public lazy var optionsList:UITableView = { //下拉列表
-        let table = UITableView(frame: CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0), style: .Plain)
+    open lazy var optionsList:UITableView = { //下拉列表
+        let table = UITableView(frame: CGRect(x: self.frame.origin.x, y: self.frame.origin.y + self.frame.size.height, width: self.frame.size.width, height: 0), style: .plain)
         table.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)
         table.dataSource = self
         table.delegate = self
-        table.layer.borderColor = UIColor.lightGrayColor().CGColor
+        table.layer.borderColor = UIColor.lightGray.cgColor
         table.layer.borderWidth = 0.5
         self.superview?.addSubview(table)
         return table
     }()
     
-    @IBInspectable public var editable:Bool = true { //允许用户编辑,默认允许
+    @IBInspectable open var editable:Bool = true { //允许用户编辑,默认允许
         didSet {
-            contentTextField.enabled = editable
+            contentTextField.isEnabled = editable
         }
     }
     
-    @IBInspectable public var placeholder:String? {
+    @IBInspectable open var placeholder:String? {
         didSet {
             contentTextField.placeholder = placeholder
         }
     }
     
-    @IBInspectable public var buttonImage:UIImage?{ //下拉按钮的图片
+    @IBInspectable open var buttonImage:UIImage?{ //下拉按钮的图片
         didSet {
-            pullDownButton.setImage(buttonImage, forState: .Normal)
+            pullDownButton.setImage(buttonImage, for: UIControlState())
         }
     }
     
-    private var isShown:Bool = false
+    fileprivate var isShown:Bool = false
     
-    private var contentTextField:UITextField!
+    fileprivate var contentTextField:UITextField!
     
-    private var pullDownButton:UIButton!
+    fileprivate var pullDownButton:UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -125,46 +125,46 @@ public protocol ZHDropDownMenuDelegate:class{
     }
     
     func setUp() {
-        contentTextField = UITextField(frame: CGRectZero)
+        contentTextField = UITextField(frame: CGRect.zero)
         contentTextField.delegate = self
         addSubview(contentTextField)
         
-        pullDownButton = UIButton(type: .Custom)
-        pullDownButton.addTarget(self, action: #selector(ZHDropDownMenu.showOrHide), forControlEvents: .TouchUpInside)
+        pullDownButton = UIButton(type: .custom)
+        pullDownButton.addTarget(self, action: #selector(ZHDropDownMenu.showOrHide), for: .touchUpInside)
         addSubview(pullDownButton)
         
         self.showBorder = true
-        self.textColor = UIColor.darkGrayColor()
-        self.font = UIFont.systemFontOfSize(16)
+        self.textColor = UIColor.darkGray
+        self.font = UIFont.systemFont(ofSize: 16)
     }
     
     func showOrHide() {
         if isShown {
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.pullDownButton.transform = CGAffineTransformMakeRotation(CGFloat(M_PI*2))
-                self.optionsList.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height-0.5, self.frame.size.width, 0)
-                }) { (finished) -> Void in
+            UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                self.pullDownButton.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI*2))
+                self.optionsList.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y + self.frame.size.height-0.5, width: self.frame.size.width, height: 0)
+                }, completion: { (finished) -> Void in
                     if finished{
-                        self.pullDownButton.transform = CGAffineTransformMakeRotation(0.0)
+                        self.pullDownButton.transform = CGAffineTransform(rotationAngle: 0.0)
                         self.isShown = false
                     }
-            }
+            }) 
         } else {
             contentTextField.resignFirstResponder()
             optionsList.reloadData()
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.pullDownButton.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-                self.optionsList.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height-0.5, self.frame.size.width, CGFloat(self.options.count) * self.rowHeight)
-                }) { (finished) -> Void in
+            UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                self.pullDownButton.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+                self.optionsList.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y + self.frame.size.height-0.5, width: self.frame.size.width, height: CGFloat(self.options.count) * self.rowHeight)
+                }, completion: { (finished) -> Void in
                     if finished{
                         self.isShown = true
                     }
-            }
+            }) 
         }
         
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         
         contentTextField.frame = CGRect(x: 15, y: 5, width: self.frame.size.width - 50, height: self.frame.size.height - 10)
@@ -179,25 +179,25 @@ public protocol ZHDropDownMenuDelegate:class{
 //        }
     }
     
-    public func textFieldShouldReturn(textField: UITextField) -> Bool {
+    open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let text = textField.text {
             self.delegate?.dropDownMenu(self, didInput: text)
-            self.inputClosure?(self, text: text)
+            self.inputClosure?(self, text)
         }
         return true
     }
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    open func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return options.count
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "")
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "")
         cell.textLabel?.text = options[indexPath.row]
         cell.textLabel?.font = font
         cell.textLabel?.textColor = textColor
@@ -205,14 +205,14 @@ public protocol ZHDropDownMenuDelegate:class{
         return cell
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return rowHeight
     }
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         contentTextField.text = options[indexPath.row]
         self.delegate?.dropDownMenu(self, didChoose:indexPath.row)
-        self.chooseClosure?(self, index: indexPath.row)
+        self.chooseClosure?(self, indexPath.row)
         showOrHide()
     }
 

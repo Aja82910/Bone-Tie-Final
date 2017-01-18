@@ -12,8 +12,8 @@ import CloudKit
 var LostDogs = [lostDog]()
 
 class FetchLost: NSObject {
-    let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
-    func loadAll(viewcontroller: UIViewController) -> ([lostDog]?, NSError?) {
+    let publicDatabase = CKContainer.default().publicCloudDatabase
+    func loadAll(_ viewcontroller: UIViewController) -> ([lostDog]?, NSError?) {
         var Error: NSError? = nil
         var newLostDogs = [lostDog]()
         let predicate = NSPredicate(value: true)//NSPredicate(format: "Found != %@", "Yes")
@@ -29,9 +29,9 @@ class FetchLost: NSObject {
             LostDog.location = record["Location"] as? CLLocation
             LostDog.breed = record["Breed"] as? String
             let photo = record["Photo"] as! CKAsset
-            LostDog.photo = UIImage(data: NSData(contentsOfURL: photo.fileURL)!)
+            LostDog.photo = UIImage(data: try! Data(contentsOf: photo.fileURL))
             LostDog.home = record["Home"] as? CLLocation
-            LostDog.lostDate = record["LostDate"] as? NSDate
+            LostDog.lostDate = record["LostDate"] as? Date
             print(LostDog.photo)
             print(record["Photo"] as? UIImage)
             newLostDogs.append(LostDog)
@@ -44,14 +44,14 @@ class FetchLost: NSObject {
                     Error = nil
                 } else {
                     print("error")
-                    let ac = UIAlertController(title: "Fetch Error", message: "Please check your connection: \(error!.localizedDescription)", preferredStyle: .Alert)
-                    ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                    viewcontroller.presentViewController(ac, animated: true, completion: nil)
-                    Error = error
+                    let ac = UIAlertController(title: "Fetch Error", message: "Please check your connection: \(error!.localizedDescription)", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    viewcontroller.present(ac, animated: true, completion: nil)
+                    Error = error as NSError?
                 }
             //}
         }
-        publicDatabase.addOperation(operation)
+        publicDatabase.add(operation)
         if Error == nil {
             //LostDogsMap().RefreshStop()
             print(LostDogs)

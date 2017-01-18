@@ -31,21 +31,21 @@ class EditDogViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Enable the Save button only if the text field has a valid Meal name.
         checkValidDogName()
     }
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     // The number of rows of data
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerData.count
     }
     
     // The data to return for the row and component (column) that's being passed in
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerData[row]
     }
 
-    func sharing (Photo: UIImage, Name: String){
+    func sharing (_ Photo: UIImage, Name: String){
         EditDogName?.text = Name
         EditPhoto?.image = Photo
         if (EditPhoto != nil && EditDogName != nil) {
@@ -60,36 +60,36 @@ class EditDogViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard.
         textField.resignFirstResponder()
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         checkValidDogName()
         navigationItem.title = textField.text
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         // Disable the Save button while editing.
-        Done.enabled = false
+        Done.isEnabled = false
     }
     
     func checkValidDogName() {
         // Disable the Save button if the text field is empty.
         let text = EditDogName?.text ?? ""
-        Done?.enabled = !text.isEmpty
+        Done?.isEnabled = !text.isEmpty
     }
     
     // MARK: UIImagePickerControllerDelegate
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Dismiss the picker if the user canceled.
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // The info dictionary contains multiple representations of the image, and this uses the original.
         let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         
@@ -97,64 +97,64 @@ class EditDogViewController: UIViewController, UIImagePickerControllerDelegate, 
         EditPhoto?.image = selectedImage
         
         // Dismiss the picker.
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
-    @IBAction func Cancel(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func Cancel(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if Done === sender {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if sender as! UIBarButtonItem == Done! {
             let name = EditDogName?.text ?? ""
             let photo = EditPhoto?.image
             let date = dogs?.date
-            let selected = Categories.selectedRowInComponent(0)
+            let selected = Categories.selectedRow(inComponent: 0)
             let breed = pickerData[selected]
             dogs = dog(name: name, photo: photo, date: date!, breed: breed, trackerNumber: self.EditTrackerNumber.text!, city: "City", color:  dogs!.color, sound: dogs!.sound, id: dogs!.id)
         }
     }
-    func photoLibrary (alertAction: UIAlertAction!) {
+    func photoLibrary (_ alertAction: UIAlertAction!) {
         EditDogName?.resignFirstResponder()
         
         // UIImagePickerController is a view controller that lets a user pick media from their photo library.
         let imagePickerController = UIImagePickerController()
         
         // Only allow photos to be picked, not taken.
-        imagePickerController.sourceType = .PhotoLibrary
+        imagePickerController.sourceType = .photoLibrary
         
         // Make sure ViewController is notified when the user picks an image.
         imagePickerController.delegate = self
         
-        presentViewController(imagePickerController, animated: true, completion: nil)
+        present(imagePickerController, animated: true, completion: nil)
     }
-    func takePhoto (alertAction: UIAlertAction!) {
+    func takePhoto (_ alertAction: UIAlertAction!) {
         EditDogName?.resignFirstResponder()
         
         // UIImagePickerController is a view controller that lets a user pick media from their photo library.
         let imagePickerController = UIImagePickerController()
         imagePickerController.allowsEditing = true
         // Only allow photos to be picked, not taken.
-        imagePickerController.sourceType = .Camera
-        imagePickerController.cameraCaptureMode = .Photo
-        imagePickerController.modalPresentationStyle = .FullScreen
+        imagePickerController.sourceType = .camera
+        imagePickerController.cameraCaptureMode = .photo
+        imagePickerController.modalPresentationStyle = .fullScreen
         
         // Make sure ViewController is notified when the user picks an image.
         imagePickerController.delegate = self
         
-        presentViewController(imagePickerController, animated: true, completion: nil)
+        present(imagePickerController, animated: true, completion: nil)
     }
 
     
-    @IBAction func selectImageFromPhotoLibrary(sender: UITapGestureRecognizer) {
+    @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         // Hide the keyboard.
-        let alert = UIAlertController(title: "Edit the Image of Your Dog", message: nil, preferredStyle: .ActionSheet)
+        let alert = UIAlertController(title: "Edit the Image of Your Dog", message: nil, preferredStyle: .actionSheet)
         
-        let PhotoLibrary = UIAlertAction(title: "Photo Library", style: .Default, handler: photoLibrary)
-        let TakePhoto = UIAlertAction(title: "Take Photo", style: .Default, handler: takePhoto)
-        let CancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let PhotoLibrary = UIAlertAction(title: "Photo Library", style: .default, handler: photoLibrary)
+        let TakePhoto = UIAlertAction(title: "Take Photo", style: .default, handler: takePhoto)
+        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(PhotoLibrary)
         alert.addAction(TakePhoto)
@@ -162,9 +162,9 @@ class EditDogViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         // Support display in iPad
         alert.popoverPresentationController?.sourceView = self.view
-        alert.popoverPresentationController?.sourceRect = CGRectMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height / 2.0, 1.0, 1.0)
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
         // Hide the keyboard.
-        self.presentViewController(alert, animated: true, completion: nil)    }
+        self.present(alert, animated: true, completion: nil)    }
     
     /*
     // MARK: - Navigation

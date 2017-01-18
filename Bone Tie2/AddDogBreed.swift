@@ -34,45 +34,45 @@ class AddDogBreed: UITableViewController, UISearchControllerDelegate, UISearchRe
         filtered = pickerData
         
     }
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filtered.count
     }
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cells", forIndexPath: indexPath) as! AddDogBreedTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cells", for: indexPath) as! AddDogBreedTableViewCell
         cell.DogBreed.text! = filtered[indexPath.row]
         return cell
     }
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if filtered[indexPath.row] != "Mixed Breed" {
             AddDogBreed = filtered[indexPath.row]
-            performSegueWithIdentifier("AddDogCity", sender: self)
+            performSegue(withIdentifier: "AddDogCity", sender: self)
         } else {
-            performSegueWithIdentifier("AddDogMixedBreed", sender: self)
+            performSegue(withIdentifier: "AddDogMixedBreed", sender: self)
         }
     }
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         filtered = pickerData.filter({ (text) -> Bool in
-            let tmp: NSString = text
-            let range = tmp.rangeOfString(Search.searchBar.text!, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            let tmp: NSString = text as NSString
+            let range = tmp.range(of: Search.searchBar.text!, options: NSString.CompareOptions.caseInsensitive)
             return range.location != NSNotFound
         })
         self.tableView.reloadData()
     }
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard.
         textField.resignFirstResponder()
         return true
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filtered = pickerData.filter({ (text) -> Bool in
-            let tmp: NSString = text
-            let range = tmp.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            let tmp: NSString = text as NSString
+            let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
             return range.location != NSNotFound
         })
         self.tableView.reloadData()
@@ -80,46 +80,46 @@ class AddDogBreed: UITableViewController, UISearchControllerDelegate, UISearchRe
     
     // MARK: UIImagePickerControllerDelegate
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Dismiss the picker if the user canceled.
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
-    @IBAction func Cancel(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func Cancel(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
         
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddDogCity" {
-            let targetController = segue.destinationViewController as! AddDogCity
+            let targetController = segue.destination as! AddDogCity
             targetController.AddDogCode = AddDogCode
             targetController.AddDogName = AddDogName
             targetController.AddDogBreed = AddDogBreed
             targetController.AddDogColor = AddDogColor
         } else {
-            let targetController = segue.destinationViewController as! AddDogMixedBreed
+            let targetController = segue.destination as! AddDogMixedBreed
             targetController.AddDogCode = AddDogCode
             targetController.AddDogName = AddDogName
             targetController.AddDogColor = AddDogColor
         }
     }
-    func notifyUser(title: String, message: String) -> Void
+    func notifyUser(_ title: String, message: String) -> Void
     {
         let alert = UIAlertController(title: title,
                                       message: message,
-                                      preferredStyle: UIAlertControllerStyle.Alert)
+                                      preferredStyle: UIAlertControllerStyle.alert)
         
         let cancelAction = UIAlertAction(title: "OK",
-                                         style: .Cancel, handler: nil)
+                                         style: .cancel, handler: nil)
         
         alert.addAction(cancelAction)
-        self.presentViewController(alert, animated: true,
+        self.present(alert, animated: true,
                                    completion: nil)
     }
     
     func loadDogs() -> [dog]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
+        return NSKeyedUnarchiver.unarchiveObject(withFile: dog.archiveURL!.path) as? [dog]
     }
     
 }

@@ -28,32 +28,32 @@ class AddDog: UIViewController, UITextFieldDelegate {
 
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard.
         textField.resignFirstResponder()
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         checkValidDogName()
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         // Disable the Save button while editing.
-        Connect.enabled = false
+        Connect.isEnabled = false
     }
     
     func checkValidDogName() {
         // Disable the Save button if the text field is empty.
         let texts = TrackerNumber.text ?? ""
-        Connect.enabled = (!texts.isEmpty)
+        Connect.isEnabled = (!texts.isEmpty)
     }
     
-    @IBAction func Cancel(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func Cancel(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
 
     }
-    @IBAction func TryToConnect(sender: AnyObject) {
+    @IBAction func TryToConnect(_ sender: AnyObject) {
         let key = "fz5Uz8s"
         if TrackerNumber.text == key {
             var doged = [dog]()
@@ -65,7 +65,7 @@ class AddDog: UIViewController, UITextFieldDelegate {
                 notifyUser("Multiple Dogs for This Device", message: "You cannot have more than one dog for each device")
             }
             else {
-                self.performSegueWithIdentifier("Connects", sender: self)
+                self.performSegue(withIdentifier: "Connects", sender: self)
             }
 
         } else {
@@ -74,28 +74,28 @@ class AddDog: UIViewController, UITextFieldDelegate {
     }
         
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let DestViewController = segue.destinationViewController as! AddDogName
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let DestViewController = segue.destination as! AddDogName
         DestViewController.AddDogCode = AddDogCode
         
     }
-    func notifyUser(title: String, message: String) -> Void
+    func notifyUser(_ title: String, message: String) -> Void
     {
         let alert = UIAlertController(title: title,
                                       message: message,
-                                      preferredStyle: UIAlertControllerStyle.Alert)
+                                      preferredStyle: UIAlertControllerStyle.alert)
         
         let cancelAction = UIAlertAction(title: "OK",
-                                         style: .Cancel, handler: nil)
+                                         style: .cancel, handler: nil)
         
         alert.addAction(cancelAction)
-        self.presentViewController(alert, animated: true,
+        self.present(alert, animated: true,
                                    completion: nil)
     }
 
 
     func loadDogs() -> [dog]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
+        return NSKeyedUnarchiver.unarchiveObject(withFile: dog.archiveURL!.path) as? [dog]
     }
 
     }

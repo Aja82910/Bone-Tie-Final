@@ -29,10 +29,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Map"
-        if NSUserDefaults.standardUserDefaults().boolForKey("CompletedTutorial") {
+        if UserDefaults.standard.bool(forKey: "CompletedTutorial") {
             // Terms have been accepted, proceed as normal
         } else {
-            performSegueWithIdentifier("Tutorial", sender: self)
+            performSegue(withIdentifier: "Tutorial", sender: self)
             // Terms have not been accepted. Show terms (perhaps using performSegueWithIdentifier)
         }
         uiBusy.color = self.view.tintColor
@@ -52,7 +52,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             dogs += savedDogs
         }
         if places.count == 1 {
-            places.removeAtIndex(0)
+            places.remove(at: 0)
         }
         if latitude != 0.0 {
             if places.count == 0 {
@@ -94,15 +94,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 Map.addAnnotation(annotation)
                 annotation.title = dog.name
                 annotation.subtitle = dog.breed
-                mapView(Map, viewForAnnotation: annotation)
-                NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.mapReload), userInfo: nil, repeats: true)
+                mapView(Map, viewFor: annotation)
+                Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.mapReload), userInfo: nil, repeats: true)
                 }
             }
         }
 
         // Do any additional setup after loading the view, typically from a nib.
     }
-    @IBAction func unwindToMapList(sender: UIStoryboardSegue) {
+    @IBAction func unwindToMapList(_ sender: UIStoryboardSegue) {
         viewDidAppear(true)
     }
     /*func presentTurorial() {
@@ -112,9 +112,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.presentViewController(viewController, animated: false, completion: nil)
     }*/
 
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "Refreshing"
-        var view = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+        var view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         var dogNumber: Int = 0
         for dog in dogs {
             if String?(annotation.title!!) == String!(dog.name) {
@@ -131,16 +131,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let pinImage = combineAnnotationPhotos(dogs[dogNumber])
             let size = CGSize(width: 50, height: 50)
             UIGraphicsBeginImageContext(size)
-            pinImage.drawInRect(CGRectMake(0, 0, size.width, size.height))
+            pinImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
             let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             view?.image = resizedImage
             view?.canShowCallout = true
-            view?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            view?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             view?.leftCalloutAccessoryView = AnnotationDog
             //view?.animatesDrop = true
-            AnnotationDog.frame = CGRectMake(0, 0, view!.bounds.height + 28, view!.bounds.height + 10)
-            AnnotationDog.contentMode = .ScaleAspectFill
+            AnnotationDog.frame = CGRect(x: 0, y: 0, width: view!.bounds.height + 28, height: view!.bounds.height + 10)
+            AnnotationDog.contentMode = .scaleAspectFill
             //view?.sizeToFit()
         } else {
             view?.annotation = annotation
@@ -148,7 +148,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         return view
     }
-    func combineAnnotationPhotos(Dog: dog) -> UIImage {
+    func combineAnnotationPhotos(_ Dog: dog) -> UIImage {
         var bottomImage: UIImage
         var topImage = Dog.photo
         switch Dog.color {
@@ -181,51 +181,51 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         default:
             bottomImage = UIImage(named: "Red Annotation")!
         }
-        let size = CGSizeMake(50, 50)
+        let size = CGSize(width: 50, height: 50)
         topImage = circle(topImage!, size: CGSize(width: 50.0, height: 50.0))
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        [bottomImage.drawInRect(CGRectMake(0, 0, size.width, size.height))];
-        [topImage!.drawInRect(CGRectMake(0.11 * (size.width), 0.06 * (size.height), 0.77 * (size.width), 0.77 * (size.height)))];
+        [bottomImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))];
+        [topImage!.draw(in: CGRect(x: 0.11 * (size.width), y: 0.06 * (size.height), width: 0.77 * (size.width), height: 0.77 * (size.height)))];
         
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newImage
     }
-    func circle(image: UIImage, size: CGSize) -> UIImage? {
+    func circle(_ image: UIImage, size: CGSize) -> UIImage? {
         let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         imageView.image = image
         imageView.layer.cornerRadius = size.width/2
         imageView.layer.masksToBounds = true
         UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, 0.0)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        imageView.layer.renderInContext(context)
+        imageView.layer.render(in: context)
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return result
     }
 
-    func findDog(annotation: MKAnnotationView) -> dog? {
+    func findDog(_ annotation: MKAnnotationView) -> dog? {
         for dog in dogs {
-            if dog.name == String(annotation.annotation?.title) && dog.photo == annotation.leftCalloutAccessoryView {
+            if dog.name == annotation.annotation!.title!! as String && dog.photo == annotation.leftCalloutAccessoryView {
                 return dog
             }
         }
         return nil
     }
 
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             dogInfo = findDog(view)
-            performSegueWithIdentifier("Dogs", sender: self)
+            performSegue(withIdentifier: "Dogs", sender: self)
         }
     }
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         /*if let location = locations.first {
             print("Found user's location: \(location)")
         }*/
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
             // Terms have been accepted, proceed as normal
         
         let longed = longitude
@@ -235,7 +235,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             dogs += savedDogs
         }
         if places.count == 1 {
-            places.removeAtIndex(0)
+            places.remove(at: 0)
         }
         if latitude != 0.0 {
             if places.count == 0 {
@@ -277,7 +277,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     Map.addAnnotation(annotation)
                     annotation.title = dog.name
                     annotation.subtitle = dog.breed
-                    mapView(Map, viewForAnnotation: annotation)
+                    mapView(Map, viewFor: annotation)
                 }
             }
         }
@@ -288,21 +288,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func MapType(sender: UISegmentedControl) {
+    @IBAction func MapType(_ sender: UISegmentedControl) {
         switch mapsType.selectedSegmentIndex
         {
         case 0:
-        self.Map.mapType = MKMapType.Standard
+        self.Map.mapType = MKMapType.standard
         case 1:
-        self.Map.mapType = MKMapType.SatelliteFlyover
+        self.Map.mapType = MKMapType.satelliteFlyover
         case 2:
-        self.Map.mapType = MKMapType.HybridFlyover
+        self.Map.mapType = MKMapType.hybridFlyover
         default:
             break
         }
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let DestViewController = segue.destinationViewController as? LostViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let DestViewController = segue.destination as? LostViewController
         DestViewController?.doggie = dogInfo
     }
     
@@ -361,17 +361,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             doneReloading = false
             let request = api.requestDatafromDog(true)
             let retrieve = api.mapReload()
-            NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector:  #selector(LostViewController.EndedRefresh), userInfo: nil, repeats: !EndedRefresh())
+            Timer.scheduledTimer(timeInterval: 3, target: self, selector:  #selector(LostViewController.EndedRefresh), userInfo: nil, repeats: !EndedRefresh())
             RefreshColor = self.view.tintColor
-            Refresh.tintColor = UIColor.clearColor()
-            Refresh.enabled = false
+            Refresh.tintColor = UIColor.clear
+            Refresh.isEnabled = false
             self.navigationItem.setRightBarButtonItems([UIBarButtonItem(customView: uiBusy), Refresh], animated: true)
             if !request || !retrieve {
                 if !request {
-                    NSTimer.scheduledTimerWithTimeInterval(5, target: Api(), selector: #selector(Api.requestDatafromDog), userInfo: nil, repeats: !request)
+                    Timer.scheduledTimer(timeInterval: 5, target: Api(), selector: #selector(Api.requestDatafromDog), userInfo: nil, repeats: !request)
                 }
                 else if !retrieve {
-                    NSTimer.scheduledTimerWithTimeInterval(3, target: Api(), selector: #selector(Api.mapReload), userInfo: nil, repeats: !retrieve)
+                    Timer.scheduledTimer(timeInterval: 3, target: Api(), selector: #selector(Api.mapReload), userInfo: nil, repeats: !retrieve)
                 }
                 else {
                     Refreshing(false)
@@ -385,24 +385,24 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             retrieve
         }
         
-        func Refreshing(on: Bool) {
+        func Refreshing(_ on: Bool) {
             uiBusy.hidesWhenStopped = true
             if on {
                 uiBusy.startAnimating()
             }
             else {
                 uiBusy.stopAnimating()
-                uiBusy.hidden = true
+                uiBusy.isHidden = true
             }
         }
         func RefreshStop() {
             Refreshing(false)
         }
     func EndedRefresh() -> Bool {
-        if !uiBusy.isAnimating() && !doneReloading {
-            self.navigationItem.setRightBarButtonItem(Refresh, animated: true)
+        if !uiBusy.isAnimating && !doneReloading {
+            self.navigationItem.setRightBarButton(Refresh, animated: true)
             Refresh.tintColor = RefreshColor
-            Refresh.enabled = true
+            Refresh.isEnabled = true
             viewDidLoad()
             doneReloading = true
             return true
@@ -411,7 +411,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
 
     func loadDogs() -> [dog]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
+        return NSKeyedUnarchiver.unarchiveObject(withFile: dog.archiveURL!.path) as? [dog]
     }
 
 }

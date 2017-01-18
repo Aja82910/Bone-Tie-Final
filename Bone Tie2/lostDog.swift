@@ -13,13 +13,13 @@ import CloudKit
 class lostDog: NSObject {
     var name: String?
     var photo: UIImage?
-    var lastUpdated: NSDate?
-    var created: NSDate?
+    var lastUpdated: Date?
+    var created: Date?
     var location: CLLocation?
     var breed: String?
     var user: CKRecordID?
     var home: CLLocation?
-    var lostDate: NSDate?
+    var lostDate: Date?
     
     // MARK: Initialization
     /*struct propertyKey {

@@ -1,6 +1,9 @@
 ![Interpolate - Swift interpolation for gesture-driven animations](https://cloud.githubusercontent.com/assets/889949/14937965/8b70c90a-0f16-11e6-972a-0ffa39df3e3d.png)
 
-[![Build Status](https://travis-ci.org/marmelroy/Interpolate.svg?branch=master)](https://travis-ci.org/marmelroy/Interpolate) [![Version](http://img.shields.io/cocoapods/v/Interpolate.svg)](http://cocoapods.org/?q=Interpolate)
+
+[![Platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20tvOS-orange.svg)](https://github.com/marmelroy/Interpolate)
+[![Build Status](https://travis-ci.org/marmelroy/Interpolate.svg?branch=master)](https://travis-ci.org/marmelroy/Interpolate)
+[![Version](http://img.shields.io/cocoapods/v/Interpolate.svg)](http://cocoapods.org/?q=Interpolate)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 # Interpolate
@@ -21,11 +24,20 @@ Import Interpolate at the top of your Swift file.
 import Interpolate
 ```
 
-Create an Interpolate object with a from value, a to value and an apply closure that applies the interpolation's result to the target object. 
+Create an Interpolate object with a from value, a to value and an apply closure that applies the interpolation's result to the target object.
 
 ```swift
-let colorChange = Interpolate(from: UIColor.whiteColor(),
-to: UIColor.redColor(),
+let colorChange = Interpolate(from: UIColor.white,
+to: UIColor.red,
+apply: { [weak self] (color) in
+    self?.view.backgroundColor = color
+})
+```
+
+Alternatively, you can specify multiple values for the interpolation in an array. The Swift compiler might have issues to infer the type of the array so it's best to be explicit.
+```swift
+let colors: [UIColor] = [UIColor.white, UIColor.red, UIColor.green]
+let colorChange = Interpolate(values: colors,
 apply: { [weak self] (color) in
     self?.view.backgroundColor = color
 })
@@ -36,7 +48,7 @@ Next, you will need to define a way to translate your chosen gesture's progress 
 For a gesture recognizer or delegate that reports every step of its progress (e.g. UIPanGestureRecognizer or a ScrollViewDidScroll) you can just apply the percentage directly to the Interpolate object:
 ```swift
 @IBAction func handlePan(recognizer: UIPanGestureRecognizer) {
-    let translation = recognizer.translationInView(self.view)
+    let translation = recognizer.translation(in: self.view)
     let translatedCenterY = view.center.y + translation.y
     let progress = translatedCenterY / self.view.bounds.size.height
     colorChange.progress = progress
@@ -47,9 +59,9 @@ For other types of gesture recognizers that only report a beginning and an end (
 ```swift
 @IBAction func handleLongPress(recognizer: UILongPressGestureRecognizer) {
     switch recognizer.state {
-        case .Began:
+        case .began:
             colorChange.animate(1.0, duration: 0.3)
-        case .Cancelled, .Ended, .Failed:
+        case .cancelled, .ended, .failed:
             colorChange.animate(0.0, duration: 0.3)
         default: break
     }
@@ -89,7 +101,7 @@ More types will be added over time.
 
 Interpolate is not just for dull linear interpolations.
 
-For smoother animations, consider using any of the following functions: **EaseIn, EaseOut, EaseInOut and Spring.**
+For smoother animations, consider using any of the following functions: **easeIn, easeOut, easeInOut and Spring.**
 
 ```swift
 // Spring interpolation
@@ -101,9 +113,9 @@ apply: { [weak self] (originX) in
 })
 
 // Ease out interpolation
-let groundPosition = Interpolate(from: CGPointMake(0, self.view.bounds.size.height),
-to: CGPointMake(0, self.view.bounds.size.height - 150),
-function: BasicInterpolation.EaseOut,
+let groundPosition = Interpolate(from: CGPoint(x: 0, y: self.view.bounds.size.height),
+to: CGPoint(x: 0, y: self.view.bounds.size.height - 150),
+function: BasicInterpolation.easeOut,
 apply: { [weak self] (origin) in
     self?.groundView.frame.origin = origin
 })
@@ -114,7 +126,7 @@ In fact, you can easily create and use your own interpolation function - all you
 ### Setting up with [CocoaPods](http://cocoapods.org/?q=Interpolate)
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-pod 'Interpolate', '~> 0.1'
+pod 'Interpolate', '~> 0.4'
 ```
 
 ### Setting up with Carthage

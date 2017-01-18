@@ -20,8 +20,8 @@ class LookingForDogsTableViewController: UITableViewController, UISearchControll
         super.viewDidLoad()
         
         title = "Breeds"
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let savedBreeds = defaults.objectForKey("myBreeds") as? [String] {
+        let defaults = UserDefaults.standard
+        if let savedBreeds = defaults.object(forKey: "myBreeds") as? [String] {
             myBreeds = savedBreeds
             subscriptionDogs = savedBreeds
         }
@@ -34,15 +34,15 @@ class LookingForDogsTableViewController: UITableViewController, UISearchControll
         tableView.tableHeaderView = Search.searchBar
         Search.delegate = self
         filtered = Breeds
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: #selector(self.saveTapped))
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(self.saveTapped))
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
     func saveTapped() {
         if subscriptionDogs != myBreeds {
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(myBreeds, forKey: "myBreeds")
-            let database = CKContainer.defaultContainer().publicCloudDatabase
-            database.fetchAllSubscriptionsWithCompletionHandler { (subscriptions, error) in
+            let defaults = UserDefaults.standard
+            defaults.set(myBreeds, forKey: "myBreeds")
+            let database = CKContainer.default().publicCloudDatabase
+            database.fetchAllSubscriptions { (subscriptions, error) in
                 var errors = true
                 while errors {
                     if error == nil {
@@ -50,8 +50,8 @@ class LookingForDogsTableViewController: UITableViewController, UISearchControll
                         if let subscriptions = subscriptions {
                             var x = 0
                             for dogBreed in subscriptionDogs {
-                                if self.myBreeds.indexOf(dogBreed) == nil {
-                                    database.deleteSubscriptionWithID(subscriptions[subscriptionDogs.indexOf(dogBreed)! - x].subscriptionID, completionHandler: { (str,   error) in
+                                if self.myBreeds.index(of: dogBreed) == nil {
+                                    database.delete(withSubscriptionID: subscriptions[subscriptionDogs.index(of: dogBreed)! - x].subscriptionID, completionHandler: { (str,   error) in
                                         if error != nil {
                                             print(error?.localizedDescription)
                                             errors = true
@@ -69,12 +69,12 @@ class LookingForDogsTableViewController: UITableViewController, UISearchControll
                                     let breedPredicate = NSPredicate(format: "Breed = %@", breed)
                                     let cityPredicate =  NSPredicate(format: "City = %@", self.city)
                                     //let predicate: NSPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [breedPredicate, cityPredicate])
-                                    let subscription = CKSubscription(recordType: "Dogs", predicate: breedPredicate, options: .FiresOnRecordCreation)
+                                    let subscription = CKSubscription(recordType: "Dogs", predicate: breedPredicate, options: .firesOnRecordCreation)
                                     let notification = CKNotificationInfo()
                                     notification.alertBody = "Woof! There's a new \(breed) in town!"
                                     notification.soundName = "Dog Bark.mp3"
                                     subscription.notificationInfo = notification
-                                    database.saveSubscription(subscription) { (result, error) -> Void in
+                                    database.save(subscription, completionHandler: { (result, error) -> Void in
                                         if error != nil {
                                             print(error?.localizedDescription)
                                             errors = true
@@ -82,7 +82,7 @@ class LookingForDogsTableViewController: UITableViewController, UISearchControll
                                         else {
                                             print("Saved Subscription")
                                         }
-                                    }
+                                    }) 
                                     if errors {
                                         break
                                     }
@@ -95,47 +95,47 @@ class LookingForDogsTableViewController: UITableViewController, UISearchControll
                         print(error?.localizedDescription)
                     }
                 }
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             }
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.filtered.count
     }
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let breed = self.filtered[indexPath.row]
         cell.textLabel?.text = breed
         
         if myBreeds.contains(breed) {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .None
+            cell.accessoryType = .none
         }
         
         return cell
     }
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
             let selectedBreed = self.filtered[indexPath.row]
-            if cell.accessoryType == .None {
-                cell.accessoryType = .Checkmark
+            if cell.accessoryType == .none {
+                cell.accessoryType = .checkmark
                 myBreeds.append(selectedBreed)
             }
             else {
-                cell.accessoryType = .None
-                if let index = myBreeds.indexOf(selectedBreed) {
-                    myBreeds.removeAtIndex(index)
+                cell.accessoryType = .none
+                if let index = myBreeds.index(of: selectedBreed) {
+                    myBreeds.remove(at: index)
                 }
             }
         }
-     tableView.deselectRowAtIndexPath(indexPath, animated: true)
+     tableView.deselectRow(at: indexPath, animated: true)
     }
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         filtered = Breeds.filter({ (text) -> Bool in
-            let tmp: NSString = text
-            let range = tmp.rangeOfString(Search.searchBar.text!, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            let tmp: NSString = text as NSString
+            let range = tmp.range(of: Search.searchBar.text!, options: NSString.CompareOptions.caseInsensitive)
             return range.location != NSNotFound
         })
         if filtered.isEmpty {
@@ -145,16 +145,16 @@ class LookingForDogsTableViewController: UITableViewController, UISearchControll
     }
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard.
         textField.resignFirstResponder()
         return true
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filtered = Breeds.filter({ (text) -> Bool in
-            let tmp: NSString = text
-            let range = tmp.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            let tmp: NSString = text as NSString
+            let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
             return range.location != NSNotFound
         })
         if filtered.isEmpty {

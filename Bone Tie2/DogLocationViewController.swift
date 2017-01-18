@@ -18,7 +18,7 @@ class DogLocationViewController: UIViewController {
         super.viewDidLoad()
         print(directions)
         print(directionsType)
-        print(dogs?.name)
+        print(dogs!.name)
         print(directionTime)
         // Do any additional setup after loading the view.
     }
@@ -28,17 +28,17 @@ class DogLocationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Nearby" {
-            let DestinationViewController = segue.destinationViewController as! NearbyBuildingsViewController
+            let DestinationViewController = segue.destination as! NearbyBuildingsViewController
             DestinationViewController.dogs = self.dogs
         } else if segue.identifier == "LocationInfo" {
-            let DestinationViewController = segue.destinationViewController as! DogsLocationInfo
+            let DestinationViewController = segue.destination as! DogsLocationInfo
             DestinationViewController.dogs = self.dogs
             DestinationViewController.traveltimes = self.directionTime
             DestinationViewController.TypeofDirections = self.directionsType
         } else {
-            let DestinationViewController = segue.destinationViewController as! DirectionsViewController
+            let DestinationViewController = segue.destination as! DirectionsViewController
             DestinationViewController.directionsType = self.directionsType
             DestinationViewController.directions = self.directions
             DestinationViewController.directionsTime = self.directionTime

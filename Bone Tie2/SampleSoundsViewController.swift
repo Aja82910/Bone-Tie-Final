@@ -20,22 +20,22 @@ class SampleSoundsViewController: UIViewController, UIPickerViewDelegate {
     var AddDogBreed: String!
     var AddDogCity: String!
     var AddDogColor: String!
-    var AddDogSound: NSURL? = nil
+    var AddDogSound: URL? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let nextButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: #selector(self.Next))
-        navigationItem.setRightBarButtonItem(nextButton, animated: false)
+        let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(self.Next))
+        navigationItem.setRightBarButton(nextButton, animated: false)
         pickerView.delegate = self
         pickerView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 75, height: self.view.frame.width - 150)
         pickerView.center = self.view.center
-        pickerView.tintColor = UIColor.orangeColor()
-        self.view.backgroundColor = UIColor.blueColor()
-        play.setImage(self.imageFromSystemBarButton(.Play), forState: .Normal)
+        pickerView.tintColor = UIColor.orange
+        self.view.backgroundColor = UIColor.blue
+        play.setImage(self.imageFromSystemBarButton(.play), for: UIControlState())
         play.frame = CGRect(x: 0, y: pickerView.frame.maxY + 15, width: 40, height: 40)
         play.center = CGPoint(x: self.view.center.x, y: play.center.y)
-        play.addTarget(self, action: #selector(self.playTapped), forControlEvents: .TouchUpInside)
-        pickerView.tintColor = UIColor.orangeColor()
+        play.addTarget(self, action: #selector(self.playTapped), for: .touchUpInside)
+        pickerView.tintColor = UIColor.orange
         self.view.addSubview(pickerView)
         self.view.addSubview(play)
         recordingSession = AVAudioSession.sharedInstance()
@@ -44,7 +44,7 @@ class SampleSoundsViewController: UIViewController, UIPickerViewDelegate {
             try recordingSession.setCategory(AVAudioSessionCategoryPlayback)
             try recordingSession.setActive(true)
             recordingSession.requestRecordPermission() { [unowned self] (allowed: Bool) -> Void in
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     if !allowed {
                         self.loadFailUI()
                     }
@@ -58,28 +58,28 @@ class SampleSoundsViewController: UIViewController, UIPickerViewDelegate {
         // Do any additional setup after loading the view.
     }
     func Next() {
-        self.performSegueWithIdentifier("AddDogImage", sender: self)
+        self.performSegue(withIdentifier: "AddDogImage", sender: self)
     }
     func loadFailUI() {
         let failLabel = UILabel()
-        failLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
+        failLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)
         failLabel.text = "Recording failed: please ensure the app has access to your speakers."
         failLabel.numberOfLines = 0
         self.view.addSubview(failLabel)
     }
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponentsInPickerView(_ pickerView: UIPickerView) -> Int {
         return 1
     }
-    func imageFromSystemBarButton(systemItem: UIBarButtonSystemItem)-> UIImage {
+    func imageFromSystemBarButton(_ systemItem: UIBarButtonSystemItem)-> UIImage {
         let tempItem = UIBarButtonItem(barButtonSystemItem: systemItem, target: nil, action: nil)
         
         // add to toolbar and render it
         UIToolbar().setItems([tempItem], animated: false)
         
         // got image from real uibutton
-        let itemView = tempItem.valueForKey("view") as! UIView
+        let itemView = tempItem.value(forKey: "view") as! UIView
         for view in itemView.subviews {
-            if view.isKindOfClass(UIButton){
+            if view.isKind(of: UIButton.self){
                 let button = view as! UIButton
                 return button.imageView!.image!
             }
@@ -88,20 +88,20 @@ class SampleSoundsViewController: UIViewController, UIPickerViewDelegate {
         return UIImage()
     }
     func playTapped() {
-        var audioURL: NSURL!
-        if self.pickerData[pickerView.selectedRowInComponent(0)] != "Default" {
-            audioURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(pickerData[pickerView.selectedRowInComponent(0)] + ".mp3", ofType: nil)!)
+        var audioURL: URL!
+        if self.pickerData[pickerView.selectedRow(inComponent: 0)] != "Default" {
+            audioURL = URL(fileURLWithPath: Bundle.main.path(forResource: pickerData[pickerView.selectedRow(inComponent: 0)] + ".mp3", ofType: nil)!)
             print("printing")
             do {
-                voicePlayer = try AVAudioPlayer(contentsOfURL: audioURL!)
+                voicePlayer = try AVAudioPlayer(contentsOf: audioURL!)
                 voicePlayer.volume = 1
                 print(voicePlayer.url!)
                 voicePlayer.prepareToPlay()
                 voicePlayer.play()
             } catch {
-                let ac = UIAlertController(title: "Playback failed", message: "There was a problem playing your whistle; please try re-recording.", preferredStyle: .Alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                presentViewController(ac, animated: true, completion: nil)
+                let ac = UIAlertController(title: "Playback failed", message: "There was a problem playing your whistle; please try re-recording.", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                present(ac, animated: true, completion: nil)
             }
 
         } else {
@@ -112,12 +112,12 @@ class SampleSoundsViewController: UIViewController, UIPickerViewDelegate {
     }
 
     // The number of rows of data
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerData.count
     }
     
     // The data to return for the row and component (column) that's being passed in
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerData[row]
     }
 
@@ -126,16 +126,16 @@ class SampleSoundsViewController: UIViewController, UIPickerViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddDogImage" {
-            let destinationViewController = segue.destinationViewController as! AddDogImage
+            let destinationViewController = segue.destination as! AddDogImage
             let audioURL: String!
             destinationViewController.AddDogName = AddDogName
             destinationViewController.AddDogCity = AddDogCity
             destinationViewController.AddDogCode = AddDogCode
             destinationViewController.AddDogBreed = AddDogBreed
             destinationViewController.AddDogColor = AddDogColor
-            audioURL = pickerData[pickerView.selectedRowInComponent(0)] + ".mp3"
+            audioURL = pickerData[pickerView.selectedRow(inComponent: 0)] + ".mp3"
             destinationViewController.AddDogSound = audioURL
             print(audioURL)
         }

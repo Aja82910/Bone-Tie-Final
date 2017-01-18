@@ -9,6 +9,30 @@
 import UIKit
 import CoreLocation
 import Contacts
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class DogsLocationInfo: UIViewController {
     var dogs: dog?
@@ -25,15 +49,15 @@ class DogsLocationInfo: UIViewController {
     
     override func viewDidLoad() {
         if TypeofDirections == "None" {
-            TravelTime.hidden = true
-            DirectionsType.hidden = true
-            TravelTimeLabel.hidden = true
-            DirectionsTypeLabel.hidden = true
+            TravelTime.isHidden = true
+            DirectionsType.isHidden = true
+            TravelTimeLabel.isHidden = true
+            DirectionsTypeLabel.isHidden = true
         } else {
-            TravelTime.hidden = false
-            DirectionsType.hidden = false
-            TravelTimeLabel.hidden = false
-            DirectionsTypeLabel.hidden = false
+            TravelTime.isHidden = false
+            DirectionsType.isHidden = false
+            TravelTimeLabel.isHidden = false
+            DirectionsTypeLabel.isHidden = false
             TravelTime.text = traveltimes
             DirectionsType.text = TypeofDirections
         }
@@ -44,7 +68,7 @@ class DogsLocationInfo: UIViewController {
         TravelTime.numberOfLines = 0
         TravelTime.sizeToFit()
         }
-    func postalAddressFromAddressDictionary(addressdictionary: Dictionary<NSObject,AnyObject>) -> CNMutablePostalAddress {
+    func postalAddressFromAddressDictionary(_ addressdictionary: Dictionary<String,AnyObject>) -> CNMutablePostalAddress {
         
         let address = CNMutablePostalAddress()
         
@@ -56,7 +80,7 @@ class DogsLocationInfo: UIViewController {
         
         return address
     }
-    func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+    func reverseGeocoding(_ latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         Latitude.text = String(latitude)
         Longtitude.text = String(longitude)
         let location = CLLocation(latitude: latitude, longitude: longitude)
@@ -67,7 +91,7 @@ class DogsLocationInfo: UIViewController {
             }
             else if placemarks?.count > 0 {
                 let pm = placemarks![0]
-                let address = CNPostalAddressFormatter.stringFromPostalAddress(self.postalAddressFromAddressDictionary(pm.addressDictionary!), style: .MailingAddress)
+                let address = CNPostalAddressFormatter.string(from: self.postalAddressFromAddressDictionary(pm.addressDictionary! as! Dictionary<String, AnyObject>), style: .mailingAddress)
                 self.Address.text = address
                 self.Address.sizeToFit()
                 if pm.areasOfInterest?.count > 0 {

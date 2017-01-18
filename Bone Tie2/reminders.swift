@@ -15,16 +15,16 @@ class reminders: NSObject, NSCoding {
     var photo: UIImage?
     var repeatType: String?
     var repeatTime: Int?
-    var created: NSDate
-    var firstLaunchTime: NSDate
+    var created: Date
+    var firstLaunchTime: Date
     var location: CLLocation?
     var range: CLLocationDistance?
     var type: String
     var stillRepeating: Bool
     var notification: UILocalNotification
     var id: Int
-    static let doccumentDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
-    static let archiveURL = doccumentDirectory?.URLByAppendingPathComponent("Reminders")
+    static let doccumentDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first
+    static let archiveURL = doccumentDirectory?.appendingPathComponent("Reminders")
     
     struct propertyKey {
         static let reminderDogIdKey = "DogName"
@@ -42,7 +42,7 @@ class reminders: NSObject, NSCoding {
         static let idKey = "id"
      }
      
-    init?(reminderDogId: Int?, name: String?, photo: UIImage?, repeatType: String?, repeatTime: Int?, created: NSDate, firstLaunchTime: NSDate, location: CLLocation?, range: CLLocationDistance?, type: String, stillRepeating: Bool, notification: UILocalNotification, id: Int) {
+    init?(reminderDogId: Int?, name: String?, photo: UIImage?, repeatType: String?, repeatTime: Int?, created: Date, firstLaunchTime: Date, location: CLLocation?, range: CLLocationDistance?, type: String, stillRepeating: Bool, notification: UILocalNotification, id: Int) {
         // Initialize stored properties.
         self.reminderDogId = reminderDogId
         self.name = name
@@ -60,35 +60,35 @@ class reminders: NSObject, NSCoding {
      }
      // Initialization should fail if there is no name or if the rating is negative.
      // return nil
-     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(reminderDogId, forKey: propertyKey.reminderDogIdKey)
-        aCoder.encodeObject(name, forKey: propertyKey.nameKey)
-        aCoder.encodeObject(photo, forKey: propertyKey.photoKey)
-        aCoder.encodeObject(repeatType, forKey: propertyKey.repeatTypeKey)
-        aCoder.encodeObject(repeatTime, forKey: propertyKey.repeatTimeKey)
-        aCoder.encodeObject(created, forKey: propertyKey.createdKey)
-        aCoder.encodeObject(firstLaunchTime, forKey: propertyKey.firstLaunchTimeKey)
-        aCoder.encodeObject(location, forKey: propertyKey.locationKey)
-        aCoder.encodeObject(range, forKey: propertyKey.rangeKey)
-        aCoder.encodeObject(type, forKey: propertyKey.typeKey)
-        aCoder.encodeObject(stillRepeating, forKey: propertyKey.stillRepeatingKey)
-        aCoder.encodeObject(notification, forKey: propertyKey.notificationKey)
-        aCoder.encodeObject(id, forKey: propertyKey.idKey)
+     func encode(with aCoder: NSCoder) {
+        aCoder.encode(reminderDogId, forKey: propertyKey.reminderDogIdKey)
+        aCoder.encode(name, forKey: propertyKey.nameKey)
+        aCoder.encode(photo, forKey: propertyKey.photoKey)
+        aCoder.encode(repeatType, forKey: propertyKey.repeatTypeKey)
+        aCoder.encode(repeatTime, forKey: propertyKey.repeatTimeKey)
+        aCoder.encode(created, forKey: propertyKey.createdKey)
+        aCoder.encode(firstLaunchTime, forKey: propertyKey.firstLaunchTimeKey)
+        aCoder.encode(location, forKey: propertyKey.locationKey)
+        aCoder.encode(range, forKey: propertyKey.rangeKey)
+        aCoder.encode(type, forKey: propertyKey.typeKey)
+        aCoder.encode(stillRepeating, forKey: propertyKey.stillRepeatingKey)
+        aCoder.encode(notification, forKey: propertyKey.notificationKey)
+        aCoder.encode(id, forKey: propertyKey.idKey)
      }
      required convenience init?(coder aDecoder: NSCoder) {
-        let reminderDogId = aDecoder.decodeObjectForKey(propertyKey.reminderDogIdKey) as! Int
-        let name = aDecoder.decodeObjectForKey(propertyKey.nameKey) as! String?
-        let photo = aDecoder.decodeObjectForKey(propertyKey.photoKey) as? UIImage?
-        let repeatType = aDecoder.decodeObjectForKey(propertyKey.repeatTypeKey) as! String?
-        let repeatTime = aDecoder.decodeObjectForKey(propertyKey.repeatTimeKey) as! Int?
-        let created = aDecoder.decodeObjectForKey(propertyKey.createdKey) as! NSDate
-        let firstLaunchTime = aDecoder.decodeObjectForKey(propertyKey.firstLaunchTimeKey) as! NSDate
-        let location = aDecoder.decodeObjectForKey(propertyKey.locationKey) as! CLLocation?
-        let range = aDecoder.decodeObjectForKey(propertyKey.rangeKey) as! CLLocationDistance?
-        let type = aDecoder.decodeObjectForKey(propertyKey.typeKey) as! String
-        let stillRepeating = aDecoder.decodeObjectForKey(propertyKey.stillRepeatingKey) as! Bool
-        let notification = aDecoder.decodeObjectForKey(propertyKey.notificationKey) as! UILocalNotification
-        let id = aDecoder.decodeObjectForKey(propertyKey.idKey) as! Int
+        let reminderDogId = aDecoder.decodeObject(forKey: propertyKey.reminderDogIdKey) as! Int
+        let name = aDecoder.decodeObject(forKey: propertyKey.nameKey) as! String?
+        let photo = aDecoder.decodeObject(forKey: propertyKey.photoKey) as? UIImage?
+        let repeatType = aDecoder.decodeObject(forKey: propertyKey.repeatTypeKey) as! String?
+        let repeatTime = aDecoder.decodeObject(forKey: propertyKey.repeatTimeKey) as! Int?
+        let created = aDecoder.decodeObject(forKey: propertyKey.createdKey) as! Date
+        let firstLaunchTime = aDecoder.decodeObject(forKey: propertyKey.firstLaunchTimeKey) as! Date
+        let location = aDecoder.decodeObject(forKey: propertyKey.locationKey) as! CLLocation?
+        let range = aDecoder.decodeObject(forKey: propertyKey.rangeKey) as! CLLocationDistance?
+        let type = aDecoder.decodeObject(forKey: propertyKey.typeKey) as! String
+        let stillRepeating = aDecoder.decodeObject(forKey: propertyKey.stillRepeatingKey) as! Bool
+        let notification = aDecoder.decodeObject(forKey: propertyKey.notificationKey) as! UILocalNotification
+        let id = aDecoder.decodeObject(forKey: propertyKey.idKey) as! Int
         self.init(reminderDogId: reminderDogId, name: name, photo: photo!, repeatType: repeatType, repeatTime: repeatTime, created: created, firstLaunchTime: firstLaunchTime, location: location, range: range, type: type, stillRepeating: stillRepeating, notification: notification, id: id)
      }
 }

@@ -11,23 +11,23 @@ import UIKit
 
 public extension UIImageView {
     
-    public func setupForImageViewer(highQualityImageUrl: NSURL? = nil, backgroundColor: UIColor = UIColor.whiteColor()) {
-        userInteractionEnabled = true
+    public func setupForImageViewer(_ highQualityImageUrl: URL? = nil, backgroundColor: UIColor = UIColor.white) {
+        isUserInteractionEnabled = true
         let gestureRecognizer = ImageViewerTapGestureRecognizer(target: self, action: #selector(UIImageView.didTap(_:)), highQualityImageUrl: highQualityImageUrl, backgroundColor: backgroundColor)
         addGestureRecognizer(gestureRecognizer)
     }
     
-    internal func didTap(recognizer: ImageViewerTapGestureRecognizer) {        
+    internal func didTap(_ recognizer: ImageViewerTapGestureRecognizer) {        
         let imageViewer = ImageViewer(senderView: self, highQualityImageUrl: recognizer.highQualityImageUrl, backgroundColor: recognizer.backgroundColor)
         imageViewer.presentFromRootViewController()
     }
 }
 
 class ImageViewerTapGestureRecognizer: UITapGestureRecognizer {
-    var highQualityImageUrl: NSURL?
+    var highQualityImageUrl: URL?
     var backgroundColor: UIColor!
     
-    init(target: AnyObject, action: Selector, highQualityImageUrl: NSURL?, backgroundColor: UIColor) {
+    init(target: AnyObject, action: Selector, highQualityImageUrl: URL?, backgroundColor: UIColor) {
         self.highQualityImageUrl = highQualityImageUrl
         self.backgroundColor = backgroundColor
         super.init(target: target, action: action)

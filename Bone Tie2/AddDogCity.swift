@@ -9,6 +9,41 @@
 import UIKit
 import MapKit
 import Contacts
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class AddDogCity: UITableViewController, UISearchControllerDelegate, UISearchResultsUpdating, CLLocationManagerDelegate {
     var Search = UISearchController(searchResultsController: nil)
@@ -44,28 +79,28 @@ class AddDogCity: UITableViewController, UISearchControllerDelegate, UISearchRes
             placemark = MKPlacemark(coordinate: place.coordinate, addressDictionary: nil)
         }
     }
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cityLabel.count
     }
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! AddDogTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AddDogTableViewCell
         cell.CityName.text = cityLabel[indexPath.row]
         return cell
     }
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         AddDogCity = cityLabel[indexPath.row]
-        performSegueWithIdentifier("AddDogSound", sender: self)
+        performSegue(withIdentifier: "AddDogSound", sender: self)
     }
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         if !Search.searchBar.text!.isEmpty {
             localSearchRequest = MKLocalSearchRequest()
             localSearchRequest.naturalLanguageQuery = Search.searchBar.text
             localSearch = MKLocalSearch(request: localSearchRequest)
             cityLabel.removeAll()
-            localSearch.startWithCompletionHandler { (localSearchResponse, error) -> Void in
+            localSearch.start { (localSearchResponse, error) -> Void in
                 for searchResponse in localSearchResponse!.mapItems {
                     CLGeocoder().reverseGeocodeLocation(searchResponse.placemark.location!, completionHandler: { (placemarks, error) -> Void in
                         if error != nil {
@@ -112,17 +147,17 @@ class AddDogCity: UITableViewController, UISearchControllerDelegate, UISearchRes
         }
 
     }
-    func postalAddressFromAddressDictionary(addressdictionary: Dictionary<NSObject,AnyObject>) -> CNMutablePostalAddress {
+    func postalAddressFromAddressDictionary(_ addressdictionary: Dictionary<String,AnyObject>) -> CNMutablePostalAddress {
         
         let address = CNMutablePostalAddress()
         
         address.state = addressdictionary["State"] as? String ?? ""
         address.city = addressdictionary["City"] as? String ?? ""
-        address.ISOCountryCode = addressdictionary["Country Code"] as? String ?? ""
+        address.isoCountryCode = addressdictionary["Country Code"] as? String ?? ""
         
         return address
     }
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             //print("Found user's location: \(location)")
             placemark = MKPlacemark(coordinate: location.coordinate, addressDictionary: nil)
@@ -131,19 +166,19 @@ class AddDogCity: UITableViewController, UISearchControllerDelegate, UISearchRes
 
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard.
         textField.resignFirstResponder()
         return true
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
         localSearchRequest = MKLocalSearchRequest()
         localSearchRequest.naturalLanguageQuery = Search.searchBar.text
         localSearch = MKLocalSearch(request: localSearchRequest)
         cityLabel.removeAll()
-        localSearch.startWithCompletionHandler { (localSearchResponse, error) -> Void in
+        localSearch.start { (localSearchResponse, error) -> Void in
             for searchResponse in localSearchResponse!.mapItems {
                 let placemark = searchResponse.placemark
                 let country = placemark.countryCode
@@ -155,7 +190,7 @@ class AddDogCity: UITableViewController, UISearchControllerDelegate, UISearchRes
         }
         }
         else {
-            let user = MKMapItem.mapItemForCurrentLocation()
+            let user = MKMapItem.forCurrentLocation()
             let placemark = user.placemark
             let country = placemark.countryCode
             let State = placemark.administrativeArea
@@ -167,40 +202,40 @@ class AddDogCity: UITableViewController, UISearchControllerDelegate, UISearchRes
     
     // MARK: UIImagePickerControllerDelegate
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Dismiss the picker if the user canceled.
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
-    @IBAction func Cancel(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func Cancel(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
         
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let DestViewController = segue.destinationViewController as! SampleSoundsViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let DestViewController = segue.destination as! SampleSoundsViewController
         DestViewController.AddDogCode = AddDogCode
         DestViewController.AddDogName = AddDogName
         DestViewController.AddDogBreed = AddDogBreed
         DestViewController.AddDogCity = AddDogCity
         DestViewController.AddDogColor = AddDogColor
     }
-    func notifyUser(title: String, message: String) -> Void
+    func notifyUser(_ title: String, message: String) -> Void
     {
         let alert = UIAlertController(title: title,
                                       message: message,
-                                      preferredStyle: UIAlertControllerStyle.Alert)
+                                      preferredStyle: UIAlertControllerStyle.alert)
         
         let cancelAction = UIAlertAction(title: "OK",
-                                         style: .Cancel, handler: nil)
+                                         style: .cancel, handler: nil)
         
         alert.addAction(cancelAction)
-        self.presentViewController(alert, animated: true,
+        self.present(alert, animated: true,
                                    completion: nil)
     }
     
-        func loadDogs() -> [dog]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(dog.archiveURL!.path!) as? [dog]
+    func loadDogs() -> [dog]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: dog.archiveURL!.path) as? [dog]
     }
     
     }

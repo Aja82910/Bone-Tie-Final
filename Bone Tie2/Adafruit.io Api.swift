@@ -17,7 +17,7 @@ var lost: String = ""
 var isLost: String = ""
 let forecastAPIKeys = "9d0e1ff721b54cc7831ed43660a1cc65"
 let key = "fz5Uz8s" // Test Key
-let container = CKContainer.defaultContainer()
+let container = CKContainer.default()
 var publicDatabase = container.publicCloudDatabase
 var currentRecord: CKRecord?
 
@@ -30,10 +30,10 @@ class Api: NSObject {
         // Do any additional setup after loading the view, typically from a nib.
     func beginApi() {
         retrieveWeatherForecast()
-        backgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({
-            UIApplication.sharedApplication().endBackgroundTask(self.backgroundTaskIdentifier!)
+        backgroundTaskIdentifier = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+            UIApplication.shared.endBackgroundTask(self.backgroundTaskIdentifier!)
         })
-        NSTimer.scheduledTimerWithTimeInterval(120, target: self, selector: #selector(Api.retrieveWeatherForecast), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 120, target: self, selector: #selector(Api.retrieveWeatherForecast), userInfo: nil, repeats: true)
 
     }
     func updateLocationLost() -> Bool {
@@ -47,19 +47,19 @@ class Api: NSObject {
             let query = CKQuery(recordType: "Lost", predicate: predicate)
             let operation = CKQueryOperation(query: query)
             operation.resultsLimit = 1
-            operation.queuePriority = .VeryHigh
+            operation.queuePriority = .veryHigh
             let returns  = retrieveWeatherForecast()
             operation.recordFetchedBlock = { (record: CKRecord) -> Void in
                 record.setObject(CLLocation(latitude: Latitude, longitude:  Longitude), forKey: "Location")
-                publicDatabase.saveRecord(record, completionHandler:
+                publicDatabase.save(record, completionHandler:
                     ({returnRecord, error in
                         if let err = error {
-                            dispatch_async(dispatch_get_main_queue()) {
+                            DispatchQueue.main.async {
                                 //self.notifyUser("Save Error", message: err.localizedDescription)
                                 print(err.localizedDescription)
                             }
                         } else {
-                            dispatch_async(dispatch_get_main_queue()) {
+                            DispatchQueue.main.async {
                                 //self.notifyUser("Success!", message: "Record saved successfully.")
                                 print("Record Saved")
                             }
@@ -67,7 +67,7 @@ class Api: NSObject {
                         }
                     }))
                 }
-            publicDatabase.addOperation(operation)
+            publicDatabase.add(operation)
             return returns
         }
         return retrieveWeatherForecast()
@@ -75,8 +75,8 @@ class Api: NSObject {
     
     func retrieveWeatherForecast() ->  Bool {
         
-        let blogsURL: NSURL = NSURL(string: "https://io.adafruit.com/api/groups/fona/receive.json?x-aio-key=\(forecastAPIKey)")!
-        let NSdata = NSData(contentsOfURL: blogsURL)
+        let blogsURL: URL = URL(string: "https://io.adafruit.com/api/groups/fona/receive.json?x-aio-key=\(forecastAPIKey)")!
+        let NSdata = try? Data(contentsOf: blogsURL)
         var Return = false
         var names = [String]()
         var values = [String]()
@@ -86,7 +86,7 @@ class Api: NSObject {
         // dispatch_async(dispatch_get_main_queue()) {
         if let data = NSdata {
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
                 
                 if let blogs = json["feeds"] as? [[String: AnyObject]] {
                     var x = 0
@@ -118,10 +118,10 @@ class Api: NSObject {
                                     if name == "fix" {
                                         Fix = value
                                         if let time = stream["updated_at"] {
-                                            if String(time) != TimeUpdated {
+                                            if String(describing: time) != TimeUpdated {
                                                 Return = true
                                             }
-                                            TimeUpdated = String(time)
+                                            TimeUpdated = String(describing: time)
                                         }
 
                                     }
@@ -134,7 +134,7 @@ class Api: NSObject {
                                         if lat.doubleValue != latitude {
                                             Return = true
                                         }
-                                        latlon = String(lat)
+                                        latlon = String(describing: lat)
                                         latitude = lat.doubleValue
                                         values.append("loction latitude")
                                         values.append("\(lat)")
@@ -145,7 +145,7 @@ class Api: NSObject {
                                         }
                                         if x == 1 {
                                             x = 0
-                                            latlon += String(lon)
+                                            latlon += String(describing: lon)
                                         }
                                         longitude = lon.doubleValue
                                         values.append("loction longitude")
@@ -181,35 +181,35 @@ class Api: NSObject {
         }
         return Return
     }
-    func requestDatafromDog(Requesting: Bool) -> Bool {
-        let url: NSURL
-        LedDatas = LedDatas.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[\"\\]"))
-        let LedData: [String] = LedDatas.componentsSeparatedByString("")
+    func requestDatafromDog(_ Requesting: Bool) -> Bool {
+        let url: URL
+        LedDatas = LedDatas.trimmingCharacters(in: CharacterSet(charactersIn: "[\"\\]"))
+        let LedData: [String] = LedDatas.components(separatedBy: "")
         if LedDatas != "" && Requesting == true {
-            LedDatas = String(LedData)
+            LedDatas = String(describing: LedData)
             //let baseUrl = "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&Request=Yes&LedData=\(String(LedData))"
-            LedDatas = LedDatas.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[\"\\]"))
-            let urlName : NSString = "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&Request=Yes&LedData=\(LedDatas)"
-            let urlStr = urlName.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-            url = NSURL(string: urlStr! as String)!
+            LedDatas = LedDatas.trimmingCharacters(in: CharacterSet(charactersIn: "[\"\\]"))
+            let urlName : NSString = "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&Request=Yes&LedData=\(LedDatas)" as NSString
+            let urlStr = urlName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+            url = URL(string: urlStr! as String)!
         }
         else if LedDatas != "" {
-            LedDatas = String(LedData)
+            LedDatas = String(describing: LedData)
             //let baseUrl = "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&LedData=\(LedDatas)
-            LedDatas = LedDatas.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[\"\\]"))
-            let urlName : NSString = "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&LedData=\(LedDatas)"
-            let urlStr = urlName.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet()
+            LedDatas = LedDatas.trimmingCharacters(in: CharacterSet(charactersIn: "[\"\\]"))
+            let urlName : NSString = "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&LedData=\(LedDatas)" as NSString
+            let urlStr = urlName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed
             )
-            url = NSURL(string: urlStr! as String)!
+            url = URL(string: urlStr! as String)!
         }
         else {
-            url = NSURL(string: "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&Request=Yes")!
+            url = URL(string: "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&Request=Yes")!
         }
         if Requesting {
-        let data = NSData(contentsOfURL: url)
+        let data = try? Data(contentsOf: url)
         if let data = data {
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
                 if let blogs = json["feeds"] as? [[String: AnyObject]] {
                     for blog in blogs {
                         if let name = blog["key"] as? String {
@@ -233,10 +233,10 @@ class Api: NSObject {
         }
         }
         if LedDatas != "" {
-            let data = NSData(contentsOfURL: url)
+            let data = try? Data(contentsOf: url)
             if let data = data {
                 do {
-                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
                     if let blogs = json["feeds"] as? [[String: AnyObject]] {
                         for blog in blogs {
                             if let name = blog["key"] as? String {
@@ -263,12 +263,12 @@ class Api: NSObject {
         return false
     }
     func LostMode() -> Bool{
-        let url: NSURL
-        url = NSURL(string: "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&Lost=Yes")!
-        let data = NSData(contentsOfURL: url)
+        let url: URL
+        url = URL(string: "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&Lost=Yes")!
+        let data = try? Data(contentsOf: url)
         if let data = data {
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
                 if let blogs = json["feeds"] as? [[String: AnyObject]] {
                     for blog in blogs {
                         if let name = blog["key"] as? String {
@@ -296,12 +296,12 @@ class Api: NSObject {
         return false
     }
     func Found() -> Bool{
-        let url: NSURL
-        url = NSURL(string: "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&Lost=No")!
-        let data = NSData(contentsOfURL: url)
+        let url: URL
+        url = URL(string: "https://io.adafruit.com/api/groups/fona/send.json?x-aio-key=\(forecastAPIKey)&Lost=No")!
+        let data = try? Data(contentsOf: url)
         if let data = data {
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
                 if let blogs = json["feeds"] as? [[String: AnyObject]] {
                     for blog in blogs {
                         if let name = blog["key"] as? String {

@@ -21,7 +21,7 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
     var newLostAnnotations = [MKAnnotation]()
     
     @IBOutlet weak var Refresh: UIBarButtonItem!
-    var uiBusy = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var uiBusy = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     var lostInfo: lostDog?
     
     var manager: CLLocationManager!
@@ -42,7 +42,7 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         dogs = FetchLost().loadAll(self).0!
         NSTimeZone.resetSystemTimeZone()
         if places.count == 1 {
-            places.removeAtIndex(0)
+            places.remove(at: 0)
         }
         if latitude != 0.0 {
             if places.count == 0 {
@@ -79,14 +79,14 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
                     let region: MKCoordinateRegion = MKCoordinateRegionMake(location, span)
                     mapView.setRegion(region, animated: true)
                 }
-                NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(self.updateLostDogAnnotations), userInfo: nil, repeats: true)
+                Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.updateLostDogAnnotations), userInfo: nil, repeats: true)
             }
         }
         
         // Do any additional setup after loading the view, typically from a nib.
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let DestViewController = segue.destinationViewController as? LostInfoViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let DestViewController = segue.destination as? LostInfoViewController
         print(lostInfo)
         DestViewController?.doggie = lostInfo
     }
@@ -97,33 +97,33 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
             let annotations = NSArray(array: mapView.annotations)
             for dog in dogs {
                 for annotation in mapView.annotations {
-                    let subtitle: String!! = String!!(annotation.subtitle)
-                    let lostDate = NSDateFormatter()
-                    lostDate.dateStyle = .MediumStyle
-                    lostDate.timeStyle = .MediumStyle
-                    lostDate.timeZone = NSTimeZone.systemTimeZone()
-                    if String(subtitle) == lostDate.stringFromDate(dog.lostDate!) {
+                    let subtitle: String?! = String!!(annotation.subtitle!)
+                    let lostDate = DateFormatter()
+                    lostDate.dateStyle = .medium
+                    lostDate.timeStyle = .medium
+                    lostDate.timeZone = TimeZone.current
+                    if String(describing: subtitle) == lostDate.string(from: dog.lostDate!) {
                         print(mapView.annotations.count)
                         mapView.removeAnnotation(annotation)
                         let annotation = MKPointAnnotation()
                         annotation.coordinate = dog.location!.coordinate
                         annotation.title = dog.name
-                        annotation.subtitle = lostDate.stringFromDate(dog.lostDate!)
+                        annotation.subtitle = lostDate.string(from: dog.lostDate!)
                         self.mapView.addAnnotation(annotation)
-                        self.mapView(self.mapView, viewForAnnotation: annotation)
+                        self.mapView(self.mapView, viewFor: annotation)
                         break
-                    } else if annotations.indexOfObject(annotation) == annotations.count - 1 && dogs.indexOf(dog) == dogs.count - 1 {
-                        print(String(subtitle) == String(dog.lostDate!))
-                        print(String!!(annotation.subtitle))
-                        print(String(dog.lostDate!))
+                    } else if annotations.index(of: annotation) == annotations.count - 1 && dogs.index(of: dog) == dogs.count - 1 {
+                        print(String(describing: subtitle) == String(describing: dog.lostDate!))
+                        print(String!!(annotation.subtitle!))
+                        print(String(describing: dog.lostDate!))
                         newLostAnnotations.append(annotation)
                         print(mapView.annotations.count)
                         let annotation = MKPointAnnotation()
                         annotation.coordinate = dog.location!.coordinate
                         annotation.title = dog.name
-                        annotation.subtitle = lostDate.stringFromDate(dog.lostDate!)
+                        annotation.subtitle = lostDate.string(from: dog.lostDate!)
                         self.mapView.addAnnotation(annotation)
-                        self.mapView(self.mapView, viewForAnnotation: annotation)
+                        self.mapView(self.mapView, viewFor: annotation)
                     }
                 }
             }
@@ -132,7 +132,7 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         return false
     }
     
-    @IBAction func unwindTomapViewList(sender: UIStoryboardSegue) {
+    @IBAction func unwindTomapViewList(_ sender: UIStoryboardSegue) {
         //viewDidAppear(true)
     }
     /*func presentTurorial() {
@@ -141,25 +141,25 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
      //self.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
      self.presentViewController(viewController, animated: false, completion: nil)
      }*/
-    func findDog(annotation: MKAnnotation) -> lostDog? {
-        let lostDate = NSDateFormatter()
-        lostDate.dateStyle = .MediumStyle
-        lostDate.timeStyle = .MediumStyle
-        lostDate.timeZone = NSTimeZone.systemTimeZone()
+    func findDog(_ annotation: MKAnnotation) -> lostDog? {
+        let lostDate = DateFormatter()
+        lostDate.dateStyle = .medium
+        lostDate.timeStyle = .medium
+        lostDate.timeZone = TimeZone.current
         for dog in dogs {
             print(dog.photo)
-            print(lostDate.stringFromDate(dog.lostDate!))
-            print(String!!(annotation.subtitle))
-            if lostDate.stringFromDate(dog.lostDate!) == String!!(annotation.subtitle) {
+            print(lostDate.string(from: dog.lostDate!))
+            print(String!!(annotation.subtitle!))
+            if lostDate.string(from: dog.lostDate!) == String!!(annotation.subtitle!) {
                 return dog
             }
         }
         return nil
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "Refreshing"
-        var view = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView
+        var view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
         var AnnotationDog: UIImageView?
         if let dog = findDog(annotation) {
             AnnotationDog = UIImageView.init(image: dog.photo)
@@ -174,16 +174,16 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         else if view == nil {
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             view?.canShowCallout = true
-            view?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            view?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             view?.leftCalloutAccessoryView = AnnotationDog
-            if NSArray(array: newLostAnnotations).containsObject(annotation){
+            if NSArray(array: newLostAnnotations).contains(annotation){
                 view?.animatesDrop = true
             } else {
                 view?.animatesDrop = false
             }
             if AnnotationDog != nil {
-                AnnotationDog?.frame = CGRectMake(0, 0, view!.bounds.height + 28, view!.bounds.height + 10)
-                AnnotationDog?.contentMode = .ScaleAspectFill
+                AnnotationDog?.frame = CGRect(x: 0, y: 0, width: view!.bounds.height + 28, height: view!.bounds.height + 10)
+                AnnotationDog?.contentMode = .scaleAspectFill
             }
             view?.sizeToFit()
         } else {
@@ -192,25 +192,25 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         
         return view
     }
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             if let dog = findDog(view.annotation!) {
                 lostInfo = dog
             }
-            performSegueWithIdentifier("LostDogsInfo", sender: self)
+            performSegue(withIdentifier: "LostDogsInfo", sender: self)
         }
     }
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         /*if let location = locations.first {
             print("Found user's location: \(location)")
         }*/
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         // Terms have been accepted, proceed as normal
         
         dogs = []
         if places.count == 1 {
-            places.removeAtIndex(0)
+            places.remove(at: 0)
         }
         if latitude != 0.0 {
             if places.count == 0 {
@@ -241,8 +241,8 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
                     annotation.coordinate = dog.location!.coordinate
                     mapView.addAnnotation(annotation)
                     annotation.title = dog.name
-                    annotation.subtitle = String(dog.lastUpdated)
-                    mapView(mapView, viewForAnnotation: annotation)
+                    annotation.subtitle = String(describing: dog.lastUpdated)
+                    mapView(mapView, viewFor: annotation)
                 }
             }
         }
@@ -253,15 +253,15 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func mapViewType(sender: UISegmentedControl) {
+    @IBAction func mapViewType(_ sender: UISegmentedControl) {
         switch mapsType.selectedSegmentIndex
         {
         case 0:
-            self.mapView.mapType = MKMapType.Standard
+            self.mapView.mapType = MKMapType.standard
         case 1:
-            self.mapView.mapType = MKMapType.SatelliteFlyover
+            self.mapView.mapType = MKMapType.satelliteFlyover
         case 2:
-            self.mapView.mapType = MKMapType.HybridFlyover
+            self.mapView.mapType = MKMapType.hybridFlyover
         default:
             break
         }
@@ -321,12 +321,12 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         doneReloading = false
         let request = updateLostDogAnnotations()
         RefreshColor = self.view.tintColor
-        Refresh.tintColor = UIColor.clearColor()
-        Refresh.enabled = false
+        Refresh.tintColor = UIColor.clear
+        Refresh.isEnabled = false
         self.navigationItem.setRightBarButtonItems([UIBarButtonItem(customView: uiBusy), Refresh], animated: true)
         if request != true {
-                NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(self.updateLostDogAnnotations), userInfo: request == true, repeats: true)
-             NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(self.EndedRefresh), userInfo: request == true, repeats: true)
+                Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.updateLostDogAnnotations), userInfo: request == true, repeats: true)
+             Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.EndedRefresh), userInfo: request == true, repeats: true)
         }
         else {
             Refreshing(false)
@@ -334,24 +334,24 @@ class LostDogsMap: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         }
     }
     
-    func Refreshing(on: Bool) {
+    func Refreshing(_ on: Bool) {
         uiBusy.hidesWhenStopped = true
         if on {
             uiBusy.startAnimating()
         }
         else {
             uiBusy.stopAnimating()
-            uiBusy.hidden = true
+            uiBusy.isHidden = true
         }
     }
     func RefreshStop() {
         Refreshing(false)
     }
     func EndedRefresh() -> Bool {
-        if !uiBusy.isAnimating() && !doneReloading {
-            self.navigationItem.setRightBarButtonItem(Refresh, animated: true)
+        if !uiBusy.isAnimating && !doneReloading {
+            self.navigationItem.setRightBarButton(Refresh, animated: true)
             Refresh.tintColor = RefreshColor
-            Refresh.enabled = true
+            Refresh.isEnabled = true
             viewDidLoad()
             doneReloading = true
             updateLostDogAnnotations()

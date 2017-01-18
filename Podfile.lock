@@ -1,23 +1,33 @@
 PODS:
-  - Charts (2.2.5):
-    - Charts/Core (= 2.2.5)
-  - Charts/Core (2.2.5)
-  - EPCalendarPicker (1.0.8)
-  - HanekeSwift (0.10.1)
-  - Interpolate (0.1.4)
+  - BTNavigationDropdownMenu (0.4.1)
+  - Charts (3.0.1):
+    - Charts/Core (= 3.0.1)
+  - Charts/Core (3.0.1)
+  - Interpolate (0.4.0)
+  - Kingfisher (3.2.4)
 
 DEPENDENCIES:
+  - BTNavigationDropdownMenu (from `https://github.com/PhamBaTho/BTNavigationDropdownMenu.git`, branch `swift-3.0`)
   - Charts
-  - EPCalendarPicker
-  - HanekeSwift
   - Interpolate
+  - Kingfisher
+
+EXTERNAL SOURCES:
+  BTNavigationDropdownMenu:
+    :branch: swift-3.0
+    :git: https://github.com/PhamBaTho/BTNavigationDropdownMenu.git
+
+CHECKOUT OPTIONS:
+  BTNavigationDropdownMenu:
+    :commit: 2c08c8579cf7a53ecb3dbf578e6e1034080a9859
+    :git: https://github.com/PhamBaTho/BTNavigationDropdownMenu.git
 
 SPEC CHECKSUMS:
-  Charts: b48fcc8d7190de910ff9e9748f5360c8ea7856e5
-  EPCalendarPicker: 0348fe754a7650582665ecc5ac98f4c0a0db0e91
-  HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
-  Interpolate: b59d8bf719809fa8aa119bc4cc4542cbed3fe46d
+  BTNavigationDropdownMenu: 093f3cbfad1572f2c222bdf8d17584d1e13380d4
+  Charts: 0e84f4418e87dad6a9edde221fba37ebb51d3ba7
+  Interpolate: 682895f1a2fc091da0ba53ccb018520daf51f8fd
+  Kingfisher: 8d80f39da403cd9c9ee11984e1655f4d6a566cdb
 
-PODFILE CHECKSUM: b5c3d6aa6b294e8507f8d0b5b3520ac38075b426
+PODFILE CHECKSUM: a5a047ef90bf1c1e950db9472518b0b0e0e8fb09
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1
