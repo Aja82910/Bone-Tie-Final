@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "EE23521754D903E8CCCC6016F2443A45D09E9FBA",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "3FE31EBC331483F41CD923692A761B45DD05F9EF" : 9223372036854775807,
+    "EE23521754D903E8CCCC6016F2443A45D09E9FBA" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "8DD3D83A-A347-4879-BC37-09E5FD946AE4",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "3FE31EBC331483F41CD923692A761B45DD05F9EF" : "",
+    "EE23521754D903E8CCCC6016F2443A45D09E9FBA" : "Bone%20Tie%20Final%20Prototype\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Bone Tie 3",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Bone Tie 3.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/aarovas82910\/Bone-Tie-2.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3FE31EBC331483F41CD923692A761B45DD05F9EF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Aja82910\/Bone-Tie-Final.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EE23521754D903E8CCCC6016F2443A45D09E9FBA"
+    }
+  ]
+}
